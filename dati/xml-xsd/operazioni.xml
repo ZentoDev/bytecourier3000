@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<lista_operazioni xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="operazioni.xsd">
+
+<operazione id_operazione="0001" username_bitecourier="Witt77" id_ordine="0001" stato="1">
+    <note>
+        <nota data_nota="2022-09-14T09:30:00" username="Witt77">
+            <testo>Il ritiro è proceduto secondo i piani</testo>
+        </nota>
+    </note>
+</operazione>
+
+</lista_operazioni>

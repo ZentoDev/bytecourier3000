@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<clienti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="clienti.xsd">
+
+<cliente username="marco" crediti="77"></cliente>
+<cliente username="stella" crediti="8"></cliente>
+
+</clienti>

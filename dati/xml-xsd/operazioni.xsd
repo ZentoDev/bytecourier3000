@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="lista_operazioni">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="operazione" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="operazione">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="note" />
+        </xs:sequence>
+        <xs:attribute name="id_operazione" type="xs:string" use="required" />
+        <xs:attribute name="username_bitecourier" type="xs:string" use="required" />
+        <xs:attribute name="id_ordine" type="xs:string" use="required" />
+        <xs:attribute name="stato" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1"></xs:enumeration> <!--transito verso cliente per ritiro-->
+                    <xs:enumeration value="2"></xs:enumeration> <!--pacco ritirato-->
+                    <xs:enumeration value="3"></xs:enumeration> <!--pacco al centro byte courier-->
+                    <xs:enumeration value="4"></xs:enumeration> <!--transito verso destinatario-->
+                    <xs:enumeration value="5"></xs:enumeration> <!--consegna effettuata-->
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="problema" type="xs:boolean" />
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="note">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="nota" maxOccurs="unbounded" minOccurs="0"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="nota">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="testo" type="xs:string" minOccurs="1"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="data_nota" type="xs:dateTime" use="required" />
+        <xs:attribute name="username" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>
