@@ -4,6 +4,6 @@
 xsi:noNamespaceSchemaLocation="crediti.xsd">
 
 <richiesta_crediti id_richiesta="a000" username="marco" crediti="25" stato="accettata"/>
-<richiesta_crediti id_richiesta="a001" username="luigi" crediti="457" stato="rifiutata" />
+<richiesta_crediti id_richiesta="a001" username="stella" crediti="457" stato="rifiutata" />
 <richiesta_crediti id_richiesta="a002" username="simona" crediti="14" stato="in_attesa" />
 </richieste>
