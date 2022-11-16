@@ -18,6 +18,14 @@ body {
     font-size: 60px;
 }
 
+h1.title{
+	float: right;
+	padding-right: 2%;
+	padding-top: 1%;
+	color: #1c0988;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}
+
 #content {
 	padding-left: 300px;  /*padding sx del contenitore (è uguale alla larghezza della colonna sx)*/
 	/*padding-right: 240px; */ /*padding dx del contenitore (è uguale alla larghezza della colonna dx + il padding della colonna centrale)*/
@@ -90,13 +98,6 @@ ul#menu li:hover {
     border-left: 5px solid rgb(56, 113, 236);
 	border-right: 5px solid rgb(56, 113, 236);
 	
-}
-
-h1.title{
-	float: right;
-	padding-right: 2%;
-	padding-top: 1%;
-	color: #DAF7A6;
 }
 
 img.logo{

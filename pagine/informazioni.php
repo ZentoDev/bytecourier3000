@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors', 0);
+session_start();
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -18,7 +18,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <body>
 
 <div id="top">
-    <img src="picture/logo.png" width="120" alt="Logo" class="logo" />
+    <img src="../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
 	
@@ -44,7 +44,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_visitatore.php");?>
+   <?php 
+      if($_SESSION['permesso'] == 1) 
+      require_once("cliente/menu_cliente.php");
+  
+     else 
+      require_once("menu_visitatore.php");
+     ?>
    </div>
 </div>
 

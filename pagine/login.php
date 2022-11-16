@@ -8,7 +8,7 @@ $accessonegato=0;  //$accessonegato=1 I dati inseriti non sono validi per l'aute
 //nel caso in cui si provenga dalla form
 if(isset($_POST['invio'])){
 
-    require_once("mysql/connection.php");    //accedo al database
+    require_once("../mysql/connection.php");    //accedo al database
 
 	//nel caso siano stati inseriti sia la password che lo username
     if ($_POST['username'] && $_POST['password']) {
@@ -36,27 +36,27 @@ if(isset($_POST['invio'])){
 
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente
-                    header('Location: home_cliente.php');
+                    header('Location: ../index.php');
                     exit();
                 }
 
                 if($_SESSION['permesso'] == 10) {   //10 = byte courier
-                    header('Location: home_courier.php');
+                    header('Location: courier/home_courier.php');
                     exit();
                 }
 
                 if($_SESSION['permesso'] == 100) {   //100 = gestore
-                    header('Location: home_courier.php');
+                    header('Location: gestore/home_gestore.php');
                     exit();
                 }
 
                 if($_SESSION['permesso'] == 1000) {   //1000 = amministratore
-                    header('Location: home_admin.php');
+                    header('Location: admin/home_admin.php');
                     exit();
                 }
 
                 //ruolo non trovato
-                header('Location: home_visitatore.php');    
+                header('Location: ../index.php');    
                 exit();
             }
 			else {$accessonegato=1;}
@@ -87,7 +87,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <body>
 
 <div id="top">
-    <img src="picture/logo.png" width="120" alt="Logo" class="logo" />
+    <img src="../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
 	
@@ -96,7 +96,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
 
-     <h2>Informazioni</h2>
      <br />
      <div class="log">
 			<h1>Accedi al tuo account</h1>

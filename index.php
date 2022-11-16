@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors', 0);
+session_start();
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -12,7 +12,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>Homepage</title>
-	<link rel="stylesheet" href="style1.css" type="text/css">
+	<link rel="stylesheet" href="pagine/style1.css" type="text/css">
 </head>
 
 <body>
@@ -36,7 +36,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_courier.php");?>
+   <?php 
+      if($_SESSION['permesso'] == 1) 
+      require_once("pagine/cliente/menu_cliente.php");
+  
+     else 
+      require_once("pagine/menu_visitatore.php");
+     ?>
    </div>
 </div>
 

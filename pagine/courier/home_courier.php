@@ -12,13 +12,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>Homepage</title>
-	<link rel="stylesheet" href="style1.css" type="text/css">
+	<link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
 
 <body>
 
 <div id="top">
-    <img src="picture/logo.png" width="120" alt="Logo" class="logo" />
+    <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
 	
@@ -27,7 +27,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
      <h2>Benvenuto!</h2>
-     <img src="picture/corriere.webp" width="50%" alt="corriere" />
+     <img src="../../picture/corriere.webp" width="50%" alt="corriere" />
 	 <p>
      Oggi lo shopping online richiede massima flessibilità, velocità ed efficienza in ogni fase, anche durante la consegna. Per questo mettiamo a tua disposizione una gamma di servizi dedicati al mondo Ecommerce, per rendere la tua attività ancora più semplice, sicura e performante.
      <br /><br />
@@ -36,7 +36,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_admin.php");?>
+   <?php require_once("menu_courier.php");?>
    </div>
 </div>
 

@@ -17,14 +17,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Login</title>
+    <title>Logout</title>
 	<link rel="stylesheet" href="style1.css" type="text/css">
 </head>
 
 <body>
 
 <div id="top">
-    <img src="picture/logo.png" width="120" alt="Logo" class="logo" />
+    <img src="../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
 	
