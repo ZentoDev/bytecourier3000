@@ -12,13 +12,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>Informazioni</title>
-	<link rel="stylesheet" href="style1.css" type="text/css">
+	<link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
 
 <body>
 
 <div id="top">
-    <img src="../picture/logo.png" width="120" alt="Logo" class="logo" />
+    <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
 	
@@ -44,13 +44,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php 
-      if($_SESSION['permesso'] == 1) 
-      require_once("cliente/menu_cliente.php");
-  
-     else 
-      require_once("menu_visitatore.php");
-     ?>
+   <?php require_once("menu_visitatore.php");?>
    </div>
 </div>
 

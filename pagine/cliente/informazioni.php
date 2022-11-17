@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors', 0);
 session_start();
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -12,7 +11,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Ordina spedizione</title>
+    <title>Informazioni</title>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
 
@@ -27,13 +26,25 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Ordina spedizione</h2>
-	 <p> 
-   </p>
+
+     <h2>Informazioni</h2>
+     <br />
+     <h3 class="colorato">Chi siamo</h3>
+	 <p>Dal 1989 siamo leader del mercato nel mondo delle spedizioni. 
+        Bytecourier3000 offre soluzioni affidabili per la spedizione delle merci.
+     </p>
+	 <hr />
+	 <h3 class="colorato">Dove siamo</h3>
+	 <p>in tutta Italia!</p>
+	 <hr />
+	 <h3 class="colorato">Contatti</h3>
+	 <p>Email: <a href="mailto:info@bytecourier3000.com">info@bytecourier3000.com</a> <br />
+	 Telefono: 800 6655 42
+	 </p>
    </div>
    
    <div id="navbar" class="colonna">
-    <?php require_once("menu_cliente.php");?>
+   <?php require_once("menu_cliente.php");?>
    </div>
 </div>
 

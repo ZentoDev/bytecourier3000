@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 session_start();
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -12,7 +12,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Ordina spedizione</title>
+    <title>FAQ</title>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
 
@@ -27,13 +27,15 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Ordina spedizione</h2>
-	 <p> 
-   </p>
+
+     <h2>FAQ</h2>
+     <br />
+     <h4>$domanda</h4>
+	 <p">$risposta</p>
    </div>
    
    <div id="navbar" class="colonna">
-    <?php require_once("menu_cliente.php");?>
+   <?php require_once("menu_cliente.php");?>
    </div>
 </div>
 

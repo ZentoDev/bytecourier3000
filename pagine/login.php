@@ -36,7 +36,7 @@ if(isset($_POST['invio'])){
 
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente
-                    header('Location: ../index.php');
+                    header('Location: cliente/home_cliente.php');
                     exit();
                 }
 
@@ -100,8 +100,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <div class="log">
 			<h1>Accedi al tuo account</h1>
 			<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
-			<p>Username: <input type="text" name="username" value="admin" size="40" /></p>
-			<p>Password: <input type="password" name="password" value="admin" size="40" /></p>
+			<p>Username: <input type="text" name="username" value="" size="40" /></p>
+			<p>Password: <input type="password" name="password" value="" size="40" /></p>
 			<p>
 				<input type="reset" name="reset" value="Reset">
 				<input type="submit" name="invio" value="Login">
@@ -111,7 +111,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_visitatore.php");?>
+    <ul id="menu">
+     <li><a href="../index.php">Home</a></li>
+     <li><a href="visitatore/informazioni.php">Informazioni</a></li>
+     <li><a href="visitatore/catalogo.php">Tipologia spedizioni</a></li>
+     <li><a href="visitatore/faq.php">FAQ</a></li>
+	 <li><a href="login.php">Login / Sign up</a></li>
+    </ul>
    </div>
 </div>
 

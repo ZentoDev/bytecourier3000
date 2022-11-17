@@ -38,7 +38,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_visitatore.php");?>
+    <ul id="menu">
+     <li><a href="../index.php">Home</a></li>
+     <li><a href="visitatore/informazioni.php">Informazioni</a></li>
+     <li><a href="visitatore/catalogo.php">Tipologia spedizioni</a></li>
+     <li><a href="visitatore/faq.php">FAQ</a></li>
+	 <li><a href="login.php">Login / Sign up</a></li>
+    </ul>
    </div>
 </div>
 
