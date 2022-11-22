@@ -43,7 +43,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <li><a href="visitatore/informazioni.php">Informazioni</a></li>
      <li><a href="visitatore/catalogo.php">Tipologia spedizioni</a></li>
      <li><a href="visitatore/faq.php">FAQ</a></li>
-	 <li><a href="login.php">Login / Sign up</a></li>
+     <li><a href="registrazione.php">Registrazione</a></li>  
+	 <li><a href="login.php">Login</a></li>
     </ul>
    </div>
 </div>

@@ -94,20 +94,40 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 </div>
 
 <div id="content">
-   <div id="center" class="colonna">
+   <div id="center" class="colonna" style="text-align: center;">
 
-     <br />
-     <div class="log">
-			<h1>Accedi al tuo account</h1>
-			<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
-			<p><strong>Username:</strong> <input type="text" name="username" value="" size="40" /></p>
-			<p><strong>Password:</strong> <input type="password" name="password" value="" size="40" /></p>
-			<p>
-				<button type="reset" name="reset" value="Reset">Reset</button>
-				<button type="submit" name="invio" value="Login">Login</button>
-			</p>
-		    </form>
-     </div>
+     <h2>Registrazione al sito</h2>
+	 <p>Inserisci i seguenti dati per creare un account:</p>
+
+        <form action="registrazione.php" method="post" > 
+
+        <div id="div_left">
+            <strong>Nome</strong><br />
+            <input type="text" name="nome" value="<?php echo $val_nome; ?>" required><br />
+            <strong>Username</strong><br />
+	        <input type="text" name="username" value="<?php echo $val_user; ?>" required><br />
+            <strong>Password</strong><br />
+	        <input type="password" name="password" value="<?php echo $val_pw; ?>"  required><br />
+	   </div>
+	   <div>
+            <strong>Cognome</strong><br />
+            <input type="text" name="cognome" value="<?php echo $val_cognome; ?>" required><br />
+            <strong>Data di nascita</strong><br />
+	        <input type="date" name="data" value="<?php echo $val_data; ?>" required><br />
+	        <strong>Conferma password</strong><br />
+	        <input type="password" name="ripeti_pw" value="<?php echo $val_rip_pw; ?>"  required><br />
+	    </div>
+	 
+	    <div id="div_left">
+            <button type="submit" name="invio" value="signup">Registrati al sito</button>
+        </div>
+
+        </form>
+
+        <form action="registrazione.php" method="post">
+		    <button type="submit" name="reset" value="reset" id="reset_signup">Reset</button>
+	    </form>
+
    </div>
    
    <div id="navbar" class="colonna">
@@ -117,7 +137,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <li><a href="visitatore/catalogo.php">Tipologia spedizioni</a></li>
      <li><a href="visitatore/faq.php">FAQ</a></li>
      <li><a href="registrazione.php">Registrazione</a></li>  
-	 <li><a href="login.php">Login</a></li>
+	 <li><a href="login.php">Login</a></li>   
     </ul>
    </div>
 </div>
