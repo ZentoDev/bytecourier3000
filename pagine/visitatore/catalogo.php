@@ -13,7 +13,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>tipologia spedizioni</title>
-	<link rel="stylesheet" href="../style1.css" type="text/css">
+    <link rel="shortcut icon" href="../../picture/favicon.png"/>
+	  <link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
 
 <body>

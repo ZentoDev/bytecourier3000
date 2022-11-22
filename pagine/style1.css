@@ -109,11 +109,25 @@ p, h2, h3{
 
 .log{
     text-align: center;
+    justify-content: center;
+}
+
+.log > h1{
+    margin-right: 10%;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container > div {
+    padding: 5%;
 }
 
 #div_left{
-	float: left;
-	margin-right:150px;
+    padding-right:50%;
+    width: 30%
 }
  
 /*stili relativi agli input*/

@@ -81,6 +81,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>Login</title>
+    <link rel="shortcut icon" href="../picture/favicon.png"/>
 	<link rel="stylesheet" href="style1.css" type="text/css">
 </head>
 
@@ -98,7 +99,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <br />
      <div class="log">
-			<h1>Accedi al tuo account</h1>
+			<h1 style="">Accedi al tuo account</h1>
 			<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
 			<p><strong>Username:</strong> <input type="text" name="username" value="" size="40" /></p>
 			<p><strong>Password:</strong> <input type="password" name="password" value="" size="40" /></p>

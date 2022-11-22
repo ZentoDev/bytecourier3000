@@ -12,6 +12,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <head>
     <title>Homepage</title>
+    <link rel="shortcut icon" href="picture/favicon.png"/>
 	<link rel="stylesheet" href="pagine/style1.css" type="text/css">
 </head>
 
@@ -41,7 +42,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <li><a href="pagine/visitatore/informazioni.php">Informazioni</a></li>
      <li><a href="pagine/visitatore/catalogo.php">Tipologia spedizioni</a></li>
      <li><a href="pagine/visitatore/faq.php">FAQ</a></li>
-     <li><a href="registrazione.php">Registrazione</a></li>  
+     <li><a href="pagine/registrazione.php">Registrazione</a></li>  
 	   <li><a href="pagine/login.php">Login</a></li>
     </ul>
   </div>

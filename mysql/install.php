@@ -72,7 +72,6 @@ $create_table_query = "CREATE TABLE if not exists $user_table_name (
             data_nascita date,
             permesso int NOT NULL,
             ban boolean NOT NULL,
-            UNIQUE (username)
             );";
 
 

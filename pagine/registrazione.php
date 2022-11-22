@@ -80,7 +80,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Login</title>
+    <title>Registrazione</title>
+    <link rel="shortcut icon" href="../picture/favicon.png"/>
 	<link rel="stylesheet" href="style1.css" type="text/css">
 </head>
 
@@ -96,36 +97,38 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna" style="text-align: center;">
 
-     <h2>Registrazione al sito</h2>
-	 <p>Inserisci i seguenti dati per creare un account:</p>
+        <h1>Registrazione al sito</h1>
 
         <form action="registrazione.php" method="post" > 
-
-        <div id="div_left">
+        <div class="flex-container">
+            <div>
             <strong>Nome</strong><br />
-            <input type="text" name="nome" value="<?php echo $val_nome; ?>" required><br />
+            <input type="text" name="nome" value="<?php echo '' ?>" required><br />
             <strong>Username</strong><br />
-	        <input type="text" name="username" value="<?php echo $val_user; ?>" required><br />
+	        <input type="text" name="username" value="<?php echo '' ?>" required><br />
             <strong>Password</strong><br />
-	        <input type="password" name="password" value="<?php echo $val_pw; ?>"  required><br />
-	   </div>
-	   <div>
+	        <input type="password" name="password" value="<?php echo '' ?>"  required><br />
+	        </div>
+	        <div>
             <strong>Cognome</strong><br />
-            <input type="text" name="cognome" value="<?php echo $val_cognome; ?>" required><br />
+            <input type="text" name="cognome" value="<?php echo '' ?>" required><br />
             <strong>Data di nascita</strong><br />
-	        <input type="date" name="data" value="<?php echo $val_data; ?>" required><br />
+	        <input type="date" name="data" value="<?php echo''  ?>" required><br />
 	        <strong>Conferma password</strong><br />
-	        <input type="password" name="ripeti_pw" value="<?php echo $val_rip_pw; ?>"  required><br />
-	    </div>
-	 
-	    <div id="div_left">
+	        <input type="password" name="ripeti_pw" value="<?php echo''  ?>"  required><br />
+	        </div>
+        </div>
+        
+        
+	    <div style="margin-bottom:10px">
             <button type="submit" name="invio" value="signup">Registrati al sito</button>
         </div>
 
         </form>
 
+
         <form action="registrazione.php" method="post">
-		    <button type="submit" name="reset" value="reset" id="reset_signup">Reset</button>
+		    <button type="submit" name="reset" value="reset" id="reset_signup" >Reset</button>
 	    </form>
 
    </div>
