@@ -61,6 +61,9 @@ La funzione require_once() permette di includere il codice di un file esterno (i
 Nel caso in cui il file sia stato gia' incluso, non verra' incluso di nuovo.
  */
 require_once("connection.php");
+if( !$connection_mysqli ){
+    echo "<p>Problemi nell'accesso al database, controllare la propria configurazione di mysql o il file connection.php";
+}
 
 //Creazione tabella utenti
 $create_table_query = "CREATE TABLE if not exists $user_table_name (

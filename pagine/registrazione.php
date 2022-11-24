@@ -1,75 +1,101 @@
 <?php
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
 
-$datimancanti=0;   //$datimancanti=1 Non sono stati inseriti tutti i dati necessari all'autentificazione dell'utente
-$accessonegato=0;  //$accessonegato=1 I dati inseriti non sono validi per l'autentificazione dell'utente
+//variabili della form
+$nome = "";
+$cognome = "";
+$data = "";
+$username = "";
+$pw = "";
+$pw_rip = "";
 
-//nel caso in cui si provenga dalla form
-if(isset($_POST['invio'])){
+if( isset($_POST['invio']) ){
+    //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
+	$nome = $_POST['nome'];
+	$cognome = $_POST['cognome'];
+	$data = $_POST['data'];
+	$username = $_POST['username'];
+    $pw = $_POST['password'];
+    $pw_rip = $_POST['ripeti_pw'];
 
-    require_once("../mysql/connection.php");    //accedo al database
+    //se le password coincidono, si inseriscono i dati nel sistema
+    if($_POST['ripeti_pw']==$_POST['password'] ){
 
-	//nel caso siano stati inseriti sia la password che lo username
-    if ($_POST['username'] && $_POST['password']) {
-		//verifico, attraverso una query, se lo username e la password corrispondono a quelle di un utente nella tabella users
-		$select_query = "SELECT *
-                         FROM $user_table_name
-                         WHERE username = \"{$_POST['username']}\" AND password =\"{$_POST['password']}\" ";
-        //se la query e' stata eseguita correttamente
-		if ($res = mysqli_query($connection_mysqli, $select_query)) {
-			
-			$row = mysqli_fetch_array($res);
-            //se $row e' diverso da null, ovvero la query precedentemente eseguita mi ha dato un risultato non nullo, allora
-			//lo username e la password corrispondono effettivamente ad un utente della tabella users.
-			if ($row) {  
-			    //inizializzo la sessione e memorizzo una serie di informazioni nell'array $_SESSION[]
-				session_start();
-				$_SESSION['id_utente']=$row['user_id'];
-				$_SESSION['username']=$row['username'];
-                $_SESSION['permesso']=$row['permesso'];
-                $_SESSION['ban']=$row['ban'];
-                $_SESSION['nome']=$row['nome'];
-                $_SESSION['cognome']=$row['cognome'];
-                $_SESSION['data_nascita']=$row['data_nascita'];
-				$_SESSION['data_login']=time();
+        //addUser() si occupa dell'inserimento dei dati utente nel sistema, ritorna 1 se il processo avviene correttamente; -1 in caso di errori
+        $add = addUser();
+        if( $add == 1 )   $mex = "La registrazione è avvenuta correttamente!";
 
-				//indirizzo il client verso la pagina iniziale del sito
-                if($_SESSION['permesso'] == 1) {   //1 = cliente
-                    header('Location: cliente/home_cliente.php');
-                    exit();
-                }
+        else if( $add == 0 )   $mex = "Username gia' in uso, inserire un altro username";
 
-                if($_SESSION['permesso'] == 10) {   //10 = byte courier
-                    header('Location: courier/home_courier.php');
-                    exit();
-                }
+        else    $mex = "Problemi interni nel processo di registrazione, si prega di contattare il supporto tecnico";
+    }    
 
-                if($_SESSION['permesso'] == 100) {   //100 = gestore
-                    header('Location: gestore/home_gestore.php');
-                    exit();
-                }
-
-                if($_SESSION['permesso'] == 1000) {   //1000 = amministratore
-                    header('Location: admin/home_admin.php');
-                    exit();
-                }
-
-                //ruolo non trovato
-                header('Location: ../index.php');    
-                exit();
-            }
-			else {$accessonegato=1;}
-		}
-		
-	}
-	else {$datimancanti=1;}
-    
-    mysqli_close($connection_mysqli);
+    else $mex = "Le password non coincidono";
 }
 
+//si occupa dell'inserimento dei dati utente nel sistema, ritorna 1 se il processo avviene correttamente; -1 in caso di errori
+function addUser(){
 
+	require_once("../mysql/connection.php");
+    if( !$connection_mysqli )   return -1;  //problemi di connessione al db, return -1
 
+    $aggiunto = 0;
+    //query per verificare l'esistenza di un utente con lo stesso username
+    $select_query = "SELECT * FROM $user_table_name 
+                    WHERE username = '{$_POST['username']}' ";
+    
+    $res = mysqli_query($connection_mysqli, $select_query);
+    $row = mysqli_fetch_array($res);
+    if( !$row ) {                               //se NON esiste un utente con lo stesso username, si può procedere; altrimenti return 0
+
+	    //query per inserire il nuovo utente
+	    $insert_query = "INSERT INTO $user_table_name
+				        (username, password, nome, cognome, data_nascita, permesso, ban)
+					    VALUES
+					    ('{$_POST['username']}','{$_POST['password']}','{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['data']}', '1', '0' )
+					    ";
+
+	    try{
+            mysqli_query($connection_mysqli, $insert_query);     //inserimento del nuovo utente, in caso di errori $aggiunto = -1
+        }catch (Exception $e){
+            $aggiunto = -1;
+        }
+         
+        //se la query e la scrittura sul file xml avverranno correttamente $aggiunto = 1
+        // $aggiunto != 1     -->  query di inserimento dei dati nel db andata a buon fine 
+        // addCliente() == 1  -->  inserimento del cliente del file xml avvenuto correttamente
+        if( $aggiunto!=-1 && addCliente() == 1 )   $aggiunto = 1;  
+        
+        else   $aggiunto = -1;    
+	}
+    
+	mysqli_close($connection_mysqli);
+	return $aggiunto;
+}
+
+//si occupa dell'inserimento di un elemento utente nel file clienti.xml; ritorna 1 se il processo avviene correttamente; -1 in caso di errori
+function addCliente(){
+
+    //Richiamo la mia libreria per la gestione degli xml e uso una funzione che crea un oggetto domDocument a partire dal corrispettivo file xml
+    require_once("../dati/lib_xmlaccess.php");
+    if ( !$doc = openXML("../dati/xml/clienti.xml") )  return -1;
+
+    //il metodo documentElement() restituisce l'elemento radice del documento (in questo caso, "clienti")
+	$root = $doc->documentElement;
+	
+	$newCliente = $doc->createElement("cliente");
+	$root->appendChild($newCliente);
+	
+	$newCliente->setAttribute("username", $_POST['username']);
+    $newCliente->setAttribute("crediti", 0);
+	
+    //permette di salvare il documento in un file xml
+    printFileXML("../dati/xml/clienti.xml", $doc);
+    return 1;			
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -100,29 +126,28 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <h1>Registrazione al sito</h1>
 
         <form action="registrazione.php" method="post" > 
-        <div class="flex-container">
-            <div>
-            <strong>Nome</strong><br />
-            <input type="text" name="nome" value="<?php echo '' ?>" required><br />
-            <strong>Username</strong><br />
-	        <input type="text" name="username" value="<?php echo '' ?>" required><br />
-            <strong>Password</strong><br />
-	        <input type="password" name="password" value="<?php echo '' ?>"  required><br />
-	        </div>
-	        <div>
-            <strong>Cognome</strong><br />
-            <input type="text" name="cognome" value="<?php echo '' ?>" required><br />
-            <strong>Data di nascita</strong><br />
-	        <input type="date" name="data" value="<?php echo''  ?>" required><br />
-	        <strong>Conferma password</strong><br />
-	        <input type="password" name="ripeti_pw" value="<?php echo''  ?>"  required><br />
-	        </div>
-        </div>
+            <div class="flex-container">
+                <div>
+                <strong>Nome</strong><br />
+                <input type="text" name="nome" value="<?php echo $nome ?>" required><br />
+                <strong>Username</strong><br />
+	            <input type="text" name="username" value="<?php echo $username ?>" required><br />
+                <strong>Password</strong><br />
+	            <input type="password" name="password" value="<?php echo $pw ?>" required><br />
+	            </div>
+	            <div>
+                <strong>Cognome</strong><br />
+                <input type="text" name="cognome" value="<?php echo $cognome ?>" required><br />
+                <strong>Data di nascita</strong><br />
+	            <input type="date" name="data" value="<?php echo $data ?>" required><br />
+	            <strong>Conferma password</strong><br />
+	            <input type="password" name="ripeti_pw" value="<?php echo $pw_rip ?>" required><br />
+	            </div>
+            </div>
         
-        
-	    <div style="margin-bottom:10px">
-            <button type="submit" name="invio" value="signup">Registrati al sito</button>
-        </div>
+	        <div style="margin-bottom:10px">
+                <button type="submit" name="invio" value="signup">Registrati al sito</button>
+            </div>
 
         </form>
 
@@ -130,6 +155,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <form action="registrazione.php" method="post">
 		    <button type="submit" name="reset" value="reset" id="reset_signup" >Reset</button>
 	    </form>
+
+        <?php 
+		if($_POST['invio']){
+			echo '<h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;'.$mex.'</h3>';
+		}
+		?>
 
    </div>
    

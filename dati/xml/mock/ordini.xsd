@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="ordini">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="ordine" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="ordine">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="destinatario" minOccurs="1" />
+            <xs:element ref="indirizzo" minOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="id_richiesta" type="xs:string" use="required"/>
+        <xs:attribute name="username" type="xs:string" use="required"/>
+        <xs:attribute name="tipologia_spedizione" type="xs:string" use="required"/>
+        <xs:attribute name="costo" type="xs:float" use="required" />
+        <xs:attribute name="stato" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="accettato"/>
+                    <xs:enumeration value="rifiutato"/>
+                    <xs:enumeration value="in_attesa"/>
+                    <xs:enumeration value="modificato"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="peso" type="xs:float" use="required"/>
+        <xs:attribute name="volume" type="xs:float" use="required"/>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="destinatario" type="nomeCognome" />
+
+<xs:complexType name="nomeCognome">
+    <xs:sequence>
+        <xs:element name="nome" type="xs:string"></xs:element>
+        <xs:element name="cognome" type="xs:string"></xs:element>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:element name="indirizzo">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="via" type="xs:string" minOccurs="1"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="città" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>

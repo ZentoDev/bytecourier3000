@@ -14,14 +14,12 @@ La funzione mysqli ha per argomenti:
 -la rispettiva password
 -il nome del database al quale dobbiamo connetterci*/ 
 
-$connection_mysqli = new mysqli($DB_host, $DB_user, $DB_pass, $DB_name);
-
+try{
+    $connection_mysqli = new mysqli($DB_host, $DB_user, $DB_pass, $DB_name);
+}catch (Exception $e){}
 
 /* Verifico se la connessione al database è andata a buon termine attraverso la funzione mysqli_connect_errno().
 Tale funzione restituisce il codice di errore dell'ultima connessione nel caso in cui questa connessione non sia
 avvenuta, altrimenti restituisce un valore nullo. */
-if (mysqli_connect_errno()) {
-    printf("***ATTENZIONE!***\n Non è stato possibile connettersi al database\n Errore: %s\n", mysqli_connect_error());
-    exit();
-}
+
 ?>

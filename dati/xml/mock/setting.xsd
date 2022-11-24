@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="setting">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="setting_spedizioni" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="assegnazione_automatica" type="xs:boolean" use="required"/>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="setting_spedizioni">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="tipologia_spedizione" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="tipologia_spedizione">
+    <xs:complexType>
+        <xs:attribute name="nome" type="xs:string" use="required"/>
+        <xs:attribute name="durata" type="xs:positiveInteger" use="required"/>
+        <xs:attribute name="costo_unit" type="xs:float" use="required" />
+        <xs:attribute name="costo_var" type="xs:float" use="required" />
+        <xs:attribute name="dimensioni_min" type="xs:float" use="optional" />
+        <xs:attribute name="dimensioni_max" type="xs:float" use="optional" />
+        <xs:attribute name="abilitazione" type="xs:boolean" use="required" />        
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>
