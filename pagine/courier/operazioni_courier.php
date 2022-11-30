@@ -1,7 +1,10 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
-session_start();
+require_once("login_courier.php");
+
+
+
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>

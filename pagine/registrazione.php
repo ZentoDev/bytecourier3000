@@ -26,7 +26,7 @@ if( isset($_POST['invio']) ){
         $add = addUser();
         if( $add == 1 )   $mex = "La registrazione è avvenuta correttamente!";
 
-        else if( $add == 0 )   $mex = "Username gia' in uso, inserire un altro username";
+        else if( $add == 0 )   $mex = "Username gi&agrave; in uso, inserire un altro username";
 
         else    $mex = "Problemi interni nel processo di registrazione, si prega di contattare il supporto tecnico";
     }    
@@ -91,7 +91,7 @@ function addCliente(){
     $newCliente->setAttribute("crediti", 0);
 	
     //permette di salvare il documento in un file xml
-    printFileXML("../dati/xml/clienti.xml", $doc);
+    printFileXML("../dati/clienti.xml", $doc);
     return 1;			
 }
 

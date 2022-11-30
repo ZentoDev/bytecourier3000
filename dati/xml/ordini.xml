@@ -3,15 +3,55 @@
 <ordini xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="ordini.xsd">
 
-<ordine id_richiesta="0001" username="marco" tipologia_spedizione="provincia" costo="87" stato="accettato" peso="7" volume="1.3">
+<ordine id_richiesta="0001" username="marcolino71" tipologia_spedizione="provincia" costo="87" stato="accettato" peso="7" volume="1.3">
     <destinatario>
         <nome>Maria</nome>
         <cognome>Gresini</cognome>
     </destinatario>
-    <indirizzo città="Livorno">
+    <indirizzo citta="Livorno">
         <via>
             viale manzoni 57
         </via>
+    </indirizzo>
+</ordine>
+
+<ordine id_richiesta="0002" username="stella" tipologia_spedizione="città" costo="22" stato="accettato" peso="4" volume="0.3">
+    <destinatario>
+        <nome>Giorgia</nome>
+        <cognome>Benedetti</cognome>
+    </destinatario>
+    <indirizzo citta="Firenze">
+        <via>via tripoli 43</via>
+    </indirizzo>
+</ordine>
+
+<ordine id_richiesta="0003" username="stella" tipologia_spedizione="provincia" costo="120" stato="accettato" peso="5" volume="0.5">
+    <destinatario>
+        <nome>Lucas</nome>
+        <cognome>Pleus</cognome>
+    </destinatario>
+    <indirizzo citta="Anzio">
+        <via>via ardeatina 112</via>
+    </indirizzo>
+</ordine>
+
+<ordine id_richiesta="0004" username="marcolino71" tipologia_spedizione="città" costo="10" stato="accettato" peso="2" volume="0.5">
+    <destinatario>
+        <nome>Gennaro</nome>
+        <cognome>Immobile</cognome>
+    </destinatario>
+    <indirizzo citta="Napoli">
+        <via>via del corso 14</via>
+    </indirizzo>
+</ordine>
+
+<ordine id_richiesta="0005" username="marcolino71" tipologia_spedizione="città" costo="10" stato="accettato" peso="2" volume="0.5">
+    <destinatario>
+        <nome>Miriam</nome>
+        <cognome>Zecchinelli</cognome>
+    </destinatario>
+    <indirizzo citta="Roma">
+        <via>via del tasso 23</via>
     </indirizzo>
 </ordine>
 

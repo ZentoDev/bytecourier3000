@@ -116,6 +116,7 @@ p, h2, h3{
     margin-right: 10%;
 }
 
+/*menu registrazione*/
 .flex-container {
     display: flex;
     justify-content: center;
@@ -164,6 +165,37 @@ button {
 
 button:hover {
 	background-color: salmon;
+}
+
+p.mex{
+	text-align: center;
+	background: salmon;
+	padding: 20px;
+	margin-left: 5%;
+	margin-right: 12%;
+}
+
+/*tabelle*/
+table{	
+	border: 3px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+	width: 80%;
+	background-color:rgb(90, 114, 224);
+}
+
+th, td {
+    
+	border-bottom: 2px solid rgb(0, 0, 0);
+	padding: 10px;
+}
+
+th{
+    color:#FFE4E1;
+	background-color:maroon;
+}
+
+td{
+	font-size: large;
 }
 
 /*img.logo {           

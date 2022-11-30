@@ -48,7 +48,7 @@
         <xs:sequence>
             <xs:element name="via" type="xs:string" minOccurs="1"></xs:element>
         </xs:sequence>
-        <xs:attribute name="città" type="xs:string" use="required"/>
+        <xs:attribute name="citta" type="xs:string" use="required"/>
     </xs:complexType>
 </xs:element>
 
