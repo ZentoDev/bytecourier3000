@@ -25,7 +25,6 @@ if(isset($_POST['invio'])){
 			if ($row) {  
 			    //inizializzo la sessione e memorizzo una serie di informazioni nell'array $_SESSION[]
 				session_start();
-				$_SESSION['id_utente']=$row['user_id'];
 				$_SESSION['username']=$row['username'];
                 $_SESSION['permesso']=$row['permesso'];
                 $_SESSION['ban']=$row['ban'];

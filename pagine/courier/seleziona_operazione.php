@@ -21,7 +21,7 @@ if($_POST['accetta']){
 
 function stampaOperazioni($listOp, $listOrd){
 
-	$presente = "no"; //questa variabile segnalerà la presenza di operazioni disponibili 
+	$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 
 	$table="<table>";  
 
@@ -35,7 +35,6 @@ function stampaOperazioni($listOp, $listOrd){
 
 				$id_operazione = $operazione->getAttribute('id_ordine');
 
-			    $coin =0;  // =1 segnala che è stata trovato trovato l'ordnine associato all'operazione
 			    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 					$ordine = $listOrd->item($i);
 				    $id_ordine = $ordine->getAttribute('id_richiesta');
@@ -50,7 +49,7 @@ function stampaOperazioni($listOp, $listOrd){
 						$destinazione .= ', '. $destinatario->getAttribute('citta');
 
 					    $table.='<tr>
-					              <th><strong>Id ordine:</strong> '.$id_operazione.'</th>
+					              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
 					             <td>   
 					              <strong>Destinazione:</strong> '.$destinazione.'<br />
 					              <strong>Destinatario:</strong> '.$nome.'<br />
@@ -65,9 +64,7 @@ function stampaOperazioni($listOp, $listOrd){
 					              </form>
 					             </td>
 					             </tr>';
-					    $coin = 1;
-					    $presente = "si";
-					
+					    $coin = 1;					
 					}
 				}
 			}
@@ -75,7 +72,7 @@ function stampaOperazioni($listOp, $listOrd){
 		}
 	}
 
-	if($presente == "no")    echo $table = "<p>Non &egrave; presente alcuna operazione al momento.</p>";
+	if($coin == 0)    echo $table = "<p>Non sono presenti operazioni</p>";
     
 	else{
 		$table.="</table>";
@@ -103,6 +100,9 @@ function accettaOperazione($doc){
 		}
 	}return $mex;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
