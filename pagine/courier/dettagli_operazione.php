@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_courier.php");
 
@@ -41,35 +41,40 @@ for ( $i = 0; $i < $listaOrd->length && $coin == 0; $i++ ) {
 	}
 }
 
-if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'operazione, contattare un gestore</p>";
+if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'operazione, contattare il supporto tecnico</p>";
+
 
 if( $_POST['next_stat'] == 1) {
 
     $fail = 0;
     switch ($stato) {
         case 1:
-            $operazione->setAttribute('stato', $stato + 1);
+            $stato += 1;
+            $operazione->setAttribute('stato', $stato );
             $mex_stat = "Stato aggiornato";
             break;
         case 2:
-            $operazione->setAttribute('stato', $stato + 1);
+            $stato += 1;
+            $operazione->setAttribute('stato', $stato );
             $mex_stat = "Ritiro completato";
             break;
         case 3:
-            $operazione->setAttribute('stato', $stato + 1);
+            $stato += 1;
+            $operazione->setAttribute('stato', $stato );
             $mex_stat = "Stato aggiornato";
             break;
         case 4:
-            $operazione->setAttribute('stato', $stato + 1 );
-            $mex_stat = "Operazione completata";
+            $stato += 1;
+            $operazione->setAttribute('stato', $stato );
+            $mex_stat = "";
             break;
 
         default: 
-            $mex_stat = "errore nel riconoscimento dello stato, contattare un gestore";
+            $mex_stat = "errore nel riconoscimento dello stato, contattare il supporto tecnico";
             $fail = 1;
     }
 
-    if( $fail == 0)   printFileXML("../../dati/operazioni.xml", $docOp);
+    if( $fail == 0)   printFileXML("../../dati/xml/operazioni.xml", $docOp);
 
 }
 
@@ -86,7 +91,7 @@ function statoOperazione($stat) {
         case 5:
             return "consegna effettuata";
 
-        default: return "errore nel riconoscimento dello stato, contattare un gestore";
+        default: return "errore nel riconoscimento dello stato, contattare il supporto tecnico";
     }
 }
 
@@ -133,13 +138,18 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<strong>Indirizzo:</strong> <?php echo $indirizzo; ?> <br /><br />
 
 		<strong>Stato dell'operazione:</strong> <?php echo statoOperazione($stato); ?> <br />
-        Quando la seguente fase dell'operazione viene completata aggiorna lo stato premendo sul pulsante sutto <br />
-        <form action="dettagli_operazione.php" method="post">
-            <input type="hidden" name="id_operazione" value=" <?php echo $_POST['id_operazione']; ?>">
-            <button type="submit" name="next_stat" value="1" >Aggiorna stato</button>        
-        </form>
-        <br />     
-        <?php echo $mex_stat; ?>
+        <?php
+        if( $stato != 5 ) 
+            echo '
+                Quando la seguente fase dell\'operazione viene completata, aggiorna lo stato premendo sul seguente pulsante <br />
+                <form action="dettagli_operazione.php" method="post">
+                    <input type="hidden" name="id_operazione" value=" '. $_POST["id_operazione"] .' " >
+                    <button type="submit" name="next_stat" value="1" >Aggiorna stato</button>        
+                </form>
+                <br />';
+        
+        echo $mex_stat;
+        ?>
 
 	 </p>
 	 

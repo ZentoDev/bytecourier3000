@@ -21,7 +21,7 @@ if($_POST['accetta']){
 
 function stampaOperazioni($listOp, $listOrd){
 
-	$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
+	$presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
 
 	$table="<table>";  
 
@@ -35,6 +35,7 @@ function stampaOperazioni($listOp, $listOrd){
 
 				$id_operazione = $operazione->getAttribute('id_ordine');
 
+				$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 			    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 					$ordine = $listOrd->item($i);
 				    $id_ordine = $ordine->getAttribute('id_richiesta');
@@ -53,7 +54,7 @@ function stampaOperazioni($listOp, $listOrd){
 					             <td>   
 					              <strong>Destinazione:</strong> '.$destinazione.'<br />
 					              <strong>Destinatario:</strong> '.$nome.'<br />
-					              <strong>Stato:</strong> '.$stato.'<br />
+					              <strong>Tipologia:</strong> '.tipologiaOperazione($stato).'<br />
 					             </td>   
 				            	 <td>
 					              <form action="seleziona_operazione.php" method="post">
@@ -64,7 +65,8 @@ function stampaOperazioni($listOp, $listOrd){
 					              </form>
 					             </td>
 					             </tr>';
-					    $coin = 1;					
+					    $coin = 1;		
+						$presente = 1;			
 					}
 				}
 			}
@@ -72,7 +74,7 @@ function stampaOperazioni($listOp, $listOrd){
 		}
 	}
 
-	if($coin == 0)    echo $table = "<p>Non sono presenti operazioni</p>";
+	if($presente == 0)    echo $table = "<p>Non sono presenti operazioni</p>";
     
 	else{
 		$table.="</table>";
@@ -94,13 +96,24 @@ function accettaOperazione($doc){
 			$operazione->setAttribute('username_bitecourier', $_SESSION['username']);
 
 			//permette di salvare il documento in un file xml
-			printFileXML("../../dati/operazioni.xml", $doc);
+			printFileXML("../../dati/xml/operazioni.xml", $doc);
 
 			return "L'operazione &egrave stata aggiunta correttamente";
 		}
 	}return $mex;
 }
 
+function tipologiaOperazione($stat) {
+    switch ($stat) {
+        case 1:
+            return "ritiro";
+        case 3:
+            return "consegna";
+        case 4:
+
+        default: return "errore nel riconoscimento dello stato, contattare il supporto tecnico";
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

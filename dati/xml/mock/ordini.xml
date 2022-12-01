@@ -55,4 +55,24 @@ xsi:noNamespaceSchemaLocation="ordini.xsd">
     </indirizzo>
 </ordine>
 
+<ordine id_richiesta="0006" username="marcolino71" tipologia_spedizione="provincia" costo="100" stato="accettato" peso="20" volume="0.5">
+    <destinatario>
+        <nome>Luca</nome>
+        <cognome>Barbero</cognome>
+    </destinatario>
+    <indirizzo citta="Milano">
+        <via>viale san tommaso 3</via>
+    </indirizzo>
+</ordine>
+
+<ordine id_richiesta="0007" username="stella" tipologia_spedizione="provincia" costo="120" stato="accettato" peso="5" volume="0.5">
+    <destinatario>
+        <nome>Nando</nome>
+        <cognome>Alonso</cognome>
+    </destinatario>
+    <indirizzo citta="Sanigallia">
+        <via>via abete 12</via>
+    </indirizzo>
+</ordine>
+
 </ordini>

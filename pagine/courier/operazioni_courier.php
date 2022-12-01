@@ -21,7 +21,7 @@ if($_POST['dettagli']){
 
 function stampaOperazioni($listOp, $listOrd){
 
-    $coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
+	$presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
 
 	$table="<table>";  
 
@@ -32,6 +32,7 @@ function stampaOperazioni($listOp, $listOrd){
 
 			$id_operazione = $operazione->getAttribute('id_ordine');
 
+			$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 		    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 				$ordine = $listOrd->item($i);
 			    $id_ordine = $ordine->getAttribute('id_richiesta');
@@ -51,7 +52,7 @@ function stampaOperazioni($listOp, $listOrd){
 				             <td>   
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
 				              <strong>Destinatario:</strong> '.$nome.'<br />
-					          <strong>Stato:</strong> '.$stato.'<br />
+					          <strong>Stato:</strong> '.statoOperazione($stato).'<br />
 				             </td>   
 			            	 <td>
 				              <form action="dettagli_operazione.php" method="post">
@@ -62,20 +63,37 @@ function stampaOperazioni($listOp, $listOrd){
 				             </td>
 				             </tr>';
 				    $coin = 1;
-					
+					$presente = 1;
 				}
 			}
 		}
             
     }
 
-	if($coin == 0)    echo $table = "<p>Non sono presenti operazioni</p>";
+	if($presente == 0)    echo $table = "<p>Non sono presenti operazioni</p>";
     
 	else{
 		$table.="</table>";
 		echo $table;
 	}
 	
+}
+
+function statoOperazione($stat) {
+    switch ($stat) {
+        case 1:
+            return "transito verso il cliente per il ritiro";
+        case 2:
+            return "transito verso il centro byte courier";
+        case 3:
+            return "pacco al centro byte courier";
+        case 4:
+            return "transito verso il destinatario";
+        case 5:
+            return "consegna effettuata";
+
+        default: return "errore nel riconoscimento dello stato, contattare il supporto tecnico";
+    }
 }
 
 

@@ -26,4 +26,13 @@ xsi:noNamespaceSchemaLocation="operazioni.xsd">
 <operazione id_operazione="0005" username_bitecourier="" id_ordine="0005" stato="1">
     <note></note>
 </operazione>
+
+<operazione id_operazione="0006" username_bitecourier="Wick64" id_ordine="0006" stato="5">
+    <note></note>
+</operazione>
+
+<operazione id_operazione="0007" username_bitecourier="Wick64" id_ordine="0007" stato="1">
+    <note></note>
+</operazione>
+
 </lista_operazioni>
