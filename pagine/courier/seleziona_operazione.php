@@ -87,7 +87,7 @@ function accettaOperazione($doc){
 	$root = $doc->documentElement;  
     $list = $root->childNodes;
 	
-	for ( $pos = 0; $pos < $list->length; $pos++){
+	for ( $pos = 0; $pos < $list->length; $pos++) {
 		$operazione = $list->item($pos);
 		$id_operazione = $operazione->getAttribute('id_ordine');
 		$mex = "Problemi interni nel processo di selezione della operazione, si prega di contattare il supporto tecnico ";
@@ -129,6 +129,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <title>Selezione operazioni</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
+	<link rel="stylesheet" href="../tabselezione.css" type="text/css">
 </head>
 
 <body>

@@ -29,7 +29,7 @@ function stampaOperazioni($listOp, $listOrd){
 		$operazione = $listOp->item($pos);
 
 		if( $operazione->getAttribute('username_bitecourier') && 
-            $operazione->getAttribute('stato') != 5 )      
+            $operazione->getAttribute('stato') == 5 )      
             { //seleziona le operazioni concluse dall'operatore
 
 			$id_operazione = $operazione->getAttribute('id_ordine');
@@ -110,7 +110,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Operazioni in corso</title>
+    <title>Operazioni concluse</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
 	<link rel="stylesheet" href="../tabselezione.css" type="text/css">
@@ -127,7 +127,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Operazioni in corso</h2>
+     <h2>Operazioni concluse</h2>
 
      <?php 
 	 if( $_POST['dettagli'])   echo "<p><strong>$mess</strong></p>";

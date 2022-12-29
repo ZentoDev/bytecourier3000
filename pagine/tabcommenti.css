@@ -1,0 +1,24 @@
+#table_commenti{
+    margin-top: 30px;
+
+	border-collapse: collapse;
+	width: 90%;
+}
+
+#table_commenti th, td {
+	padding: 30px 30px;
+}
+
+#table_commenti th{ 
+    color:#FFE4E1;
+	background-color: rgb(228, 61, 61);
+}
+
+#table_commenti td{
+
+	background-color:rgb(255, 255, 255);
+}
+
+tr.tr_bordo{
+	border-bottom: 2px solid rgb(85, 47, 255);
+}

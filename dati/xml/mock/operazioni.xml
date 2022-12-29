@@ -10,7 +10,7 @@ xsi:noNamespaceSchemaLocation="operazioni.xsd">
 <operazione id_operazione="0002" username_bitecourier="Wick64" id_ordine="0002" stato="4">
     <note>
         <nota data_nota="2022-09-14T09:30:00" username="Wick64">
-            <testo>Il ritiro è proceduto secondo i piani</testo>
+            Il ritiro è proceduto secondo i piani
         </nota>
     </note>
 </operazione>

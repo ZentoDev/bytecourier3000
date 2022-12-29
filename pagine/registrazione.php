@@ -91,7 +91,7 @@ function addCliente(){
     $newCliente->setAttribute("crediti", 0);
 	
     //permette di salvare il documento in un file xml
-    printFileXML("../dati/clienti.xml", $doc);
+    printFileXML("../dati/xml/clienti.xml", $doc);
     return 1;			
 }
 

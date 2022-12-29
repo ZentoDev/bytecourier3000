@@ -1,0 +1,21 @@
+table{	
+	border: 3px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+	width: 80%;
+	background-color:rgb(90, 114, 224);
+}
+
+th, td {
+    
+	border-bottom: 2px solid rgb(0, 0, 0);
+	padding: 10px;
+}
+
+th{
+    color:#FFE4E1;
+	background-color:maroon;
+}
+
+td{
+	font-size: large;
+}

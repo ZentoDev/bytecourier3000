@@ -14,7 +14,7 @@ $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
 $mex = '';
-$coin =0;  // =1 segnala che è stata trovato trovato l'operazione 
+$coin =0;  // =1 segnala che è stata trovata l'operazione 
 for ($pos = 0; $pos < $listaOp->length && $coin == 0; $pos++) {
 	
     $operazione = $listaOp->item($pos);
@@ -22,28 +22,32 @@ for ($pos = 0; $pos < $listaOp->length && $coin == 0; $pos++) {
 
 }
 
-$coin =0;
-for ( $i = 0; $i < $listaOrd->length && $coin == 0; $i++ ) {
-	$ordine = $listaOrd->item($i);
-    $id_ordine = $ordine->getAttribute('id_richiesta');
+//se l'operazione viene trovata si procede alla ricerca dell'ordine associato
+if($coin == 1) {
 
-    if( $id_ordine ==  $operazione->getAttribute('id_ordine')) {
-		$destinatario = $ordine->firstChild;  //nodo destinatario
-        $nome = $destinatario->firstChild->textContent;  //nome
-        $cognome = $destinatario->lastChild->textContent;  //cognome
-	    $indirizzo = $destinatario->nextSibling->textContent;  //via
-		$destinatario = $ordine->lastChild; //nodo destinazione
-		$citta = $destinatario->getAttribute('citta');
-        $stato = $operazione->getAttribute('stato');   
+    $coin =0;
+    for ( $i = 0; $i < $listaOrd->length && $coin == 0; $i++ ) {
+        $ordine = $listaOrd->item($i);
+        $id_ordine = $ordine->getAttribute('id_richiesta');
 
-        $coin = 1;
-	    $presente = 1;					
-	}
+        if( $id_ordine ==  $operazione->getAttribute('id_ordine')) {
+            $destinatario = $ordine->firstChild;  //nodo destinatario
+            $nome = $destinatario->firstChild->textContent;  //nome
+            $cognome = $destinatario->lastChild->textContent;  //cognome
+	        $indirizzo = $destinatario->nextSibling->textContent;  //via
+		    $destinatario = $ordine->lastChild; //nodo destinazione
+		    $citta = $destinatario->getAttribute('citta');
+            $stato = $operazione->getAttribute('stato');
+            $listaNote = $operazione->firstChild->childNodes;
+
+            $coin = 1;			
+	    }
+    }
 }
-
 if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'operazione, contattare il supporto tecnico</p>";
 
 
+//aggiornamento stato
 if( $_POST['next_stat'] == 1) {
 
     $fail = 0;
@@ -75,9 +79,23 @@ if( $_POST['next_stat'] == 1) {
     }
 
     if( $fail == 0)   printFileXML("../../dati/xml/operazioni.xml", $docOp);
-
 }
 
+//inserimento nuova nota
+if( $_POST['invio_nota'] == 1) {
+    $note = $operazione->firstChild;
+    
+    $newNota = $docOp->createElement('nota', $_POST['testo']);
+    $note->appendChild($newNota);
+
+    $newNota->setAttribute('data_nota', $_POST['datetime']);
+    $newNota->setAttribute('username', $_SESSION['username']);
+
+    //permette di salvare il documento in un file xml
+    printFileXML("../../dati/xml/operazioni.xml", $docOp);
+}
+
+//restituisce il nome associato allo stato dell'operazione
 function statoOperazione($stat) {
     switch ($stat) {
         case 1:
@@ -95,8 +113,30 @@ function statoOperazione($stat) {
     }
 }
 
-function aggiornaStato($stat) {
+//stampa le note
+function stampaNote($listNote){
 
+	$tabNote = "<table id=\"table_commenti\">";
+	
+	for ( $i=0; $i < $listNote->length; $i++ ) {
+
+		$nota = $listNote->item($i);
+		$author = $nota->getAttribute('username');
+        $data = $nota->getAttribute('data_nota');
+		$text = $nota->textContent;
+		
+		$tabNote .="<tr>
+		              <td><strong>Autore:</strong> $author <strong>Data:</strong> $data</td>
+                      <td rowspan=\"2\">llla</td>
+				    </tr>
+				    <tr class=\"tr_bordo\">
+				       <td>$text</td>
+
+				    </tr>";
+		
+	}
+	$tabNote .= "</table>";
+	echo $tabNote;
 }
 
 
@@ -114,6 +154,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <title>Dettagli operazione</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
+    <link rel="stylesheet" href="../tabcommenti.css" type="text/css">
 </head>
 
 <body>
@@ -138,12 +179,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<strong>Indirizzo:</strong> <?php echo $indirizzo; ?> <br /><br />
 
 		<strong>Stato dell'operazione:</strong> <?php echo statoOperazione($stato); ?> <br />
-        <?php
+        <?php 
         if( $stato != 5 ) 
             echo '
                 Quando la seguente fase dell\'operazione viene completata, aggiorna lo stato premendo sul seguente pulsante <br />
                 <form action="dettagli_operazione.php" method="post">
-                    <input type="hidden" name="id_operazione" value=" '. $_POST["id_operazione"] .' " >
+                    <input type="hidden" name="id_operazione" value="'. $_POST["id_operazione"] .'" >
                     <button type="submit" name="next_stat" value="1" >Aggiorna stato</button>        
                 </form>
                 <br />';
@@ -151,8 +192,19 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         echo $mex_stat;
         ?>
 
-	 </p>
-	 
+<?php echo '
+        <br /><br />
+        <form action="dettagli_operazione.php" method="post" >
+		    Inserisci nota: <br />
+	        <textarea type="text" name="testo" placeholder="nota..."></textarea>
+			<input type="hidden" name="id_operazione" value=" '. $_POST["id_operazione"] .'">
+            <input type="hidden" name="datetime" value="'. date("Y-m-d").'T'.date("H:i:s") .'">
+			<button type="submit" name="invio_nota" value="1">Invia nota</button>
+	    </form>
+	 </p>';
+
+     stampaNote($listaNote); 
+ ?>
 	 
    </div> 
    

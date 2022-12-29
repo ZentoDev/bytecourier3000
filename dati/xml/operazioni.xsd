@@ -42,11 +42,12 @@
 
 <xs:element name="nota">
     <xs:complexType>
-        <xs:sequence>
-            <xs:element name="testo" type="xs:string" minOccurs="1"></xs:element>
-        </xs:sequence>
-        <xs:attribute name="data_nota" type="xs:dateTime" use="required" />
-        <xs:attribute name="username" type="xs:string" use="required" />
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="data_nota" type="xs:dateTime" use="required" />
+                <xs:attribute name="username" type="xs:string" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 </xs:element>
 

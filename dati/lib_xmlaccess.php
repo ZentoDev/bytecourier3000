@@ -28,6 +28,7 @@ function openXML ($fname) {
 function printFileXML ($fname, $docXML) {
 
     $stringXML = '<?xml version="1.0" encoding="UTF-8"?>' . $docXML->saveXML($docXML->documentElement);
+    $stringXML = str_replace("nonamespaceschemalocation", "noNamespaceSchemaLocation", $stringXML); 
     file_put_contents($fname, $stringXML);
 }
 
