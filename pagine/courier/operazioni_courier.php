@@ -13,10 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['dettagli']){
-
-	$mess = mostraDettagli($docOp);
-}
+if($_POST['dettagli'])  $mess = mostraDettagli($docOp);
 
 
 function stampaOperazioni($listOp, $listOrd){

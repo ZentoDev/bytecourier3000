@@ -13,12 +13,6 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['dettagli']){
-
-	$mess = mostraDettagli($docOp);
-}
-
-
 function stampaOperazioni($listOp, $listOrd){
 
 	$presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
@@ -129,11 +123,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    <div id="center" class="colonna">
      <h2>Operazioni concluse</h2>
 
-     <?php 
-	 if( $_POST['dettagli'])   echo "<p><strong>$mess</strong></p>";
-
-	 stampaOperazioni($listaOp, $listaOrd); 
-     ?>
+     <?php stampaOperazioni($listaOp, $listaOrd); ?>
 		
    </div>
    

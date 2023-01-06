@@ -13,11 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['accetta']){
-
-	$mess = accettaOperazione($docOp);
-}
-
+if($_POST['accetta']) $mess = accettaOperazione($docOp);
 
 function stampaOperazioni($listOp, $listOrd){
 
@@ -83,15 +79,17 @@ function stampaOperazioni($listOp, $listOrd){
 	
 }
 
-function accettaOperazione($doc){
+//associa all'operazione selezionata il bitecourier che l'ha presa in carico
+function accettaOperazione($doc) {
 	$root = $doc->documentElement;  
     $list = $root->childNodes;
 	
+	//scorre l'intera lista di nodi
 	for ( $pos = 0; $pos < $list->length; $pos++) {
 		$operazione = $list->item($pos);
 		$id_operazione = $operazione->getAttribute('id_ordine');
-		$mex = "Problemi interni nel processo di selezione della operazione, si prega di contattare il supporto tecnico ";
 
+		//se id_operazione coincide con quella ricercata si aggiorna il file xml associando il bitecourier all'operazione associata
 		if( $id_operazione == $_POST['id_operazione'] ) {
 			$operazione->setAttribute('username_bitecourier', $_SESSION['username']);
 
@@ -100,7 +98,7 @@ function accettaOperazione($doc){
 
 			return "L'operazione &egrave stata aggiunta correttamente";
 		}
-	}return $mex;
+	}return "Problemi interni nel processo di selezione della operazione, si prega di contattare il supporto tecnico";
 }
 
 function tipologiaOperazione($stat) {
@@ -109,7 +107,6 @@ function tipologiaOperazione($stat) {
             return "ritiro";
         case 3:
             return "consegna";
-        case 4:
 
         default: return "errore nel riconoscimento dello stato, contattare il supporto tecnico";
     }
