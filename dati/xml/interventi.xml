@@ -3,12 +3,14 @@
 <lista_interventi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="interventi.xsd" >
 
-<intervento id_intervento="0001" id_risposta="" username="stella">
-    <testo>Dove si possono trovare info sulle spedizioni?</testo>
-</intervento>
+<intervento id_intervento="0001" id_risposta="" username="stella">Dove si possono trovare info sulle spedizioni?</intervento>
 
-<intervento id_intervento="0002" id_risposta="0001" username="marco">
-    <testo>Nella sezione informazioni!</testo>
-</intervento>
+<intervento id_intervento="0002" id_risposta="0001" username="marco">Nella sezione informazioni!</intervento>
+
+<intervento id_intervento="0003" id_risposta="" username="marco">Ciao a tutti!</intervento>
+
+<intervento id_intervento="0004" id_risposta="0005" username="marco">Vedi bene nella sezione richiedi crediti</intervento>
+
+<intervento id_intervento="0005" id_risposta="" username="marco">Dove posso richiedere i crediti?</intervento>
 
 </lista_interventi>

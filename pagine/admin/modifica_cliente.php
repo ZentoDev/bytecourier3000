@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
-require_once("login_cliente.php");
+require_once("login_admin.php");
 
 
 if($_POST['invio'])	$mod = modifica_utenti();
@@ -10,15 +10,15 @@ if($_POST['invio'])	$mod = modifica_utenti();
 function modifica_utenti(){
 
 	require_once("../../mysql/connection.php");
-    if( !$connection_mysqli )   return 'problemi interni al sistema,  contattare un amministratore';
+    if( !$connection_mysqli )   return 'problemi di connessione al db';
 
 	$modificato="";
-    if( !$_POST['username'] ) return 'problemi interni al sistema,  contattare un amministratore';
+    if( !$_POST['username'] ) return 'problema con la lettura dello username dell\'utente selezionato';
 
     //verifica che esiste nel database l'utente con il medesimo username
 	$select_query="SELECT * FROM $user_table_name WHERE username = \"$_POST[username]\";";
 	if (!$res = mysqli_query($connection_mysqli, $select_query)) {
-		$modificato.="problemi interni al sistema,  contattare un amministratore<br />";
+		$modificato.="Non &egrave; presente alcun utente con username = \"$_POST[username]\"<br />";
 		return $modificato;
 	}
 
@@ -88,7 +88,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Profilo</title>
+    <title>Modifica cliente</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	  <link rel="stylesheet" href="../style1.css" type="text/css">
 	  <link rel="stylesheet" href="../tabselezione.css" type="text/css">
@@ -106,7 +106,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
 
-     <h2 style="margin-left:50px; text-align: center;">Profilo di <?php echo $_SESSION['username'];?> </h2>
+     <h2 style="margin-left:50px; text-align: center;">Modifica del cliente <?php echo $_POST['username'];?> </h2>
 	 <?php if( $_POST['invio'])   echo "<p><strong>$mod</strong></p>"; ?>
      <form action="modifica_cliente.php" method="post" > 
             <div class="flex-container">
@@ -138,7 +138,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_cliente.php");?>
+   <?php require_once("menu_admin.php");?>
    </div>
 </div>
 

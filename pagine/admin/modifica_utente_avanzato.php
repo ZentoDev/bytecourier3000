@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_admin.php");
 
@@ -57,7 +57,6 @@ function modifica_utenti(){
 			if($_POST['permesso_user'] == 1) $tipologia_utente = 'cliente';
 			else if($_POST['permesso_user'] == 10) $tipologia_utente = 'bite courier';
 			else if($_POST['permesso_user'] == 100) $tipologia_utente = 'gestore';
-			else if($_POST['permesso_user'] == 1000) $tipologia_utente = 'amministratore';
 			else $tipologia_utente = 'errore';
 			$modificato.="-La tipologia dell'utente &egrave; stata modificata correttamente in \"$tipologia_utente\"<br />";
 		}
@@ -65,37 +64,15 @@ function modifica_utenti(){
 	if($_POST['ban'] != $_SESSION['ban']){	
         $update_query="UPDATE $user_table_name SET ban = '{$_POST['ban']}' WHERE username = \"$_POST[username]\";";
         if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			if( $_POST['ban'] == 0) $stato_ban = '"non attivo"';
-			else                    $stato_ban = '"attivo"';
-            $modificato.="-Lo stato del ban dell'utente &egrave; stato modificato correttamente in $stato_ban<br />";
+			if( $_POST['ban'] == 0) $stato_ban = 'attivato';
+			else                    $stato_ban = 'disattivato';
+            $modificato.="-L'utente &egrave; stato $stato_ban<br />";
         }	
 	}
 	
 	if( $modificato == "") return '-Non &egrave; stato modificato alcun valore';
 
     return $modificato;	
-}
-
-/*quando la tipologia di un utente viene cambiata in 'cliente' si verifica l'esistenza dell'utente all'interno del file xml 
-relativo ai clienti, in caso di assenza del nodo lo si crea */
-function crea_cliente($username) {
-	require_once("../../dati/lib_xmlaccess.php");
-	$doc = openXML("../../dati/xml/clienti.xml");
-	$root = $doc->documentElement;
-	$list = $root->childNodes;
-
-	for( $pos=0; $pos < $list->length; $pos++ ) {
-
-		if($username == $list->item($pos)->getAttribute('username') )
-		   return;
-	}
-	$newCliente = $doc->createElement('cliente');
-	$root->appendChild($newCliente);
-	$newCliente->setAttribute('username', $username);
-	$newCliente->setAttribute('crediti', 0);
-
-	printFileXML("../../dati/xml/clienti.xml", $doc);
-	return;
 }
 
 /*l'aggiornamento delle variabili di sessione è inportante che avvenga dopo l'esecuzione della funzione di modifica (quando prevista)
@@ -146,29 +123,26 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h2 style="margin-left:50px; text-align: center;">Modifica utente <?php echo $_POST['username'];?> </h2>
 	 <?php if( $_POST['invio'])   echo "<p><strong>$mod</strong></p>"; ?>
-     <form action="modifica_utente.php" method="post" > 
+     <form action="modifica_utente_avanzato.php" method="post" > 
             <div class="flex-container">
                 <div>
                 <strong>Nome</strong><br />
                 <input type="text" name="nome" value="<?php echo $_SESSION['nome'] ?>"><br />
                 <strong>Password</strong><br />
 	            <input type="text" name="password" value="<?php echo $_SESSION['pw'] ?>"><br /><br />
-				<label for="ban"><strong>Stato ban:</strong></label><br />
-                <input type="radio" name="ban" value="0" <?php if ($_SESSION['ban'] == 0) echo 'checked';?> >ban non attivo <br />
-                <input type="radio" name="ban" value="1" <?php if ($_SESSION['ban'] == 1) echo 'checked';?> >ban attivo <br />
+				<label for="ban"><strong>Stato dell'utenza:</strong></label><br />
+                <input type="radio" name="ban" value="0" <?php if ($_SESSION['ban'] == 0) echo 'checked';?> >utente attivo <br />
+                <input type="radio" name="ban" value="1" <?php if ($_SESSION['ban'] == 1) echo 'checked';?> >utente non attivo <br />
 	            </div>
 	            <div>
                 <strong>Cognome</strong><br />
                 <input type="text" name="cognome" value="<?php echo $_SESSION['cognome'] ?>"><br />
                 <strong>Data di nascita</strong><br />
 	            <input type="date" name="data" value="<?php echo $_SESSION['data'] ?>"><br />
-				<p>
                 <strong>Tipologia utente</strong><br />
-				<select name="permesso_user" size="4">
-					<option value="1" <?php if ($_SESSION['permesso_user'] == 1) echo 'selected';?>>Cliente</option>
+				<select name="permesso_user" size="2">
 					<option value="10" <?php if ($_SESSION['permesso_user'] == 10) echo 'selected';?>>Bite courier</option>
 					<option value="100" <?php if ($_SESSION['permesso_user'] == 100) echo 'selected';?>>Gestore</option>
-					<option value="1000" <?php if ($_SESSION['permesso_user'] == 1000) echo 'selected';?>>Amministratore</option>
 				</select>
 	            </div>
             </div>

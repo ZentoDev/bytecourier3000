@@ -11,12 +11,13 @@
 
 <xs:element name="intervento">
     <xs:complexType>
-        <xs:sequence>
-            <xs:element name="testo" minOccurs="1" type="xs:string" />
-        </xs:sequence>
-        <xs:attribute name="id_intervento" type="xs:string" use="required" />
-        <xs:attribute name="id_risposta" type="xs:string" use="required" />
-        <xs:attribute name="username" type="xs:string" use="required" />
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="id_intervento" type="xs:string" use="required" />
+                <xs:attribute name="id_risposta" type="xs:string" use="required" />
+                <xs:attribute name="username" type="xs:string" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 </xs:element>
 
