@@ -26,6 +26,7 @@
                     <xs:enumeration value="rifiutato"/>
                     <xs:enumeration value="in_attesa"/>
                     <xs:enumeration value="modificato"/>
+                    <xs:enumeration value="concluso"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>

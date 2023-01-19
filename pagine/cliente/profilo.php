@@ -3,17 +3,45 @@ ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 
+//se mancano dati utente, vengono letti dal db
+if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['conome'], $_SESSION['pw'], $_SESSION['data'] )  ) {
 
-if($_POST['invio'])	$mod = modifica_utenti();
+    $err = 'errore interno, contattare un amministratore';
+    require_once("../../mysql/connection.php");
+    if( $connection_mysqli ) {
+        $err = '';
+        //query per accedere ai dati dell'utente
+        $select_query = "SELECT * FROM $user_table_name
+        WHERE username = \"$_SESSION[username]\"";
+
+        if ( $res = mysqli_query($connection_mysqli, $select_query) ) {
+ 
+            $row = mysqli_fetch_array($res);  
+
+            $_SESSION['nome'] = $row['nome'];
+            $_SESSION['cognome'] = $row['cognome'];
+            $_SESSION['pw'] = $row['password'];
+            $_SESSION['data'] = $row['data_nascita'];
+        }
+        mysqli_close($connection_mysqli);
+    }
+}
+
+//viene eseguita in caso di attivazione della form
+if($_POST['invio'])	{
+    if ( $_POST['password'] == $_POST['ripeti_pw'] )  $mod = modifica_password();
+
+    else $mod = 'Le password inserite non coincidono';
+}
 
 
-function modifica_utenti(){
+function modifica_password() {
 
 	require_once("../../mysql/connection.php");
-    if( !$connection_mysqli )   return 'problemi interni al sistema,  contattare un amministratore';
+    if( !$connection_mysqli )   return 'problemi interni al sistema, contattare un amministratore';
 
 	$modificato="";
-    if( !$_POST['username'] ) return 'problemi interni al sistema,  contattare un amministratore';
+    if( !$_POST['username'] ) return 'problemi interni al sistema, contattare un amministratore';
 
     //verifica che esiste nel database l'utente con il medesimo username
 	$select_query="SELECT * FROM $user_table_name WHERE username = \"$_POST[username]\";";
@@ -23,58 +51,17 @@ function modifica_utenti(){
 	}
 
 	//per ogni valore inserito che differisce da quello già presente avviene una query di aggiornamento
-	if($_POST['nome'] != $_SESSION['nome']){
-		$update_query="UPDATE $user_table_name SET nome = '{$_POST['nome']}' WHERE username = \"$_POST[username]\";";
-		if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			$modificato.="-Il nome dell'utente &egrave; stato modificato correttamente in $_POST[nome]\n<br />";
-		}
-	}
-    if($_POST['cognome'] != $_SESSION['cognome']){
-		$update_query="UPDATE $user_table_name SET cognome = '{$_POST['cognome']}' WHERE username = \"$_POST[username]\";";
-		if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			$modificato.="-Il cognome dell'utente &egrave; stato modificato correttamente in $_POST[cognome]\n<br />";
-		}
-	} 
-    if($_POST['data'] != $_SESSION['data']){
-		$update_query="UPDATE $user_table_name SET data_nascita = '{$_POST['data']}' WHERE username = \"$_POST[username]\";";
-		if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			$modificato.="-La data di nascita dell'utente &egrave; stata modificata correttamente in $_POST[data]<br />";
-		}
-	}
+
     if($_POST['password'] != $_SESSION['pw']){
 		$update_query="UPDATE $user_table_name SET password = '{$_POST['password']}' WHERE username = \"$_POST[username]\";";
 		if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			$modificato.="-La password dell'utente &egrave; stata modificata correttamente in $_POST[password]<br />";
+			$modificato.="-La password &egrave; stata modificata correttamente in $_POST[password]<br />";
 		}
-	}
-	if($_POST['ban'] != $_SESSION['ban']){	
-        $update_query="UPDATE $user_table_name SET ban = '{$_POST['ban']}' WHERE username = \"$_POST[username]\";";
-        if ($res = mysqli_query($connection_mysqli, $update_query)) {
-			if( $_POST['ban'] == 0) $stato_ban = '"non attivo"';
-			else                    $stato_ban = '"attivo"';
-            $modificato.="-Lo stato del ban dell'utente &egrave; stato modificato correttamente in $stato_ban<br />";
-        }	
 	}
 	
 	if( $modificato == "") return '-Non &egrave; stato modificato alcun valore';
 
     return $modificato;	
-}
-
-/*l'aggiornamento delle variabili di sessione è inportante che avvenga dopo l'esecuzione della funzione di modifica (quando prevista)
-in quanto i valori inseriti devono essere confrontati con i valori precedenti */
-$_SESSION['nome'] = $_POST['nome'];
-$_SESSION['cognome'] = $_POST['cognome'];
-$_SESSION['pw'] = $_POST['password'];
-$_SESSION['ban'] = $_POST['ban'];
-$_SESSION['data'] = $_POST['data'];
-/*modifica del formato della data da d-m-Y a Y-m-d, 
-il controllo dell'esistenza della data è reso necessario dal comportamento della funzione srtotime che in caso di 
-variabile vuota aggiunge una data di default (1/1/1970), dato che preferiamo un campo vuoto ad una data fasulla 
-evitiamo la sua esecuzione in questo caso*/
-if($_SESSION['data']){
-	$timestamp = strtotime($_SESSION['data']); 
-    $_SESSION['data'] = date("Y-m-d", $timestamp );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,33 +95,27 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h2 style="margin-left:50px; text-align: center;">Profilo di <?php echo $_SESSION['username'];?> </h2>
 	 <?php if( $_POST['invio'])   echo "<p><strong>$mod</strong></p>"; ?>
-     <form action="modifica_cliente.php" method="post" > 
+     <form action="profilo.php" method="post" > 
             <div class="flex-container">
                 <div>
-                <strong>Nome</strong><br />
-                <input type="text" name="nome" value="<?php echo $_SESSION['nome'] ?>"><br />
-                <strong>Password</strong><br />
-	            <input type="text" name="password" value="<?php echo $_SESSION['pw'] ?>"><br /><br />
-				<label for="ban"><strong>Stato ban:</strong></label><br />
-                <input type="radio" name="ban" value="0" <?php if ($_SESSION['ban'] == 0) echo 'checked';?> >ban non attivo <br />
-                <input type="radio" name="ban" value="1" <?php if ($_SESSION['ban'] == 1) echo 'checked';?> >ban attivo <br />
+                <strong>Nome: </strong><?php echo $_SESSION['nome']?> <br />
+                <strong>Cognome: </strong><?php echo $_SESSION['cognome']?> <br /> <br /><br /><br /><br />
+                <strong>Nuova password</strong><br />
+	            <input type="password" name="password" value="">
 	            </div>
 	            <div>
-                <strong>Cognome</strong><br />
-                <input type="text" name="cognome" value="<?php echo $_SESSION['cognome'] ?>"><br />
-                <strong>Data di nascita</strong><br />
-	            <input type="date" name="data" value="<?php echo $_SESSION['data'] ?>"><br />
-				<p>
+                <strong>Data di nascita: </strong><?php echo $_SESSION['data']?> <br /><br /><br /><br /><br /><br />
+	            <strong>Conferma password</strong><br />
+	            <input type="password" name="ripeti_pw" value="" required>
 	            </div>
             </div>
         
 	        <div style="margin-bottom:10px; text-align: center;">
-                <input type="hidden" name="username" value="<?php echo $_POST['username'] ?>">
-                <button type="submit" name="invio" value="signup">Modifica valori</button>
+                <button type="submit" name="invio" value="signup">Modifica password</button>
             </div>
 
         </form>
-
+   <?php echo $err;?>
    </div>
    
    <div id="navbar" class="colonna">

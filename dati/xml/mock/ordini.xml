@@ -55,7 +55,7 @@ xsi:noNamespaceSchemaLocation="ordini.xsd">
     </indirizzo>
 </ordine>
 
-<ordine id_richiesta="0006" username="marcolino71" tipologia_spedizione="provincia" costo="100" stato="accettato" peso="20" volume="0.5">
+<ordine id_richiesta="0006" username="marcolino71" tipologia_spedizione="provincia" costo="100" stato="concluso" peso="20" volume="0.5">
     <destinatario>
         <nome>Luca</nome>
         <cognome>Barbero</cognome>

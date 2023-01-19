@@ -31,13 +31,25 @@ if($coin == 1) {
         $id_ordine = $ordine->getAttribute('id_richiesta');
 
         if( $id_ordine ==  $operazione->getAttribute('id_ordine')) {
-            $destinatario = $ordine->firstChild;  //nodo destinatario
-            $nome = $destinatario->firstChild->textContent;  //nome
-            $cognome = $destinatario->lastChild->textContent;  //cognome
-	        $indirizzo = $destinatario->nextSibling->textContent;  //via
-		    $destinatario = $ordine->lastChild; //nodo destinazione
-		    $citta = $destinatario->getAttribute('citta');
-            $stato = $operazione->getAttribute('stato');
+
+            $stato = $operazione->getAttribute('stato');  
+            
+            $ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
+            $indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+            $indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+            $indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+            $indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+
+            $ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+            $destinazione = $ordine_child->getAttribute('strada').' ';
+            $destinazione .= $ordine_child->getAttribute('numero').', ';
+            $destinazione .= $ordine_child->getAttribute('citta').', ';
+            $destinazione .= $ordine_child->getAttribute('nazione');
+
+            $ordine_child = $ordine_child->nextSibling;  //nodo destinatario
+            $nome = $ordine_child->getAttribute('nome');
+            $cognome = $ordine_child->getAttribute('cognome');
+
             $listaNote = $operazione->firstChild->childNodes;
 
             $coin = 1;			
@@ -70,6 +82,8 @@ if( $_POST['next_stat'] == 1) {
         case 4:
             $stato += 1;
             $operazione->setAttribute('stato', $stato );
+            $ordine->setAttribute('stato', 'concluso');
+            printFileXML("../../dati/xml/ordini.xml", $docOrd);
             $mex_stat = "";
             break;
 
@@ -175,8 +189,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	 <p>
 	    <strong>Nome:</strong> <?php echo $nome; ?> <br />
 	    <strong>Cognome:</strong> <?php echo $cognome; ?> <br />
-		<strong>Citt&agrave:</strong> <?php echo $citta; ?> <br />
-		<strong>Indirizzo:</strong> <?php echo $indirizzo; ?> <br /><br />
+		<strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />
+		<strong>Indirizzo destinazione:</strong> <?php echo $destinazione; ?> <br /><br />
 
 		<strong>Stato dell'operazione:</strong> <?php echo statoOperazione($stato); ?> <br />
         <?php 

@@ -38,17 +38,33 @@ function stampaOperazioni($listOp, $listOrd){
 
 			    if( $id_ordine ==  $id_operazione) {
 
-					$destinatario = $ordine->firstChild;  //nodo destinatario
-			        $nome = $destinatario->firstChild->textContent;  //nome
-			        $nome .= ' '. $destinatario->lastChild->textContent;  //cognome
-				    $destinazione = $destinatario->nextSibling->textContent;  //via
-					$destinatario = $ordine->lastChild; //nodo destinazione
-					$destinazione .= ', '. $destinatario->getAttribute('citta');
+					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
+					if( $stato >= 3) {
+						$indirizzo_ritiro = 'centro bite courier';
+					}
+					else  {
+						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+					}
+
+					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					$destinazione = $ordine_child->getAttribute('strada').' ';
+					$destinazione .= $ordine_child->getAttribute('numero').', ';
+					$destinazione .= $ordine_child->getAttribute('citta').', ';
+					$destinazione .= $ordine_child->getAttribute('nazione');
+					
+					$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
+					$nome = $ordine_child->getAttribute('nome').' ';
+					$nome .= $ordine_child->getAttribute('cognome');
+
                     $stato = $operazione->getAttribute('stato');   
 
 				    $table.='<tr>
 				              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
 				             <td>   
+							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
 				              <strong>Destinatario:</strong> '.$nome.'<br />
 					          <strong>Stato:</strong> '.statoOperazione($stato).'<br />

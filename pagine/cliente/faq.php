@@ -1,7 +1,58 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
-session_start();
+ini_set('display_errors', 0);
+error_reporting(E_ALL & ~E_NOTICE);
+require_once("../../dati/lib_xmlaccess.php");
+
+
+$docFAQ = openXML("../../dati/xml/faq.xml");
+$rootFAQ = $docFAQ->documentElement;
+$listaFAQ = $rootFAQ->childNodes;
+
+$docInt = openXML("../../dati/xml/interventi.xml");
+$rootInt = $docInt->documentElement;
+$listaInt = $rootInt->childNodes;
+
+
+function stampaFAQ($listF, $listI) {
+
+	$faq = "<table id=\"table_commenti\">";	
+	for ( $pos=0; $pos < $listF->length; $pos++ ) {
+
+		$coppia_faq = $listF->item($pos);
+        $id_domanda= $coppia_faq->getAttribute('id_intervento');
+        $id_risposta = $coppia_faq->getAttribute('id_risposta');
+
+        for( $i=0; $i < $listI->length && !$domanda; $i++ ) {
+
+            $intervento = $listI->item($i);
+            $id_intervento = $intervento->getAttribute('id_intervento');
+
+            if( $id_domanda ==  $id_intervento )  {
+                $domanda = $intervento->firstChild->textContent;}
+        }
+
+        for( $i=0; $i < $listI->length && !$risposta; $i++ ) {
+
+            $intervento = $listI->item($i);
+            $id_intervento = $intervento->getAttribute('id_intervento');
+
+            if( $id_risposta ==  $id_intervento ) 
+                $risposta = $intervento->firstChild->textContent; 
+        }
+
+		$faq .= "<tr>
+		            <td><strong>Domanda:</strong> $domanda</td>
+				 </tr>
+				 <tr class=\"tr_bordo\">
+				    <td><strong>Risposta:</strong> $risposta</td>
+				</tr>";
+        
+        $risposta = $domanda = '';
+	}
+	$faq .= "</table>";
+	return $faq;
+}
+
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -15,6 +66,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <title>FAQ</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
+    <link rel="stylesheet" href="../tabcommenti.css" type="text/css">
 </head>
 
 <body>
@@ -28,11 +80,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-
      <h2>FAQ</h2>
-     <br />
-     <h4>$domanda</h4>
-	 <p">$risposta</p>
+     
+	 <?php echo stampaFAQ($listaFAQ, $listaInt);?>
+		
    </div>
    
    <div id="navbar" class="colonna">
