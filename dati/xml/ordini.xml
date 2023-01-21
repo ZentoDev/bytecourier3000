@@ -45,10 +45,16 @@ xsi:noNamespaceSchemaLocation="ordini.xsd">
     <destinatario nome="Nando" cognome="Alonso"/>
 </ordine>
 
-<ordine id_richiesta="0006" username="marcolino71" tipologia_spedizione="citta" costo="10" stato="rifiutato" ritiro="in_loco" peso="2" volume="0.5">
+<ordine id_richiesta="0008" username="marcolino71" tipologia_spedizione="citta" costo="10" stato="rifiutato" ritiro="in_loco" peso="2" volume="0.5">
     <indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7"/>
     <indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via pineta" numero="4"/>
     <destinatario nome="Sofia" cognome="Bianchi"/>
+</ordine>
+
+<ordine id_richiesta="0009" username="marcolino71" tipologia_spedizione="provincia" costo="10" stato="in_attesa" ritiro="in_loco" peso="2" volume="0.5">
+    <indirizzo_ritiro citta="Padova" nazione="Italia" strada="via nastri" numero="7"/>
+    <indirizzo_destinazione citta="Biella" nazione="Italia" strada="via cinema" numero="4"/>
+    <destinatario nome="Gregorio" cognome="Annunziato"/>
 </ordine>
 
 </ordini>

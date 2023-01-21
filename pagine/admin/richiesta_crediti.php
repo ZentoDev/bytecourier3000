@@ -12,12 +12,31 @@ $listaCr = $rootCr->childNodes;
 if( isset( $_POST['scelta'] )) {
 
     $mex = '';
-	for( $pos = 0; $pos < $listaCr->length && !$mex; $pos++ ) {
+	for( $pos = 0; $pos < $listaCr->length && !$mex; $pos++ ) {   //ricerca della richiesta
 		$richiesta = $listaCr->item($pos);
 		if( $_POST['id_richiesta'] == $richiesta->getAttribute('id_richiesta') ) {
+
 			$richiesta->setAttribute('stato', $_POST['scelta']);
-			
 			printFileXML("../../dati/xml/crediti.xml", $docCr);
+
+			if( $_POST['scelta'] == 'accettata') {
+				//apertura file clienti.xml 
+			    $docCliente = openXML("../../dati/xml/clienti.xml");
+			    $listCliente = $docCliente->documentElement->childNodes;	
+
+			    for( $i = 0; $i < $listCliente->length; $i++ ) {   //ricerca del cliente 
+
+			    	$cliente = $listCliente->item($i);	
+			       	if( $cliente->getAttribute('username') == $richiesta->getAttribute('username') ) {
+                        //aggiornamento crediti del cliente
+			     		$new_cr = $cliente->getAttribute('crediti') + $richiesta->getAttribute('crediti');
+		     			$cliente->setAttribute('crediti', $new_cr);
+		     			printFileXml("../../dati/xml/clienti.xml", $docCliente);
+ 
+		    			$i = $listCliente->length;  //uscita dal ciclo
+		    		}
+	     		}
+			}
 			$mex = 'operazione completata';
 		}
 	}

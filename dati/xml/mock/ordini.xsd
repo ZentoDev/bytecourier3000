@@ -12,8 +12,9 @@
 <xs:element name="ordine">
     <xs:complexType>
         <xs:sequence>
+            <xs:element name="indirizzo_ritiro" type="indirizzo" minOccurs="1" />
+            <xs:element name="indirizzo_destinazione" type="indirizzo" minOccurs="1" />
             <xs:element ref="destinatario" minOccurs="1" />
-            <xs:element ref="indirizzo" minOccurs="1" />
         </xs:sequence>
         <xs:attribute name="id_richiesta" type="xs:string" use="required"/>
         <xs:attribute name="username" type="xs:string" use="required"/>
@@ -25,8 +26,17 @@
                     <xs:enumeration value="accettato"/>
                     <xs:enumeration value="rifiutato"/>
                     <xs:enumeration value="in_attesa"/>
+                    <xs:enumeration value="in_attesa_pagamento"/>
                     <xs:enumeration value="modificato"/>
                     <xs:enumeration value="concluso"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="ritiro" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="in_loco"/>
+                    <xs:enumeration value="centro"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -38,19 +48,15 @@
 <xs:element name="destinatario" type="nomeCognome" />
 
 <xs:complexType name="nomeCognome">
-    <xs:sequence>
-        <xs:element name="nome" type="xs:string"></xs:element>
-        <xs:element name="cognome" type="xs:string"></xs:element>
-    </xs:sequence>
+    <xs:attribute name="nome" type="xs:string" use="required"/>
+    <xs:attribute name="cognome" type="xs:string" use="required"/>
 </xs:complexType>
 
-<xs:element name="indirizzo">
-    <xs:complexType>
-        <xs:sequence>
-            <xs:element name="via" type="xs:string" minOccurs="1"></xs:element>
-        </xs:sequence>
-        <xs:attribute name="citta" type="xs:string" use="required"/>
-    </xs:complexType>
-</xs:element>
+<xs:complexType name="indirizzo">
+    <xs:attribute name="citta" type="xs:string" use="required"/>
+    <xs:attribute name="nazione" type="xs:string" use="required"/>
+    <xs:attribute name="strada" type="xs:string" use="required"/>
+    <xs:attribute name="numero" type="xs:integer" use="required"/>
+</xs:complexType>
 
 </xs:schema>

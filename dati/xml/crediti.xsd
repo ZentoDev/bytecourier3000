@@ -4,7 +4,7 @@
 <xs:element name="richieste">
     <xs:complexType>
         <xs:sequence>
-            <xs:element ref="richiesta_crediti" maxOccurs="unbounded"/>
+            <xs:element ref="richiesta_crediti" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:element>
