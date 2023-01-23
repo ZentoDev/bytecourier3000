@@ -69,8 +69,7 @@ function stampaRichiesteAttesa($lista) {
 					 <td>
 			         <strong>Crediti richiesti:</strong> '.$crediti.'<br />
 			         </td>   
-			         </tr>';
-			$coin = 1;		
+			         </tr>';	
 			$presente = 1;			
 		}
 	}

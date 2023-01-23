@@ -31,8 +31,7 @@ function stampaRichieste($lista) {
                      <td>
                      <strong>Stato:</strong> '.$stato.'<br />
                      </td>
-			         </tr>';
-			$coin = 1;		
+			         </tr>';	
 			$presente = 1;			
 		}
 	}
