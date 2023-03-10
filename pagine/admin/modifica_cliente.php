@@ -35,6 +35,35 @@ function modifica_utenti(){
 			$modificato.="-Il cognome dell'utente &egrave; stato modificato correttamente in $_POST[cognome]\n<br />";
 		}
 	} 
+	if($_POST['cf'] != $_SESSION['cf']){
+		$update_query="UPDATE $user_table_name SET cf = '{$_POST['cf']}' WHERE username = \"$_POST[username]\";";
+		if ($res = mysqli_query($connection_mysqli, $update_query)) {
+			$modificato.="-Il codice fiscale dell'utente &egrave; stato aggiornato correttamente in $_POST[cf]\n<br />";
+		}
+	} 
+	if($_POST['email'] != $_SESSION['email']){
+		$update_query="UPDATE $user_table_name SET email = '{$_POST['email']}' WHERE username = \"$_POST[username]\";";
+		if ($res = mysqli_query($connection_mysqli, $update_query)) {
+			$modificato.="-L'email dell'utente &egrave; stata modificata correttamente in $_POST[email]\n<br />";
+		}
+	} 
+	if($_POST['tel'] != $_SESSION['tel']){
+		$update_query="UPDATE $user_table_name SET tel = '{$_POST['tel']}' WHERE username = \"$_POST[username]\";";
+		if ($res = mysqli_query($connection_mysqli, $update_query)) {
+			$modificato.="-Il numero di telefono dell'utente &egrave; stato modificato correttamente in $_POST[tel]\n<br />";
+		}
+	} 
+	if($_POST['indirizzo'] != $_SESSION['indirizzo'] || 
+	   $_POST['num_civico'] != $_SESSION['num_civico'] ||
+	   $_POST['citta'] != $_SESSION['citta'] || 
+	   $_POST['nazione'] != $_SESSION['nazione'] )  
+	{
+		$update_query="UPDATE $user_table_name SET indirizzo = '{$_POST['indirizzo']}' and num_civico = '{$_POST['num_civico']}' and citta = '{$_POST['citta']}' and nazione = '{$_POST['nazione']}' WHERE username = \"$_POST[username]\";";
+		if ($res = mysqli_query($connection_mysqli, $update_query)) {
+			$indirizzo = $_POST['indirizzo'].' '.$_POST['num_civico'].', '.$_POST['citta'].', '.$_POST['nazione'];
+			$modificato.="-L'indirizzo di residenza dell'utente &egrave; stato modificato correttamente in '$indirizzo'\n<br />";
+		}
+	} 
     if($_POST['data'] != $_SESSION['data']){
 		$update_query="UPDATE $user_table_name SET data_nascita = '{$_POST['data']}' WHERE username = \"$_POST[username]\";";
 		if ($res = mysqli_query($connection_mysqli, $update_query)) {
@@ -67,6 +96,13 @@ $_SESSION['nome'] = $_POST['nome'];
 $_SESSION['cognome'] = $_POST['cognome'];
 $_SESSION['pw'] = $_POST['password'];
 $_SESSION['ban'] = $_POST['ban'];
+$_SESSION['email'] = $_POST['email'];
+$_SESSION['cf'] = $_POST['cf'];
+$_SESSION['tel'] = $_POST['tel'];
+$_SESSION['indirizzo'] = $_POST['indirizzo'];
+$_SESSION['num_civico'] = $_POST['num_civico'];
+$_SESSION['citta'] = $_POST['citta'];
+$_SESSION['nazione'] = $_POST['nazione'];
 $_SESSION['data'] = $_POST['data'];
 /*modifica del formato della data da d-m-Y a Y-m-d, 
 il controllo dell'esistenza della data è reso necessario dal comportamento della funzione srtotime che in caso di 
@@ -113,17 +149,32 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <div>
                 <strong>Nome</strong><br />
                 <input type="text" name="nome" value="<?php echo $_SESSION['nome'] ?>"><br />
+				<strong>Codice fiscale: </strong> <br />
+				<input type="text" name="cf" value="<?php echo $_SESSION['cf']?>"><br />
+				<strong>Email: </strong><br />
+                <input type="text" name="email" value="<?php echo $_SESSION['email']?>"><br />
+				<strong>Indirizzo residenza: </strong><br />
+                <input type="text" name="indirizzo" value="<?php echo $_SESSION['indirizzo']?>"><br />
+				<strong>citt&agrave;: </strong><br />
+                <input type="text" name="citta" value="<?php echo $_SESSION['citta']?>"><br />
                 <strong>Password</strong><br />
 	            <input type="text" name="password" value="<?php echo $_SESSION['pw'] ?>"><br /><br />
 				<label for="ban"><strong>Stato ban:</strong></label><br />
                 <input type="radio" name="ban" value="0" <?php if ($_SESSION['ban'] == 0) echo 'checked';?> >ban non attivo <br />
                 <input type="radio" name="ban" value="1" <?php if ($_SESSION['ban'] == 1) echo 'checked';?> >ban attivo <br />
 	            </div>
+
 	            <div>
                 <strong>Cognome</strong><br />
                 <input type="text" name="cognome" value="<?php echo $_SESSION['cognome'] ?>"><br />
                 <strong>Data di nascita</strong><br />
 	            <input type="date" name="data" value="<?php echo $_SESSION['data'] ?>"><br />
+				<strong>Telefono: </strong><br />
+                <input type="tel" name="tel" value="<?php echo $_SESSION['tel']?>"><br />
+				<strong>Numero civico: </strong><br />
+                <input type="number" name="num_civico" value="<?php echo $_SESSION['num_civico']?>"><br />
+				<strong>Nazione: </strong><br />
+                <input type="text" name="nazione" value="<?php echo $_SESSION['nazione']?>"><br /><br />
 				<p>
 	            </div>
             </div>

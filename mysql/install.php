@@ -67,14 +67,21 @@ if( !$connection_mysqli ){
 
 //Creazione tabella utenti
 $create_table_query = "CREATE TABLE if not exists $user_table_name (
-            username varchar (40) NOT NULL ,
+            username varchar (40) NOT NULL,
             primary key (username), 
             password varchar (32) NOT NULL,
             nome varchar (20),
             cognome varchar (20),
             data_nascita date,
+            cf varchar(15) NOT NULL,
+            email varchar (30),
+            tel varchar (13),
+            nazione varchar (20),
+            citta varchar (20),
+            indirizzo varchar (40),
+            num_civico int,
             permesso int NOT NULL,
-            ban boolean NOT NULL,
+            ban boolean NOT NULL
             );";
 
 
@@ -116,9 +123,9 @@ else {
 }
 
 $insert_query = "INSERT INTO $user_table_name
-	(username, password, nome, cognome, data_nascita, permesso, ban)
+	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"marco\", \"1234\", \"marco\", \"struzzi\", \"1971-12-24\", \"1\", \"0\")
+	(\"marcolino71\", \"1234\", \"marco\", \"struzzi\", \"1971-12-24\", \"STRMRC71T24H501U\", \"struzzimarco@mmail.it\", \"32964439887\", \"Italia\", \"Roma\", \"via dei fatali\", \"98\", \"1\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -129,9 +136,9 @@ else {
 }
 
 $insert_query = "INSERT INTO $user_table_name
-	(username, password, nome, cognome, data_nascita, permesso, ban)
+	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"stella\", \"1234\", \"stella\", \"gianduia\", \"1998-2-20\", \"1\", \"1\")
+	(\"stella\", \"1234\", \"stella\", \"gianduia\", \"1998-2-20\", \"GNDSLL98B60H274C\", \"starmail@opp.com\", \"32768434487\", \"Italia\", \"Riccione\", \"via latta\", \"4\", \"1\", \"1\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))

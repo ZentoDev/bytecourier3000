@@ -86,7 +86,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <strong>Citt&agrave;</strong><br />
                 <input type="text" name="citta_dest" value="<?php echo $citta_dest;?>" required><br />
                 <strong>Numero civico</strong><br />
-                <input type="number" name="civico_dest" value="<?php echo $civico_dest;?>" required><br />
+                <input type="number" name="civico_dest" value="<?php echo $civico_dest;?>" min='1' required><br />
 	            </div>
             </div>
             <br />

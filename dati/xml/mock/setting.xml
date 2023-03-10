@@ -8,6 +8,7 @@ assegnazione_automatica="true">
     <tipologia_spedizione nome="città" durata="12" costo_unit="8" costo_var="2" dimensioni_max="100" dimensioni_min="0" abilitazione="true" />
     <tipologia_spedizione nome="provincia" durata="24" costo_unit="10" costo_var="3" dimensioni_max="80" dimensioni_min="10" abilitazione="true" />
     <tipologia_spedizione nome="isole" durata="72" costo_unit="30" costo_var="5" dimensioni_max="100" dimensioni_min="0" abilitazione="false" />
+    <tipologia_spedizione nome="estero" durata="96" costo_unit="20" costo_var="10" dimensioni_max="200" dimensioni_min="10" abilitazione="true" />
 </setting_spedizioni>
 
 

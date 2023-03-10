@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
@@ -29,7 +29,7 @@ $citta_rit = $_SESSION['citta_rit'];
 
 $crediti = crediti($_SESSION['tipo_spedizione'], $_SESSION['volume']);
 $mex = '';
-if( isset( $_POST['invio'] )) {
+if( isset( $_POST['paga'] )) {
     $new_id = getId($listaOrd);
     $new_ordine = $docOrd->createElement('ordine');
     $rootOrd->appendChild($new_ordine);
@@ -130,7 +130,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Riepilogo</title>
+    <title>Riepilogo ordine</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
     <link rel="stylesheet" href="../tabcommenti.css" type="text/css">
@@ -147,7 +147,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Riepilogo</h2>
+     <h2>Riepilogo ordine</h2>
      <?php echo $mex;?>
 
      <h3>Informazioni pacco</h3>
@@ -172,8 +172,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_rit; ?> <br /><br />
 	 </p>
 	 
-     <form action="ordina_spedizione_riepilogo.php" method="post">
-     <?php if ( !isset( $_POST['invio'] ))  echo '<button type="submit" name="invio" value="1">Conferma ordine</button>';?>  
+     <form action="dettagli_ordine.php" method="post">
+     <?php if ( !isset( $_POST['paga'] ))  echo '<button type="submit" name="invio" value="1">Paga</button>';?>  
      </form>
    </div> 
    

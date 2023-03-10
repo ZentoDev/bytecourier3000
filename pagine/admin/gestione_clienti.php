@@ -39,6 +39,13 @@ function stampaUser() {
         <input type=\"hidden\" name=\"data\" value=\"{$row['data_nascita']}\">
         <input type=\"hidden\" name=\"permesso_user\" value=\"{$row['permesso']}\">
         <input type=\"hidden\" name=\"ban\" value=\"{$row['ban']}\">
+        <input type=\"hidden\" name=\"cf\" value=\"{$row['cf']}\">
+        <input type=\"hidden\" name=\"email\" value=\"{$row['email']}\">
+        <input type=\"hidden\" name=\"tel\" value=\"{$row['tel']}\">
+        <input type=\"hidden\" name=\"indirizzo\" value=\"{$row['indirizzo']}\">
+        <input type=\"hidden\" name=\"num_civico\" value=\"{$row['num_civico']}\">
+        <input type=\"hidden\" name=\"citta\" value=\"{$row['citta']}\">
+        <input type=\"hidden\" name=\"nazione\" value=\"{$row['nazione']}\">
         <button type=\"submit\" name=\"invio_dati\" value=\"modifica\" >Modifica utente</button>
         </form>
         </td>

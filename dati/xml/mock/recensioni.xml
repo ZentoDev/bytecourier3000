@@ -3,7 +3,7 @@
 <recensioni xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="recensioni.xsd" >
 
-<recensione id_recensione="0001" tipologia_spedizione="provincia" username="marco" voto="5">
+<recensione id_recensione="0001" tipologia_spedizione="provincia" username="marcolino71" voto="5">
     <testo>Servizio ottimo, puntuale e attento!</testo>
 </recensione>
 

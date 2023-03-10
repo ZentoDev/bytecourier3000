@@ -9,6 +9,13 @@ $data = "";
 $username = "";
 $pw = "";
 $pw_rip = "";
+$cf = "";
+$tel = "";
+$email = "";
+$indirizzo = "";
+$num_civ = "";
+$citta = "";
+$nazione = "";
 
 if( isset($_POST['invio']) ){
     //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
@@ -18,20 +25,44 @@ if( isset($_POST['invio']) ){
 	$username = $_POST['username'];
     $pw = $_POST['password'];
     $pw_rip = $_POST['ripeti_pw'];
+    $cf = $_POST['cf'];
+    $tel = $_POST['tel'];
+    $email = $_POST['email'];
+    $indirizzo = $_POST['indirizzo'];
+    $num_civ = $_POST['num_civ'];
+    $citta = $_POST['citta'];
+    $nazione = $_POST['nazione'];
 
-    //se le password coincidono, si inseriscono i dati nel sistema
-    if($_POST['ripeti_pw']==$_POST['password'] ){
+    //verifica i valori inseriti nella form, 1 dati corretti, altrimenti messaggio di errore
+    $ver = verifyForm();
+    if( $ver == 1 ) {
 
         //addUser() si occupa dell'inserimento dei dati utente nel sistema, ritorna 1 se il processo avviene correttamente; -1 in caso di errori
         $add = addUser();
         if( $add == 1 )   $mex = "La registrazione è avvenuta correttamente!";
-
+        
         else if( $add == 0 )   $mex = "Username gi&agrave; in uso, inserire un altro username";
-
-        else    $mex = "Problemi interni nel processo di registrazione, si prega di contattare il supporto tecnico";
+        
+        else    $mex = "Problemi interni nel processo di registrazione, si prega di contattare il supporto tecnico";    
     }    
 
-    else $mex = "Le password non coincidono";
+    else $mex = $ver;
+}
+
+//verifica i valori inseriti nella form, ritorna 1 se i dati inseriti risultano corretti, altrimenti stampa il messaggio di errore relativo al campo non valido
+function verifyForm(){
+
+    if( !preg_match("/^[a-z-' ]*$/i", $_POST['nome']) )  return 'Il nome deve contenere solo caratteri alfabetici';
+    if( !preg_match("/^[a-z-' ]*$/i", $_POST['cognome']) )  return 'Il cognome deve contenere solo caratteri alfabetici';
+    if( !preg_match("/^[0-9]{9,15}$/", $_POST['tel']) )  return 'Il numero di telefono inserito non è valido';
+    if( !filter_var( $_POST['email'], FILTER_VALIDATE_EMAIL) )  return 'L\'email non è corretta';
+    if( !preg_match("/^[[:alpha:]]{6}[[:digit:]]{2}[[:alpha:]][[:digit:]]{2}[[:alpha:]][[:digit:]]{3}[[:alpha:]]$/i", $_POST['cf']) )  return 'Il codice fiscale non è corretto';
+    if( !preg_match("/^[a-z-' ]*$/i", $_POST['indirizzo']) )  return 'L\'indirizzo inserito non è valido';
+    if( !preg_match("/^[a-z-' ]*$/i", $_POST['citta']) )  return 'la città inserita non è valida';
+    if( !preg_match("/^[a-z-' ]*$/i", $_POST['nazione']) )  return 'La nazione inserita non è valida';
+    if( $_POST['ripeti_pw'] !== $_POST['password'] )  return 'Le password non coincidono';
+
+    return 1;   //tutti i campi sono corretti
 }
 
 //si occupa dell'inserimento dei dati utente nel sistema, ritorna 1 se il processo avviene correttamente; -1 in caso di errori
@@ -51,9 +82,9 @@ function addUser(){
 
 	    //query per inserire il nuovo utente
 	    $insert_query = "INSERT INTO $user_table_name
-				        (username, password, nome, cognome, data_nascita, permesso, ban)
+				        (username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 					    VALUES
-					    ('{$_POST['username']}','{$_POST['password']}','{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['data']}', '1', '0' )
+					    ('{$_POST['username']}','{$_POST['password']}','{$_POST['nome']}', '{$_POST['cognome']}', '{$_POST['data']}','{$_POST['cf']}', '{$_POST['email']}', '{$_POST['tel']}', '{$_POST['nazione']}', '{$_POST['citta']}', '{$_POST['indirizzo']}', '{$_POST['num_civ']}', '1', '0' )
 					    ";
 
 	    try{
@@ -125,6 +156,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
         <h1>Registrazione al sito</h1>
 
+        <?php 
+		if($_POST['invio']){
+			echo '<h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;'.$mex.'</h3>';
+		}
+		?>
+
         <form action="registrazione.php" method="post" > 
             <div class="flex-container">
                 <div>
@@ -132,14 +169,29 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <input type="text" name="nome" value="<?php echo $nome ?>" required><br />
                 <strong>Username</strong><br />
 	            <input type="text" name="username" value="<?php echo $username ?>" required><br />
+                <strong>Email</strong><br />
+	            <input type="text" name="email" value="<?php echo $email ?>" required><br />
+                <strong>Codice fiscale</strong><br />
+	            <input type="text" name="cf" value="<?php echo $cf ?>" required><br />
+                <strong>Indirizzo residenza</strong><br />
+	            <input type="text" name="indirizzo" value="<?php echo $indirizzo ?>" required><br />
+                <strong>Città</strong><br />
+	            <input type="text" name="citta" value="<?php echo $citta ?>" required><br />
                 <strong>Password</strong><br />
 	            <input type="password" name="password" value="<?php echo $pw ?>" required><br />
 	            </div>
+
 	            <div>
                 <strong>Cognome</strong><br />
                 <input type="text" name="cognome" value="<?php echo $cognome ?>" required><br />
                 <strong>Data di nascita</strong><br />
 	            <input type="date" name="data" value="<?php echo $data ?>" required><br />
+                <strong>Telefono</strong><br />
+	            <input type="text" name="tel" value="<?php echo $tel ?>" required><br />
+                <strong>Numero civico</strong><br />
+	            <input type="number" name="num_civ" value="<?php echo $num_civ ?>" min="1" required><br />
+                <strong>Nazione</strong><br />
+	            <input type="text" name="nazione" value="<?php echo $nazione ?>" required><br />
 	            <strong>Conferma password</strong><br />
 	            <input type="password" name="ripeti_pw" value="<?php echo $pw_rip ?>" required><br />
 	            </div>
@@ -156,11 +208,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		    <button type="submit" name="reset" value="reset" id="reset_signup" >Reset</button>
 	    </form>
 
-        <?php 
-		if($_POST['invio']){
-			echo '<h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;'.$mex.'</h3>';
-		}
-		?>
 
    </div>
    

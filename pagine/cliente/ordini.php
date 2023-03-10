@@ -21,7 +21,7 @@ function stampaSpedizioni($listOrd) {
 
         //seleziona gli ordini conclusi dal cliente
         if( $ordine->getAttribute('username') == $_SESSION['username'] && 
-            $stato  == 'in_attesa' ) {                    
+            $stato  == 'in_attesa' || $stato == 'in_attesa_pagamento' || $stato == 'modificato' ) {                    
 
             $id_ordine = $ordine->getAttribute('id_richiesta');
             $ordine_child = $ordine->firstChild; 
@@ -58,7 +58,6 @@ function stampaSpedizioni($listOrd) {
     
             $table.='<tr>
                       <th><strong>Id ordine:</strong> '.$id_ordine.'<br />
-                      <strong>stato:</strong> '.$stato.'</th>
                      <td>   
                       <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
                       <strong>Destinazione:</strong> '.$destinazione.'<br />
@@ -69,9 +68,22 @@ function stampaSpedizioni($listOrd) {
                      <strong>costo:</strong> '.$costo.'<br />
                      <strong>peso:</strong> '.$peso.'<br />
                      <strong>volume:</strong> '.$volume.'<br />
-                     </td>
-                     </tr>';
-            $coin = 1;
+                     </td>';
+
+            if( $stato  == 'in_attesa_pagamento' || $stato == 'modificato') {
+
+                $table .='<td>
+                          <form action="dettagli_ordine.php" method="post">
+                          <div id="buttons">
+                          <input type"hidden" name="" 
+                          <button type="submit" name="id_ordine" value="'.$id_ordine.'" >Pagamento</button>
+                          </div>
+                          </form>
+                          </td>
+                          </tr>';
+            }
+            else $table .='<td>In attesa di verifica</td></tr>';
+                     
             $presente = 1;
         }
     }
