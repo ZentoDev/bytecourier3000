@@ -9,55 +9,46 @@ $rootType = $docType->documentElement;
 $listaType = $rootType->firstChild->childNodes;
 
 //variabili della form
-$volume = $_SESSION['volume'];
-$peso = $_SESSION['peso'];
-$ritiro = $_SESSION['ritiro'];
 $tipo_sp = $_SESSION['tipo_spedizione'];
+$ritiro = $_SESSION['ritiro'];
 
 if( isset($_POST['invio']) ) {
-    //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
-	$volume = $_POST['volume'];
-	$peso = $_POST['peso'];
-    $ritiro = $_POST['ritiro'];
-    $tipo_sp = $_POST['tipo_spedizione'];
 
-    //se le dimensioni sono compatibili con la tipologia di spedizione selezionata, si passa alla pagina di inserimento degli indirizzi
-    $flag = 0;
-    for ($pos = 0; $pos < $listaType->length && $flag == 0; $pos++ ) {
-        $tipologia_spedizione = $listaType->item($pos);
-        if( $tipo_sp == $tipologia_spedizione->getAttribute('nome') ) {
-
-            if( $volume >= $tipologia_spedizione->getAttribute('dimensioni_min') &&
-                $volume <= $tipologia_spedizione->getAttribute('dimensioni_max')       )  {
-
-                $_SESSION['volume'] = $volume;
-                $_SESSION['peso'] = $peso;
-                $_SESSION['ritiro'] = $ritiro;
-                $_SESSION['tipo_spedizione'] = $tipo_sp;
-                header('Location:ordina_spedizione_indirizzi.php');
-                exit;
-            }
-            $flag = 1;
-            $min = $tipologia_spedizione->getAttribute('dimensioni_min');
-            $max = $tipologia_spedizione->getAttribute('dimensioni_max');
-        }
+    //se cambia la tipologia di spedizione le specifiche del pacco memorizzate precedentemente vengono resettate in quanto sono cambiare le condizioni 
+    if( $_SESSION['tipo_spedizione'] != $_POST['tipo_spedizione']) {
+        $_SESSION['cod_dim'] = '';
+        $_SESSION['larghezza'] = '';
+        $_SESSION['altezza'] = '';
+        $_SESSION['profondita'] = '';
+        $_SESSION['peso'] = '';
+        $_SESSION['costo'] = '';
     }
-    $mex = 'la dimensione inserita non &egrave; supportata dalla tipologia di spedizione scelta (min = '.$min.', max = '.$max.')';
+    //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
+    $_SESSION['tipo_spedizione'] = $_POST['tipo_spedizione'];
+    $_SESSION['ritiro'] = $_POST['ritiro'];
+    header('Location:ordina_spedizione_indirizzi.php');
+    exit;
 }
 
+//genera il menu di selezione della tipologia di spedizione, le opzioni disponibili dipendono dalle tipologie abilitate (vedi setting.xml)
 function stampaType($nome, $lista) {
 
-    $option = '';
+    $select = '<br />Non sono disponibili opzioni, contattare un gestore';
+    $num_elem = 0;
     for ($i = 0; $i < $lista->length; $i++ ) {
         $type = $lista->item($i);
         if( $type->getAttribute('abilitazione') == 'true') {
-            $sel = ''; //mantiene la memoria della scelta effettuata dall'utente
             $name_type = $type->getAttribute('nome');
+
+            $sel = ''; //serve a selezionare di default la precedente scelta dell'utente
             if ($nome == $name_type) $sel = 'selected';
+
             $option .= '<option value="'.$name_type.'" '.$sel.'>'.$name_type.'</option>';
+            $num_elem++;            
         }
+        if( $num_elem != 0)  $select = '<select name="tipo_spedizione" size="'.$num_elem.'">'.$option.'</select>';
     }
-    return $option;
+    return $select;
 }
 
 
@@ -94,16 +85,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <form action="ordina_spedizione.php" method="post" > 
             <div class="flex-container">
                 <div>
-                <strong>Dimensioni</strong><br />
-                <input type="number" name="volume" value="<?php echo $volume ?>" required><br />
                 <strong>Tipologia spedizione</strong><br />
-				<select name="tipo_spedizione" size="2">
-                    <?php echo stampaType($tipo_sp ,$listaType);?>
-				</select>
+                <?php echo stampaType($tipo_sp ,$listaType);?>
 	            </div>
 	            <div>
-                <strong>Peso</strong><br />
-                <input type="number" name="peso" value="<?php echo $peso ?>" required><br />
                 <strong>Tipologia ritiro</strong><br />
 				<select name="ritiro" size="2">
 					<option value="in_loco" <?php if ($ritiro == 'in_loco') echo 'selected';?>>Domicilio</option>

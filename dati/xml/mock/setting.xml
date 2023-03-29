@@ -5,10 +5,24 @@ xsi:noNamespaceSchemaLocation="setting.xsd"
 assegnazione_automatica="true">
 
 <setting_spedizioni>
-    <tipologia_spedizione nome="città" durata="12" costo_unit="8" costo_var="2" dimensioni_max="100" dimensioni_min="0" abilitazione="true" />
-    <tipologia_spedizione nome="provincia" durata="24" costo_unit="10" costo_var="3" dimensioni_max="80" dimensioni_min="10" abilitazione="true" />
-    <tipologia_spedizione nome="isole" durata="72" costo_unit="30" costo_var="5" dimensioni_max="100" dimensioni_min="0" abilitazione="false" />
-    <tipologia_spedizione nome="estero" durata="96" costo_unit="20" costo_var="10" dimensioni_max="200" dimensioni_min="10" abilitazione="true" />
+    <tipologia_spedizione nome="citta" durata="12" abilitazione="true" >
+        <tipo_pacco cod="1" larghezza="10" altezza="10" profondita="10" peso_max="0.5" costo="5"/>
+        <tipo_pacco cod="2" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/>
+        <tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="provincia" durata="24" abilitazione="true">
+        <tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="7.5"/>
+        <tipo_pacco cod="2" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/>
+        <tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="isole" durata="72" abilitazione="false">
+        <tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/>
+        <tipo_pacco cod="2" larghezza="150" altezza="150" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="estero" durata="96" abilitazione="true">
+        <tipo_pacco cod="1" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/>
+        <tipo_pacco cod="2" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
 </setting_spedizioni>
 
 

@@ -49,12 +49,9 @@ function stampaSpedizioni($listOrd) {
             $tipologia = $ordine->getAttribute('tipologia_spedizione');   
             $costo = $ordine->getAttribute('costo');  
             $peso = $ordine->getAttribute('peso');  
-            $volume = $ordine->getAttribute('volume');  
-
-            $tipologia = $ordine->getAttribute('tipologia_spedizione');   
-            $costo = $ordine->getAttribute('costo');  
-            $peso = $ordine->getAttribute('peso');  
-            $volume = $ordine->getAttribute('volume');  
+            $larghezza = $ordine->getAttribute('larghezza');
+            $altezza = $ordine->getAttribute('altezza');
+            $profondita = $ordine->getAttribute('profondita'); 
     
             $table.='<tr>
                       <th><strong>Id ordine:</strong> '.$id_ordine.'<br />
@@ -67,7 +64,9 @@ function stampaSpedizioni($listOrd) {
                      <td>
                      <strong>costo:</strong> '.$costo.'<br />
                      <strong>peso:</strong> '.$peso.'<br />
-                     <strong>volume:</strong> '.$volume.'<br />
+                     <strong>larghezza:</strong> '.$larghezza.' cm<br />
+                     <strong>altezza:</strong> '.$altezza.' cm<br />
+                     <strong>profondita:</strong> '.$profondita.' cm<br />
                      </td>';
 
             if( $stato  == 'in_attesa_pagamento' || $stato == 'modificato') {
@@ -75,7 +74,6 @@ function stampaSpedizioni($listOrd) {
                 $table .='<td>
                           <form action="dettagli_ordine.php" method="post">
                           <div id="buttons">
-                          <input type"hidden" name="" 
                           <button type="submit" name="id_ordine" value="'.$id_ordine.'" >Pagamento</button>
                           </div>
                           </form>

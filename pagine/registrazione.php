@@ -177,8 +177,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	            <input type="text" name="indirizzo" value="<?php echo $indirizzo ?>" required><br />
                 <strong>Città</strong><br />
 	            <input type="text" name="citta" value="<?php echo $citta ?>" required><br />
-                <strong>Password</strong><br />
-	            <input type="password" name="password" value="<?php echo $pw ?>" required><br />
+                <strong>Conferma password</strong><br />
+	            <input type="password" name="ripeti_pw" value="<?php echo $pw_rip ?>" required><br />
 	            </div>
 
 	            <div>
@@ -192,8 +192,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	            <input type="number" name="num_civ" value="<?php echo $num_civ ?>" min="1" required><br />
                 <strong>Nazione</strong><br />
 	            <input type="text" name="nazione" value="<?php echo $nazione ?>" required><br />
-	            <strong>Conferma password</strong><br />
-	            <input type="password" name="ripeti_pw" value="<?php echo $pw_rip ?>" required><br />
+                <strong>Password</strong><br />
+	            <input type="password" name="password" value="<?php echo $pw ?>" required><br />
 	            </div>
             </div>
         

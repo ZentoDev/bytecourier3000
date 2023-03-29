@@ -41,7 +41,9 @@
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="peso" type="xs:float" use="required"/>
-        <xs:attribute name="volume" type="xs:float" use="required"/>
+        <xs:attribute name="larghezza" type="xs:float" use="required"/>
+        <xs:attribute name="altezza" type="xs:float" use="required"/>
+        <xs:attribute name="profondita" type="xs:float" use="required"/>
     </xs:complexType>
 </xs:element>
 

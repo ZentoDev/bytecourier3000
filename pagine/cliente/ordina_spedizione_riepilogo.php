@@ -8,26 +8,7 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-//variabili della form
-$volume = $_SESSION['volume'];
-$peso = $_SESSION['peso'];
-$ritiro = $_SESSION['ritiro'];
-$tipo_sp = $_SESSION['tipo_spedizione'];
-$volume = $_SESSION['volume'];
-$peso = $_SESSION['peso'];
-$ritiro = $_SESSION['ritiro'];
-$tipo_sp = $_SESSION['tipo_spedizione'];
-$nome_dest = $_SESSION['nome_dest'];
-$cognome_dest = $_SESSION['cognome_dest'];
-$via_dest = $_SESSION['via_dest'];
-$nazione_dest = $_SESSION['nazione_dest'];
-$citta_dest = $_SESSION['citta_dest'];
-$civico_dest = $_SESSION['civico_dest'];
-$via_rit = $_SESSION['via_rit'];
-$nazione_rit = $_SESSION['nazione_rit'];
-$citta_rit = $_SESSION['citta_rit'];
 
-$crediti = crediti($_SESSION['tipo_spedizione'], $_SESSION['volume']);
 $mex = '';
 if( isset( $_POST['invio'] )) {
     $new_id = getId($listaOrd);
@@ -37,28 +18,30 @@ if( isset( $_POST['invio'] )) {
     $new_ordine->setAttribute('id_richiesta', $new_id);
     $new_ordine->setAttribute('username', $_SESSION['username']);
     $new_ordine->setAttribute('tipologia_spedizione', $_SESSION['tipo_spedizione']);
-    $new_ordine->setAttribute('costo', $crediti);
+    $new_ordine->setAttribute('costo', $_SESSION['costo']);
     $new_ordine->setAttribute('stato', 'in_attesa');
     $new_ordine->setAttribute('ritiro', $_SESSION['ritiro']);
     $new_ordine->setAttribute('peso', $_SESSION['peso']);
-    $new_ordine->setAttribute('volume', $_SESSION['volume']);
+    $new_ordine->setAttribute('larghezza', $_SESSION['larghezza']);
+    $new_ordine->setAttribute('altezza', $_SESSION['altezza']);
+    $new_ordine->setAttribute('profondita', $_SESSION['profondita']);
 
     if( $_SESSION['ritiro'] == 'in_loco' ) {
         $new_addrrit = $docOrd->createElement('indirizzo_ritiro');
         $new_ordine->appendChild($new_addrrit);
 
-        $new_addrrit->setAttribute('citta', $_SESSION['citta_dest']);
-        $new_addrrit->setAttribute('nazione', $_SESSION['nazione_dest']);
-        $new_addrrit->setAttribute('strada', $_SESSION['via_dest']);
-        $new_addrrit->setAttribute('numero', $_SESSION['civico_dest']);
+        $new_addrrit->setAttribute('citta', $_SESSION['citta_rit']);
+        $new_addrrit->setAttribute('nazione', $_SESSION['nazione_rit']);
+        $new_addrrit->setAttribute('strada', $_SESSION['via_rit']);
+        $new_addrrit->setAttribute('numero', $_SESSION['civico_rit']);
     }
     $new_addrdest = $docOrd->createElement('indirizzo_destinazione');
     $new_ordine->appendChild($new_addrdest);
     
-    $new_addrdest->setAttribute('citta', $_SESSION['citta_rit']);
-    $new_addrdest->setAttribute('nazione', $_SESSION['nazione_rit']);
-    $new_addrdest->setAttribute('strada', $_SESSION['via_rit']);
-    $new_addrdest->setAttribute('numero', $_SESSION['civico_rit']);
+    $new_addrdest->setAttribute('citta', $_SESSION['citta_dest']);
+    $new_addrdest->setAttribute('nazione', $_SESSION['nazione_dest']);
+    $new_addrdest->setAttribute('strada', $_SESSION['via_dest']);
+    $new_addrdest->setAttribute('numero', $_SESSION['civico_dest']);
 
     $new_destinatario = $docOrd->createElement('destinatario');
     $new_ordine->appendChild($new_destinatario);
@@ -69,15 +52,16 @@ if( isset( $_POST['invio'] )) {
     printFileXML("../../dati/xml/ordini.xml", $docOrd);
     $mex = 'richiesta ordine effettuata';
 
-    //dopo che la richiesta ordine viene effettuata, cancello i dati della richiesta dalla sessione
-    $_SESSION['volume'] = '';
+    //dopo che la richiesta ordine viene effettuata, cancello dalla sessione i dati temporanei della richiesta d'ordine
     $_SESSION['peso'] = '';
+    $_SESSION['larghezza'] = '';
+    $_SESSION['altezza'] = '';
+    $_SESSION['profondita'] = '';
+    $_SESSION['costo'] = '';
+    $_SESSION['cod_dim'] = '';
     $_SESSION['ritiro'] = '';
     $_SESSION['tipo_spedizione'] = '';
-    $_SESSION['volume'] = '';
-    $_SESSION['peso'] = '';
     $_SESSION['ritiro'] = '';
-    $_SESSION['tipo_spedizione'] = '';
     $_SESSION['nome_dest'] = '';
     $_SESSION['cognome_dest'] = '';
     $_SESSION['via_dest'] = '';
@@ -87,22 +71,6 @@ if( isset( $_POST['invio'] )) {
     $_SESSION['via_rit'] = '';
     $_SESSION['nazione_rit'] = '';
     $_SESSION['citta_rit'] = '';
-}
-
-//calcola il costo stimato della spedizione
-function crediti( $tipo_sped, $dim ) {
-    $docType = openXML("../../dati/xml/setting.xml");
-    $rootType = $docType->documentElement;  
-    $listaType = $rootType->firstChild->childNodes;
-
-    for ($pos = 0; $pos < $listaType->length; $pos++) {
-		$tipologia = $listaType->item($pos);
-
-        if( $tipologia->getAttribute('nome') == $tipo_sped ) {
-            return $tipologia->getAttribute('costo_unit') + $dim * $tipologia->getAttribute('costo_var');
-        }
-    }
-    return NULL;
 }
 
 //ottiene un id disponibile 
@@ -152,22 +120,24 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h3>Informazioni pacco</h3>
 	 <p>
-        <strong>Volume:</strong> <?php echo $volume; ?> m^3 <br />
-	    <strong>Peso:</strong> <?php echo $peso; ?> kg<br />
-	    <strong>Tipologia spedizione:</strong> <?php echo $tipo_sp; ?> <br />
-	    <strong>Tipologia ritiro:</strong> <?php echo $ritiro; ?> <br />
-        <strong>Costo:</strong> <?php echo $crediti; ?> <br /> 
+        <strong>Larghezza:</strong> <?php echo $_SESSION['larghezza']; ?> cm <br />
+        <strong>altezza:</strong> <?php echo $_SESSION['altezza']; ?> cm <br />
+        <strong>Profondità:</strong> <?php echo $_SESSION['profondita']; ?> cm <br />
+	    <strong>Peso:</strong> <?php echo $_SESSION['peso']; ?> kg<br />
+	    <strong>Tipologia spedizione:</strong> <?php echo $_SESSION['tipo_spedizione']; ?> <br />
+	    <strong>Tipologia ritiro:</strong> <?php echo $_SESSION['ritiro']; ?> <br />
+        <strong>Costo:</strong> <?php echo $_SESSION['costo']; ?> €<br /> 
     </p>
     <h3>Indirizzi</h3>
 	 <p>
-        <strong>Destinatario:</strong> <?php echo $nome_dest.' '.$cognome_dest; ?> <br />
-		<strong>Indirizzo destinazione:</strong> <?php echo $via_dest.' '.$civico_dest.', '.$citta_dest.', '.$nazione_dest; ?> <br />
+        <strong>Destinatario:</strong> <?php echo $_SESSION['nome_dest'].' '.$_SESSION['cognome_dest']; ?> <br />
+		<strong>Indirizzo destinazione:</strong> <?php echo $_SESSION['via_dest'].' '.$_SESSION['civico_dest'].', '.$_SESSION['citta_dest'].', '.$_SESSION['nazione_dest']; ?> <br />
         <?php 
-        if( $ritiro == 'centro') {
+        if( $_SESSION['ritiro'] == 'centro') {
             $indirizzo_rit = 'da consegnare in un centro spedizioni';
         }
         else {
-            $indirizzo_rit = $via_rit." ".$civico_rit.", ".$citta_rit.", ".$nazione_rit;
+            $indirizzo_rit = $_SESSION['via_rit']." ".$_SESSION['civico_rit'].", ".$_SESSION['citta_rit'].", ".$_SESSION['nazione_rit'];
         }?>
         <strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_rit; ?> <br /><br />
 	 </p>

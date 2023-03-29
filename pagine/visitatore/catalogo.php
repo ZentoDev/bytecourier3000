@@ -28,12 +28,15 @@ function stampaTipologie($lista) {
                <th><strong>Tipologia:</strong> '.$nome.'</th>
                <td>
                <strong>Stima durata:</strong> '.$durata.'h<br />
-               <strong>Costo fisso:</strong> '.$costo_unit.'€<br />
-               <strong>Costo variabile (per unit&agrave; di volume):</strong> '.$costo_var.' €/m^3<br />
                </td>   
                <td>
-               <strong>Dimensioni minime:</strong> '.$dimensioni_min.'<br />
-               <strong>Dimensioni massime:</strong> '.$dimensioni_max.'<br />
+               <td>
+               <form action="dettagli_tipologia.php" method="post">
+               <div id="buttons">
+               <button type="submit" name="id_tipo" value="'.$nome.'" >Opzioni disponibili</button>
+               </div>
+               </form>
+               </td>
                </td>
                </tr>';
       $presente = 1;

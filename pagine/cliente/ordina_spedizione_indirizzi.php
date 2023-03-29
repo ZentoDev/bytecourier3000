@@ -18,6 +18,7 @@ $civico_rit = $_SESSION['civico_rit'];
 
 if( isset($_POST['invio']) ) {
     //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
+
     $_SESSION['nome_dest'] = $_POST['nome_dest'];
     $_SESSION['cognome_dest'] = $_POST['cognome_dest'];
 	$_SESSION['nazione_dest'] = $_POST['nazione_dest'];
@@ -31,9 +32,90 @@ if( isset($_POST['invio']) ) {
         $_SESSION['via_rit'] = $_POST['via_rit'];
         $_SESSION['civico_rit'] = $_POST['civico_rit'];
     }
+
+    //verifico che le dimensioni del pacco non siano cambiate, 
+    //in caso di modifiche leggo i nuovi valori delle dimensioni e le salvo come variabili di sessione 
+    if( $_SESSION['cod_dim'] != $_POST['cod_dim'] ) {
+        $docType = openXML("../../dati/xml/setting.xml");
+        $rootType = $docType->documentElement;  
+        $lista = $rootType->firstChild->childNodes;
+    
+        $find = 0;
+        $find_d = 0;
+        
+        for ($i = 0; $i < $lista->length && $find == 0; $i++ ) {
+    
+            $type = $lista->item($i);
+            //cerco il tipo spedizione selezionato
+            if( $_SESSION['tipo_spedizione'] == $type->getAttribute('nome') ){
+                $find = 1; //tipologia spedizione trovata, interrompe i successivi cicli del for
+                
+                $lista_dim = $type->childNodes;
+                for ($c = 0; $c < $lista_dim->length && $find_d == 0; $c++ ) {
+
+                    $voce = $lista_dim->item($c); 
+    
+                    if( $voce->getAttribute('cod') == $_POST['cod_dim'] ) {
+
+                        $_SESSION['larghezza'] = $voce->getAttribute('larghezza');
+                        $_SESSION['altezza'] = $voce->getAttribute('altezza');
+                        $_SESSION['profondita'] = $voce->getAttribute('profondita');
+                        $_SESSION['peso'] = $voce->getAttribute('peso_max');
+                        $_SESSION['costo'] = $voce->getAttribute('costo');
+                        $find_d = 1;
+                    }          
+                }
+                if( $find_d == 0)    $_SESSION['larghezza'] = 'Problemi interni, contattare un gestore';
+            } 
+        }
+    }//conclusione aggiornamento delle var di sessione delle dimesioni del pacco
+
+    $_SESSION['cod_dim'] = $_POST['cod_dim'];
+
     header('Location:ordina_spedizione_riepilogo.php');
     exit;
 }
+
+//genera le scelte disponibili in termini di dimensioni e costo (larghezza, altezza, profondità, peso, costo) per la tipologia di spedizione selezionata
+function stampaType($tipo) {
+
+    $docType = openXML("../../dati/xml/setting.xml");
+    $rootType = $docType->documentElement;  
+    $lista = $rootType->firstChild->childNodes;
+
+    $find = 0;
+    $num_elem = 0;
+    
+    for ($i = 0; $i < $lista->length && $find == 0; $i++ ) {
+
+        $type = $lista->item($i);
+        //cerco il tipo di spedizione selezionato
+        if( $tipo == $type->getAttribute('nome') ){
+            $find = 1; //tipologia spedizione trovata, interrompe i successivi cicli del for
+            
+            $lista_dim = $type->childNodes;
+            for ($c = 0; $c < $lista_dim->length; $c++ ) {
+
+                $voce = $lista_dim->item($c); 
+                $cod = $voce->getAttribute('cod');
+                $larghezza = $voce->getAttribute('larghezza');
+                $altezza = $voce->getAttribute('altezza');
+                $profondita = $voce->getAttribute('profondita');
+                $peso = $voce->getAttribute('peso_max');
+                $costo = $voce->getAttribute('costo');
+
+                $sel = ''; //serve a selezionare di default la precedente scelta dell'utente
+                if ($cod == $_SESSION['cod_dim'] || $cod == 1) $sel = 'checked';
+
+                $input .= '<input type="radio" name="cod_dim" value="'.$cod.'" '.$sel.'/>larghezza: '.$larghezza.'cm; altezza: '.$altezza.'cm; profondità: '.$profondita.'cm; peso: '.$peso.'kg; costo: '.$costo.' €<br />';
+                $num_elem++;            
+            }
+            if( $num_elem == 0)    $input = '<br />Non sono disponibili opzioni, contattare un gestore';
+        } 
+    }
+    return $input;
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +149,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <h1>Ordina spedizione: inserimento indirizzi</h1>
 
         <form action="ordina_spedizione_indirizzi.php" method="post" > 
+            <br />
+            <strong>Seleziona dimensioni del pacco</strong><br /><br />
+            <?php echo stampaType($_SESSION['tipo_spedizione']);?>
             <br />
             <h3>indirizzo di destinzazione</h3>
             <div class="flex-container" style="padding:0%; margin: -5%;">

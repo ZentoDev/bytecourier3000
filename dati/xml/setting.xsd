@@ -20,13 +20,23 @@
 
 <xs:element name="tipologia_spedizione">
     <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="tipo_pacco" maxOccurs="unbounded"/>
+        </xs:sequence>
         <xs:attribute name="nome" type="xs:string" use="required"/>
         <xs:attribute name="durata" type="xs:positiveInteger" use="required"/>
-        <xs:attribute name="costo_unit" type="xs:float" use="required" />
-        <xs:attribute name="costo_var" type="xs:float" use="required" />
-        <xs:attribute name="dimensioni_min" type="xs:float" use="optional" />
-        <xs:attribute name="dimensioni_max" type="xs:float" use="optional" />
         <xs:attribute name="abilitazione" type="xs:boolean" use="required" />        
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="tipo_pacco">
+    <xs:complexType>
+        <xs:attribute name="cod" type="xs:string" use="required"/>
+        <xs:attribute name="larghezza" type="xs:float" use="required"/>
+        <xs:attribute name="altezza" type="xs:float" use="required"/>
+        <xs:attribute name="profondita" type="xs:float" use="required"/>
+        <xs:attribute name="peso_max" type="xs:float" use="required"/>
+        <xs:attribute name="costo" type="xs:float" use="required"/>
     </xs:complexType>
 </xs:element>
 
