@@ -21,7 +21,7 @@ function stampaSpedizioni($listOrd) {
 
         //seleziona gli ordini conclusi dal cliente
         if( $ordine->getAttribute('username') == $_SESSION['username'] && 
-            $stato  == 'in_attesa' || $stato == 'in_attesa_pagamento' || $stato == 'modificato' ) {                    
+            $stato  == 'in_attesa' || $stato == 'in_attesa_pagamento' || $stato == 'modificato' || 'accettato') {                    
 
             $id_ordine = $ordine->getAttribute('id_richiesta');
             $ordine_child = $ordine->firstChild; 
@@ -80,6 +80,7 @@ function stampaSpedizioni($listOrd) {
                           </td>
                           </tr>';
             }
+            else if ( $stato == 'accettato' )   $table .='<td>In corso</td></tr>';
             else $table .='<td>In attesa di verifica</td></tr>';
                      
             $presente = 1;
