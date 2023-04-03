@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
-session_start();
+require_once("login_gestore.php");
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -12,7 +12,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Gestione prezzi</title>
+    <title>Dettagli tipologia spedizione</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
 </head>
@@ -28,7 +28,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Gestione prezzi</h2>
+     <h2>Dettagli della tipologia '<?php echo $_POST['nome'];?>'</h2>
 	 <p> 
    </p>
    </div>

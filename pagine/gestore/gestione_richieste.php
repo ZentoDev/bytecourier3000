@@ -1,7 +1,11 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
-session_start();
+require_once("login_gestore.php");
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
@@ -29,8 +33,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
      <h2>Gestione richieste</h2>
-	 <p> 
-   </p>
+
+
    </div>
    
    <div id="navbar" class="colonna">
