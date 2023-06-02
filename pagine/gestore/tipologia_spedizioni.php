@@ -10,10 +10,10 @@ $rootType = $docType->documentElement;
 $listaType = $rootType->firstChild->childNodes;
 
 $find = 0;
-if( isset( $_POST['enter'] )) {
+if( isset( $_POST['abilitazione'] )) {
     for ($pos = 0; $pos < $listaType->length && $find == 0; $pos++) {
         $tipologia = $listaType->item($pos);
-        if( $tipologia->getAttribute('nome') == $_POST['enter'] ) {
+        if( $tipologia->getAttribute('nome') == $_POST['abilitazione'] ) {
             if( $tipologia->getAttribute('abilitazione') == 'true')  $newValue = 'false';
             else  $newValue = 'true';
             
@@ -24,6 +24,12 @@ if( isset( $_POST['enter'] )) {
         }
     }
 } 
+
+if( isset( $_POST['nome_tipo'] )) {
+    $_SESSION['nome_tipo'] = $_POST['nome_tipo'];
+    header('Location:dettagli_tipologia.php');
+    exit;
+}
 
 function stampaTipologie($listType) {
     
@@ -47,14 +53,14 @@ function stampaTipologie($listType) {
                  <td>
                   <form action="tipologia_spedizioni.php" method="post">
                   <div id="buttons">
-                  <button type="submit" name="enter" value="'.$nome.'" >'.$tasto.'</button>
+                  <button type="submit" name="abilitazione" value="'.$nome.'" >'.$tasto.'</button>
                   </div>
                  </td>
                  <td>
                   </form>
-                  <form action="dettagli_tipologia.php" method="post">
+                  <form action="tipologia_spedizioni.php" method="post">
                   <div id="buttons">
-                  <button type="submit" name="nome" value="'.$nome.'" >modifica dettagli</button>
+                  <button type="submit" name="nome_tipo" value="'.$nome.'" >modifica dettagli</button>
                   </div>
                   </form>
                  </td>
@@ -93,7 +99,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
      <h2>Gestione tipologia spedizioni</h2>
-
+     <form action="crea_tipologia.php" method="post" >
+        <button type="submit" name="add_option" value="signup">Aggiungi nuova tipologia</button><br /><br />
+     </form>
      <?php echo stampaTipologie($listaType); ?>
    </div>
    

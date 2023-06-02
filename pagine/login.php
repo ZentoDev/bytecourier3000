@@ -31,7 +31,6 @@ if(isset($_POST['invio'])){
                 $_SESSION['nome']=$row['nome'];
                 $_SESSION['cognome']=$row['cognome'];
                 $_SESSION['data_nascita']=$row['data_nascita'];
-				$_SESSION['data_login']=time();
 
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente

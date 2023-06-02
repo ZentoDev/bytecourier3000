@@ -1,1 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?><setting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="setting.xsd" assegnazione_automatica="true"><setting_spedizioni><tipologia_spedizione nome="citta" durata="12" abilitazione="true"><tipo_pacco cod="1" larghezza="10" altezza="10" profondita="10" peso_max="0.5" costo="5"/><tipo_pacco cod="2" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/><tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/></tipologia_spedizione><tipologia_spedizione nome="provincia" durata="24" abilitazione="true"><tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="7.5"/><tipo_pacco cod="2" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/><tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/></tipologia_spedizione><tipologia_spedizione nome="isole" durata="72" abilitazione="false"><tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/><tipo_pacco cod="2" larghezza="150" altezza="150" profondita="100" peso_max="20" costo="15"/></tipologia_spedizione><tipologia_spedizione nome="estero" durata="96" abilitazione="true"><tipo_pacco cod="1" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/><tipo_pacco cod="2" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/></tipologia_spedizione></setting_spedizioni></setting>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<setting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="setting.xsd" 
+assegnazione_automatica="true">
+
+<setting_spedizioni>
+    <tipologia_spedizione nome="citta" durata="12" abilitazione="true" >
+        <tipo_pacco cod="1" larghezza="10" altezza="10" profondita="10" peso_max="0.5" costo="5"/>
+        <tipo_pacco cod="2" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/>
+        <tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="provincia" durata="24" abilitazione="true">
+        <tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="7.5"/>
+        <tipo_pacco cod="2" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/>
+        <tipo_pacco cod="3" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="isole" durata="72" abilitazione="false">
+        <tipo_pacco cod="1" larghezza="50" altezza="50" profondita="50" peso_max="5" costo="10"/>
+        <tipo_pacco cod="2" larghezza="150" altezza="150" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+    <tipologia_spedizione nome="estero" durata="96" abilitazione="true">
+        <tipo_pacco cod="1" larghezza="100" altezza="50" profondita="50" peso_max="10" costo="10"/>
+        <tipo_pacco cod="2" larghezza="200" altezza="200" profondita="100" peso_max="20" costo="15"/>
+    </tipologia_spedizione>
+</setting_spedizioni>
+
+</setting>
