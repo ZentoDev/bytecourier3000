@@ -15,7 +15,7 @@
             <xs:element ref="note" />
         </xs:sequence>
         <xs:attribute name="id_operazione" type="xs:string" use="required" />
-        <xs:attribute name="username_bitecourier" type="xs:string" use="required" />
+        <xs:attribute name="username_bytecourier" type="xs:string" use="required" />
         <xs:attribute name="id_ordine" type="xs:string" use="required" />
         <xs:attribute name="stato" use="required">
             <xs:simpleType>

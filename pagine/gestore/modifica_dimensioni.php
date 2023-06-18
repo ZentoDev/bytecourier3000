@@ -9,7 +9,7 @@ $docType = openXML("../../dati/xml/setting.xml");
 $rootType = $docType->documentElement;
 $listaType = $rootType->firstChild->childNodes;
 
-if( isset($_POST['invio']) ){
+if( isset($_POST['modifica']) ){
 
     $find = 0;
     for( $pos = 0; $pos < $listaType->length && $find == 0; $pos++ ){
@@ -45,13 +45,6 @@ if( isset($_POST['invio']) ){
     if( $find == 0)    $mod = 'Modifica non effettuata, contattare l\'assistenza';
 }
 
-if( isset($_POST['indietro']) ) {
-    header('Location:dettagli_tipologia.php');
-    exit;
-}
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +76,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <div id="center" class="colonna">
 
     <h2 style="margin-left:50px; text-align: center;">Modifica dimensioni dell'opzione di "<?php echo $_SESSION['nome_tipo'].'" codice: '. $_SESSION['cod'];?> </h2>
-	    <?php if( isset($_POST['invio']) )   echo "<p><strong>$mod</strong></p>"; ?>
+	    <?php if( isset($_POST['modifica']) )   echo "<p><strong>$mod</strong></p>"; ?>
         <form action="modifica_dimensioni.php" method="post" > 
             <div class="flex-container">
                 <div>
@@ -103,7 +96,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             </div>
         
 	        <div style="margin-bottom:10px; text-align: center;">
-                <button type="submit" name="invio" value="signup">Modifica valori</button>
+                <button type="submit" name="modifica" value="signup">Modifica valori</button>
             </div>
         </form>
 

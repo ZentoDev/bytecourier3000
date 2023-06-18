@@ -3,11 +3,11 @@
 <lista_operazioni xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="operazioni.xsd">
 
-<operazione id_operazione="0001" username_bitecourier="" id_ordine="0001" stato="1">
+<operazione id_operazione="0001" username_bytecourier="" id_ordine="0001" stato="1">
     <note></note>
 </operazione>
 
-<operazione id_operazione="0002" username_bitecourier="Wick64" id_ordine="0002" stato="4">
+<operazione id_operazione="0002" username_bytecourier="Wick64" id_ordine="0002" stato="4">
     <note>
         <nota data_nota="2022-09-14T09:30:00" username="Wick64">
             Il ritiro è proceduto secondo i piani
@@ -15,23 +15,23 @@ xsi:noNamespaceSchemaLocation="operazioni.xsd">
     </note>
 </operazione>
 
-<operazione id_operazione="0003" username_bitecourier="" id_ordine="0003" stato="2">
+<operazione id_operazione="0003" username_bytecourier="" id_ordine="0003" stato="2">
     <note></note>
 </operazione>
 
-<operazione id_operazione="0004" username_bitecourier="" id_ordine="0004" stato="3">
+<operazione id_operazione="0004" username_bytecourier="" id_ordine="0004" stato="3">
     <note></note>
 </operazione>
 
-<operazione id_operazione="0005" username_bitecourier="" id_ordine="0005" stato="1">
+<operazione id_operazione="0005" username_bytecourier="" id_ordine="0005" stato="1">
     <note></note>
 </operazione>
 
-<operazione id_operazione="0006" username_bitecourier="Wick64" id_ordine="0006" stato="5">
+<operazione id_operazione="0006" username_bytecourier="Wick64" id_ordine="0006" stato="5">
     <note></note>
 </operazione>
 
-<operazione id_operazione="0007" username_bitecourier="Wick64" id_ordine="0007" stato="1">
+<operazione id_operazione="0007" username_bytecourier="Wick64" id_ordine="0007" stato="1">
     <note></note>
 </operazione>
 

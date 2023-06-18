@@ -13,7 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['accetta']) $mess = accettaOperazione($docOp);
+if($_POST['accetta']) $mess = accettaOperazione($listaOp);
 
 function stampaOperazioni($listOp, $listOrd){
 
@@ -27,7 +27,7 @@ function stampaOperazioni($listOp, $listOrd){
 		$stato = $operazione->getAttribute('stato');   
 		if( $stato == 1 || $stato == 3 ) {   //si possono selezionare solo le operazioni i cui pacchi possono essere ritirati dal domicilio del cliente o dal centro spedizioni 
 
-			if( !$operazione->getAttribute('username_bitecourier') ) {    //operazione già presa in carico? in tal caso non mostrarla
+			if( !$operazione->getAttribute('username_bytecourier') ) {    //operazione già presa in carico? in tal caso non mostrarla
 
 				$id_operazione = $operazione->getAttribute('id_ordine');
 
@@ -45,7 +45,7 @@ function stampaOperazioni($listOp, $listOrd){
 							$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
 							$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
 						}
-						else  $indirizzo_ritiro = 'centro bite courier';
+						else  $indirizzo_ritiro = 'centro byte courier';
 			
 						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
 						$destinazione = $ordine_child->getAttribute('strada').' ';
@@ -92,19 +92,17 @@ function stampaOperazioni($listOp, $listOrd){
 	
 }
 
-//associa all'operazione selezionata il bitecourier che l'ha presa in carico
-function accettaOperazione($doc) {
-	$root = $doc->documentElement;  
-    $list = $root->childNodes;
+//associa all'operazione selezionata il bytecourier che l'ha presa in carico
+function accettaOperazione($list) {
 	
 	//scorre l'intera lista di nodi
 	for ( $pos = 0; $pos < $list->length; $pos++) {
 		$operazione = $list->item($pos);
 		$id_operazione = $operazione->getAttribute('id_ordine');
 
-		//se id_operazione coincide con quella ricercata si aggiorna il file xml associando il bitecourier all'operazione associata
+		//se id_operazione coincide con quella ricercata si aggiorna il file xml associando il bytecourier all'operazione associata
 		if( $id_operazione == $_POST['id_operazione'] ) {
-			$operazione->setAttribute('username_bitecourier', $_SESSION['username']);
+			$operazione->setAttribute('username_bytecourier', $_SESSION['username']);
 
 			//permette di salvare il documento in un file xml
 			printFileXML("../../dati/xml/operazioni.xml", $doc);

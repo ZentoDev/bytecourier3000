@@ -25,7 +25,7 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		if( $operazione->getAttribute('username_bitecourier') && 
+		if( $operazione->getAttribute('username_bytecourier') && 
             $operazione->getAttribute('stato') != 5 )      
             { //seleziona le operazioni concluse dall'operatore
 
@@ -40,7 +40,7 @@ function stampaOperazioni($listOp, $listOrd){
 
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
 					if( $stato >= 3) {
-						$indirizzo_ritiro = 'centro bite courier';
+						$indirizzo_ritiro = 'centro byte courier';
 					}
 					else  {
 						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';

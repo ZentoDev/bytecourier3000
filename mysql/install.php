@@ -123,9 +123,9 @@ else {
 }
 
 $insert_query = "INSERT INTO $user_table_name
-	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
+	(username, password, nome, cognome, data_nascita, permesso, ban)
 	VALUES
-	(\"marcolino71\", \"1234\", \"marco\", \"struzzi\", \"1971-12-24\", \"STRMRC71T24H501U\", \"struzzimarco@mmail.it\", \"32964439887\", \"Italia\", \"Roma\", \"via dei fatali\", \"98\", \"1\", \"0\")
+	(\"Toni\", \"1234\", \"tonio\", \"buscarolo\", \"1999-1-4\", \"1000\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -138,7 +138,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"stella\", \"1234\", \"stella\", \"gianduia\", \"1998-2-20\", \"GNDSLL98B60H274C\", \"starmail@opp.com\", \"32768434487\", \"Italia\", \"Riccione\", \"via latta\", \"4\", \"1\", \"1\")
+	(\"marcolino71\", \"1234\", \"marco\", \"struzzi\", \"1971-12-24\", \"STRMRC71T24H501U\", \"struzzimarco@mmail.it\", \"32964439887\", \"Italia\", \"Roma\", \"via dei fatali\", \"98\", \"1\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -149,9 +149,9 @@ else {
 }
 
 $insert_query = "INSERT INTO $user_table_name
-	(username, password, nome, cognome, data_nascita, permesso, ban)
+	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"Wick64\", \"1234\", \"John\", \"Wick\", \"1964-09-02\", \"10\", \"0\")
+	(\"stella\", \"1234\", \"stella\", \"gianduia\", \"1998-2-20\", \"GNDSLL98B60H274C\", \"starmail@opp.com\", \"32768434487\", \"Italia\", \"Riccione\", \"via latta\", \"4\", \"1\", \"1\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -164,7 +164,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, permesso, ban)
 	VALUES
-	(\"TheManager\", \"1234\", \"Giulia\", \"Silvani\", \"1985-06-14\", \"100\", \"0\")
+	(\"Locky89\", \"1234\", \"Luca\", \"ragazzoni\", \"1989-1-4\", \"10\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -174,6 +174,44 @@ else {
     exit();
 }
 
+$insert_query = "INSERT INTO $user_table_name
+	(username, password, nome, cognome, data_nascita, permesso, ban)
+	VALUES
+	(\"Wick64\", \"1234\", \"John\", \"Wick\", \"1964-09-02\", \"10\", \"0\")
+	";
+
+if ($res = mysqli_query($connection_mysqli, $insert_query))
+    printf("+++2-L'utente 6 è stato inserito\n<br />");
+else {
+    printf("***2-L'utente 6 NON è stato inserito\n<br />");
+    exit();
+}
+
+$insert_query = "INSERT INTO $user_table_name
+	(username, password, nome, cognome, data_nascita, permesso, ban)
+	VALUES
+	(\"TheManager\", \"1234\", \"Giulia\", \"Silvani\", \"1985-06-14\", \"100\", \"0\")
+	";
+
+if ($res = mysqli_query($connection_mysqli, $insert_query))
+    printf("+++2-L'utente 7 è stato inserito\n<br />");
+else {
+    printf("***2-L'utente 7 NON è stato inserito\n<br />");
+    exit();
+}
+
+$insert_query = "INSERT INTO $user_table_name
+	(username, password, nome, cognome, data_nascita, permesso, ban)
+	VALUES
+	(\"Pioltello44\", \"1234\", \"Francesca\", \"Klain\", \"1994-04-11\", \"100\", \"0\")
+	";
+
+if ($res = mysqli_query($connection_mysqli, $insert_query))
+    printf("+++2-L'utente 8 è stato inserito\n<br />");
+else {
+    printf("***2-L'utente 8 NON è stato inserito\n<br />");
+    exit();
+}
 
 mysqli_close($connection_mysqli);
 ?>

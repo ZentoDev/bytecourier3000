@@ -22,7 +22,7 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		if( $operazione->getAttribute('username_bitecourier') && 
+		if( $operazione->getAttribute('username_bytecourier') && 
             $operazione->getAttribute('stato') == 5 )      
             { //seleziona le operazioni concluse dall'operatore
 

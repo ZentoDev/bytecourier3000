@@ -50,8 +50,8 @@
         <indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via pineta" numero="4" />
         <destinatario nome="Sofia" cognome="Bianchi" />
     </ordine>
-    <ordine id_richiesta="9" username="marcolino71" tipologia_spedizione="provincia" costo="10"
-        stato="in_attesa" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
+    <ordine id_richiesta="9" username="marcolino71" tipologia_spedizione="provincia" costo="100"
+        stato="modificato" ritiro="in_loco" peso="2" larghezza="200" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Padova" nazione="Italia" strada="via nastri" numero="7" />
         <indirizzo_destinazione citta="Biella" nazione="Italia" strada="via cinema" numero="4" />
         <destinatario nome="Gregorio" cognome="Annunziato" />
@@ -64,7 +64,7 @@
         <destinatario nome="Lino" cognome="Banfi" />
     </ordine>
     <ordine id_richiesta="11" username="marcolino71" tipologia_spedizione="citta" costo="112"
-        stato="concluso" ritiro="centro" peso="70" larghezza="20" altezza="25" profondita="15">
+        stato="in_attesa" ritiro="centro" peso="70" larghezza="20" altezza="25" profondita="15">
         <indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili"
             numero="5" />
         <destinatario nome="Laura" cognome="Saltelletti" />
