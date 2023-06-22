@@ -141,7 +141,7 @@ function stampaNote($listNote){
 		
 		$tabNote .="<tr>
 		              <td><strong>Autore:</strong> $author <strong>Data:</strong> $data</td>
-                      <td rowspan=\"2\">llla</td>
+                      <td rowspan=\"2\"></td>
 				    </tr>
 				    <tr class=\"tr_bordo\">
 				       <td>$text</td>
@@ -181,7 +181,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 </div>
 
 <div id="content">
-   <div id="center" class="colonna">
+    <div id="center" class="colonna">
      <h2>Dettagli operazione</h2>
      <?php echo $mex;?>
 
@@ -194,7 +194,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 		<strong>Stato dell'operazione:</strong> <?php echo statoOperazione($stato); ?> <br />
         <?php 
-        if( $stato != 5 ) 
+        if( $stato != 5 ) {
             echo '
                 Quando la seguente fase dell\'operazione viene completata, aggiorna lo stato premendo sul seguente pulsante <br />
                 <form action="dettagli_operazione.php" method="post">
@@ -202,11 +202,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                     <button type="submit" name="next_stat" value="1" >Aggiorna stato</button>        
                 </form>
                 <br />';
+        }
         
         echo $mex_stat;
-        ?>
-
-<?php echo '
+        echo '
         <br /><br />
         <form action="dettagli_operazione.php" method="post" >
 		    Inserisci nota: <br />
@@ -215,16 +214,16 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <input type="hidden" name="datetime" value="'. date("Y-m-d").'T'.date("H:i:s") .'">
 			<button type="submit" name="invio_nota" value="1">Invia nota</button>
 	    </form>
-	 </p>';
+	    </p>';
 
-     stampaNote($listaNote); 
- ?>
+        stampaNote($listaNote); 
+        ?>
 	 
-   </div> 
+    </div> 
    
-   <div id="navbar" class="colonna">
-   <?php require_once("menu_courier.php");?>
-   </div>
+    <div id="navbar" class="colonna">
+    <?php require_once("menu_courier.php");?>
+    </div>
 </div>
 
 

@@ -75,9 +75,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Opzioni della tipologia pacco '<?php echo $_POST['id_tipo'];?>'</h2>
+     <h2>Opzioni della tipologia pacco '<?php echo $_SESSION['id_tipo'];?>'</h2>
      <p>Queste sono le opzioni disponibili per la tipologia scelta: </p><br />
-     <?php echo stampaOption($_POST['id_tipo']);?>
+     <?php echo stampaOption($_SESSION['id_tipo']);?>
    </div> 
    
    <div id="navbar" class="colonna">

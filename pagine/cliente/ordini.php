@@ -9,6 +9,12 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+if( isset($_POST['id_ordine'])){
+    $_SESSION['id_ordine'] = $_POST['id_ordine'];
+	header('Location:dettagli_ordine.php');
+    exit;
+}
+
 function stampaSpedizioni($listOrd) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
@@ -72,7 +78,7 @@ function stampaSpedizioni($listOrd) {
             if( $stato  == 'in_attesa_pagamento' || $stato == 'modificato') {
 
                 $table .='<td>
-                          <form action="dettagli_ordine.php" method="post">
+                          <form action="ordini.php" method="post">
                           <div id="buttons">
                           <button type="submit" name="id_ordine" value="'.$id_ordine.'" >Pagamento</button>
                           </div>

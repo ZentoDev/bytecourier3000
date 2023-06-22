@@ -142,7 +142,7 @@ function autoAlloc($docOperazioni) {
 		//verifico se l'op non è assegnata
 		if( $operazione->getAttribute('username_bytecourier') == "" ) {
 
-			$min = 999;  //numero minimo di operazioni prese in carico da un bt
+			$min = 999;  //numero fittizio per ricercare il bt con il minimo numero di operazioni prese in carico
 
 		    //query per ottenere gli utenti che sono byte courier
 		    $select_query = "SELECT username FROM $user_table_name 

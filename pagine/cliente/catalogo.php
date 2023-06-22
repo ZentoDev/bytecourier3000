@@ -9,6 +9,20 @@ $docType = openXML("../../dati/xml/setting.xml");
 $rootType = $docType->documentElement;  
 $listaType = $rootType->firstChild->childNodes;
 
+if( isset($_POST['vedi_opzioni']) ){
+  
+  $_SESSION['id_tipo'] = $_POST['vedi_opzioni'];
+  header('Location:dettagli_tipologia.php');
+  exit;  
+}
+
+if( isset($_POST['recensioni']) ){
+  
+  $_SESSION['id_tipo'] = $_POST['recensioni'];
+  header('Location:recensioni_tipologia.php');
+  exit;  
+}
+
 function stampaTipologie($lista) {
 
   $table="<table>"; 
@@ -32,9 +46,10 @@ function stampaTipologie($lista) {
                </td>   
                <td>
                <td>
-               <form action="dettagli_tipologia.php" method="post">
+               <form action="catalogo.php" method="post">
                <div id="buttons">
-               <button type="submit" name="id_tipo" value="'.$nome.'" >Opzioni disponibili</button>
+               <button type="submit" name="vedi_opzioni" value="'.$nome.'" >Opzioni disponibili</button>
+               <button type="submit" name="recensioni" value="'.$nome.'" >Recensioni</button>
                </div>
                </form>
                </td>

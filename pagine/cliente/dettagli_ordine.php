@@ -2,19 +2,86 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
-require_once("../../dati/lib_xmlaccess.php");
 
+require_once("../../dati/lib_xmlaccess.php");
+$docOp = openXML("../../dati/xml/operazioni.xml");
 $docOrd = openXML("../../dati/xml/ordini.xml");
+$docClienti = openXML("../../dati/xml/clienti.xml");
+$docSetting = openXML("../../dati/xml/setting.xml"); 
+  
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-$pagato = 0;
-$mex = '';
+$rootOp = $docOp->documentElement;  
+$listaOp = $rootOp->childNodes;
+
+$rootClienti = $docClienti->documentElement;  
+$listaClienti = $rootClienti->childNodes;
+
+$rootSetting = $docSetting->documentElement;
+
+$mex_pagamento = '';
+if( isset($_POST['pagamento']) ){
+
+    $find = 0;
+    for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
+        $ordine = $listaOrd->item($pos);
+
+        if( $_POST['pagamento'] == $ordine->getAttribute('id_richiesta') ){
+            $costo = $ordine->getAttribute('costo');
+
+            for( $i = 0; $i < $listaClienti->length && $find == 0; $i++) {
+                $cliente = $listaClienti->item($i);
+
+                if( $_SESSION['username'] == $cliente->getAttribute('username') ){
+                    $cr_client = $cliente->getAttribute('crediti');
+                    $find = 1;
+                }
+            }
+            //verifico che il cliente abbia abbastanza crediti per pagare l'ordine
+            if( $cr_client <  $costo )  
+                $mex_pagamento = 'Possiedi '.$cr_client.' crediti, te ne servono '.$costo.' per pagare l\'ordine '.$_POST['pagamento'];
+
+            else{
+                //aggiorno il saldo del cliente
+                $cliente->setAttribute('crediti', $cr_client - $costo);
+
+                //aggiorno lo stato dell'ordine
+                $ordine->setAttribute('stato', 'accettato');
+
+                //creo operazione associata all'ordine
+                $new_id = getId($listaOp);
+                $new_op = $docOp->createElement('operazione');
+                $rootOp->appendChild($new_op);
+                $new_note = $docOp->createElement('note');
+                $new_op->appendChild($new_note);
+
+                $new_op->setAttribute('id_operazione', $new_id);
+                $new_op->setAttribute('username_bytecourier', '');
+                $new_op->setAttribute('id_ordine', $_POST['pagamento']);
+                $new_op->setAttribute('stato', 1);
+
+                //verifico che sia abilitata l'autoassegnazione del bytecourier
+                if( $rootSetting->getAttribute('assegnazione_automatica') == 'true' )
+                    autoAlloc($docOp);
+
+
+                printFileXML("../../dati/xml/clienti.xml", $docClienti);
+                printFileXML("../../dati/xml/ordini.xml", $docOrd);
+                printFileXML("../../dati/xml/operazioni.xml", $docOp);
+
+                $mex_pagamento = 'L\'ordine è stato pagato, adesso hai '.$cr_client - $costo.' crediti';
+            }
+        }
+    }
+}
+
+
 $coin =0;  // =1 segnala che è stata trovato trovato l'ordine
 for ($pos = 0; $pos < $listaOrd->length && $coin == 0; $pos++) {
     $ordine = $listaOrd->item($pos);
     
-    if( $_POST['id_ordine'] == $ordine->getAttribute('id_richiesta') ) {                    
+    if( $_SESSION['id_ordine'] == $ordine->getAttribute('id_richiesta') ) {                    
         
         $ordine_child = $ordine->firstChild; 
         $ritiro = $ordine->getAttribute('ritiro');
@@ -52,37 +119,74 @@ if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'ord
 
 
 
-if( isset( $_POST['paga'] )) {
+//associa automaticamente le operazioni non assegnate ai bytecuorier
+//Per ogni operazione libera si sceglie il bt con meno operazioni in carico in quel momento 
+function autoAlloc($docOperazioni) {
 
-    $docCliente = openXML("../../dati/xml/clienti.xml");
-    $rootCliente = $docCliente->documentElement;
-    $listaCliente = $rootCliente->childNodes;
-    
-    $coin = 0;
-    for ( $pos = 0; $pos <= $listaCliente->length && $coin == 0; $pos++) {
-        $cliente = $listaCliente->item($pos);
+	require_once("../../mysql/connection.php");
+    if( !$connection_mysqli )   return -1;  //problemi di connessione al db, return -1
+
+	$rootOp = $docOperazioni->documentElement;  
+    $listOp = $rootOp->childNodes;
+
+	//scorro tutte le operazioni
+	for ($pos = 0; $pos < $listOp->length; $pos++) {
+		$operazione = $listOp->item($pos);   
+
+		//verifico se l'op non è assegnata
+		if( $operazione->getAttribute('username_bytecourier') == "" ) {
+
+			$min = 999;  //numero fittizio per ricercare il bt con il minimo numero di operazioni prese in carico
+
+		    //query per ottenere gli utenti che sono byte courier
+		    $select_query = "SELECT username FROM $user_table_name 
+		                     WHERE permesso = 10 ";
+
+            $res = mysqli_query($connection_mysqli, $select_query);
+            while ($row = mysqli_fetch_assoc($res)) 
+	            $listByte[] = $row['username'];
         
-        if( $cliente->getAttribute('username') == $_SESSION['username'] ) {
-            //Si verifica che il cliente possa permettersi il pagamento
-            if ( $cliente->getAttribute('crediti') >= $costo ) {
-                //aggiornamento file clienti.xml
-                $newCr = $cliente->getAttribute('crediti') - $costo;
-                $cliente->setAttribute('crediti', $newCr);
-                printFileXML("../../dati/xml/clienti.xml", $docCliente);
-                //aggiornamento file ordini.xml
-                $ordine->setAttribute('stato', 'accettato');
-                printFileXML("../../dati/xml/ordini.xml", $docOrd);
+			foreach( $listByte as $byte ) {
+				$num_op = countOp($byte, $listOp);
 
-                $mex = "<p>L'ordine è stato pagato</p>";
-                $pagato = 1;
-            }
-            else $mex = "<p>Non hai abbastanza crediti per pagare l'ordine (disponi di ".$cliente->getAttribute('crediti')." crediti)</p>"; 
+				if( $min >  $num_op) {
+					$min = $num_op;
+					$byte_min = $byte;
+				}
+			}
+            
+			$operazione->setAttribute('username_bytecourier', $byte_min);
+		}
+	}
+	return 0;
+} 
 
-            $coin = 1;
+//conta il numero di operazione attualmente prese in carico da un bytecourier
+function countOp($byte, $listOp) {
+
+    $count = 0;
+    for ($pos = 0; $pos < $listOp->length; $pos++) {
+		$operazione = $listOp->item($pos);
+        
+	    if( $byte == $operazione->getAttribute('username_bytecourier') ) {    
+            $count++;
         }
     }
+    return $count;
 }
 
+//ottiene un id disponibile (da chiamare prima che si appenda un nuovo elemento al doc xml)
+function getId($lista) {
+
+    $pos = $lista->length;
+    if( $pos >= 1)
+        $last_id = $lista->item(--$pos)->getAttribute('id_operazione') + 1;
+
+    else
+        $last_id = 0;
+
+    return $last_id;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +218,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
      <h2>Riepilogo ordine</h2>
-     <?php echo $mex;?>
+     <?php echo $mex_pagamento;?>
 
      <h3>Informazioni pacco</h3>
 	 <p>
@@ -133,9 +237,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />
 	 
      <form action="dettagli_ordine.php" method="post">
-     <?php if ( $pagato == 0 )  
-       echo '<input type="hidden" name="id_ordine" value="'.$_POST['id_ordine'].'"/>
-             <button type="submit" name="paga" value="1">Paga</button>';?>  
+     <?php if ( !isset($_POST['pagamento']) )  
+                echo '<button type="submit" name="pagamento" value="'.$_SESSION['id_ordine'].'">Paga</button>';?>  
      </form>
    </div> 
    

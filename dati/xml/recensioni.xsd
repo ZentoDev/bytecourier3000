@@ -11,23 +11,24 @@
 
 <xs:element name="recensione">
     <xs:complexType>
-        <xs:sequence>
-            <xs:element name="testo" type="xs:string" minOccurs="1" />
-        </xs:sequence>
-        <xs:attribute name="id_recensione" type="xs:string" use="required" />
-        <xs:attribute name="tipologia_spedizione" type="xs:string" use="required" />
-        <xs:attribute name="username" type="xs:string" use="required" />
-        <xs:attribute name="voto" use="required">
-            <xs:simpleType>
-                <xs:restriction base="xs:int">
-                    <xs:enumeration value="1"></xs:enumeration> 
-                    <xs:enumeration value="2"></xs:enumeration> 
-                    <xs:enumeration value="3"></xs:enumeration> 
-                    <xs:enumeration value="4"></xs:enumeration> 
-                    <xs:enumeration value="5"></xs:enumeration> 
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="id_recensione" type="xs:string" use="required" />
+                <xs:attribute name="tipologia_spedizione" type="xs:string" use="required" />
+                <xs:attribute name="username" type="xs:string" use="required" />
+                <xs:attribute name="voto" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:enumeration value="1"></xs:enumeration> 
+                            <xs:enumeration value="2"></xs:enumeration> 
+                            <xs:enumeration value="3"></xs:enumeration> 
+                            <xs:enumeration value="4"></xs:enumeration> 
+                            <xs:enumeration value="5"></xs:enumeration> 
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 </xs:element>
 
