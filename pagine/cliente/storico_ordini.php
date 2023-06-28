@@ -9,6 +9,14 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+
+if( isset($_POST['dettagli']) ){
+    $_SESSION['id_ordine'] = $_POST['dettagli'];
+    $_SESSION['funzione'] = 'recensione';
+	header('Location:dettagli_ordine.php');
+    exit;
+}
+
 function stampaSpedizioni($listOrd) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
@@ -21,7 +29,7 @@ function stampaSpedizioni($listOrd) {
 
         //seleziona gli ordini conclusi dal cliente
         if( $ordine->getAttribute('username') == $_SESSION['username'] && 
-            ($stato  == 'concluso' || $stato  == 'rifiutato') ) {                    
+            ($stato  == 'concluso' ) ) {                    
 
             $id_ordine = $ordine->getAttribute('id_richiesta');
             $ordine_child = $ordine->firstChild; 
@@ -57,18 +65,25 @@ function stampaSpedizioni($listOrd) {
                       <th><strong>Id ordine:</strong> '.$id_ordine.'<br />
                       <strong>stato:</strong> '.$stato.'</th>
                      <td>   
-                      <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
-                      <strong>Destinazione:</strong> '.$destinazione.'<br />
-                      <strong>Destinatario:</strong> '.$nome.'<br />
-                      <strong>tipologia spedizione:</strong> '.$tipologia.'<br />
-                     </td>   
-                     <td>
-                     <strong>costo:</strong> '.$costo.' €<br />
-                     <strong>peso:</strong> '.$peso.' kg<br />
-                     <strong>larghezza:</strong> '.$larghezza.' cm<br />
-                     <strong>altezza:</strong> '.$altezza.' cm<br />
-                     <strong>profondita:</strong> '.$profondita.' cm<br />
+                          <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
+                          <strong>Destinazione:</strong> '.$destinazione.'<br />
+                          <strong>Destinatario:</strong> '.$nome.'<br />
+                          <strong>tipologia spedizione:</strong> '.$tipologia.'<br />
                      </td>
+                     <td>
+                          <strong>costo:</strong> '.$costo.' €<br />
+                          <strong>peso:</strong> '.$peso.' kg<br />
+                          <strong>larghezza:</strong> '.$larghezza.' cm<br />
+                          <strong>altezza:</strong> '.$altezza.' cm<br />
+                          <strong>profondita:</strong> '.$profondita.' cm<br />
+                     </td>
+                     <td>
+                          <form action="storico_ordini.php" method="post">
+                          <div id="buttons">
+                          <button type="submit" name="dettagli" value="'.$id_ordine.'" >Visualizza dettagli</button>
+                          </div>
+                          </form>
+                          </td>
                      </tr>';
             $coin = 1;
             $presente = 1;

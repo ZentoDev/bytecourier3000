@@ -13,10 +13,10 @@
             <nota data_nota="2022-12-27T20:39:11" username="Wick64">Il ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i pianiIl ritiro è proceduto secondo i piani</nota>
         </note>
     </operazione>
-    <operazione id_operazione="3" username_bytecourier="Locky89" id_ordine="3" stato="2">
+    <operazione id_operazione="3" username_bytecourier="Locky89" id_ordine="3" stato="5">
         <note />
     </operazione>
-    <operazione id_operazione="4" username_bytecourier="" id_ordine="4" stato="3">
+    <operazione id_operazione="4" username_bytecourier="Locky89" id_ordine="4" stato="5">
         <note />
     </operazione>
     <operazione id_operazione="5" username_bytecourier="" id_ordine="5" stato="1">
@@ -30,5 +30,8 @@
             <nota data_nota="2022-12-26T19:20:06" username="Locky89">ciao</nota>
             <nota data_nota="2022-12-26T19:20:43" username="Wick64">ciao</nota>
         </note>
+    </operazione>
+    <operazione id_operazione="8" username_bytecourier="Wick64" id_ordine="10" stato="5">
+        <note />
     </operazione>
 </lista_operazioni>

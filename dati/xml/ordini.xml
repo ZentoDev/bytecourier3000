@@ -14,13 +14,13 @@
         <destinatario nome="Giorgia" cognome="Benedetti" />
     </ordine>
     <ordine id_richiesta="3" username="stella" tipologia_spedizione="provincia" costo="120"
-        stato="accettato" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
+        stato="concluso" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Latina" nazione="Italia" strada="via leonida" numero="14" />
         <indirizzo_destinazione citta="Anzio" nazione="Italia" strada="via ardeatina" numero="112" />
         <destinatario nome="Lucas" cognome="Pleus" />
     </ordine>
     <ordine id_richiesta="4" username="marcolino71" tipologia_spedizione="citta" costo="10"
-        stato="accettato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
+        stato="concluso" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Napoli" nazione="Italia" strada="viale caporetto" numero="25" />
         <indirizzo_destinazione citta="Napoli" nazione="Italia" strada="via del corso" numero="14" />
         <destinatario nome="Gennaro" cognome="Immobile" />
@@ -57,7 +57,7 @@
         <destinatario nome="Gregorio" cognome="Annunziato" />
     </ordine>
     <ordine id_richiesta="10" username="marcolino71" tipologia_spedizione="provincia" costo="166"
-        stato="accettato" ritiro="in_loco" peso="52" larghezza="20" altezza="25" profondita="15">
+        stato="concluso" ritiro="in_loco" peso="52" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Bari" nazione="Italia" strada="via broccolo" numero="3" />
         <indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili"
             numero="5" />

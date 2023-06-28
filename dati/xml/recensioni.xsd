@@ -14,8 +14,7 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="id_recensione" type="xs:string" use="required" />
-                <xs:attribute name="tipologia_spedizione" type="xs:string" use="required" />
-                <xs:attribute name="username" type="xs:string" use="required" />
+                <xs:attribute name="id_ordine" type="xs:string" use="required" />
                 <xs:attribute name="voto" use="required">
                     <xs:simpleType>
                         <xs:restriction base="xs:int">

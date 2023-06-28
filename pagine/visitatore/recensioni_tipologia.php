@@ -9,31 +9,41 @@ $docRec = openXML("../../dati/xml/recensioni.xml");
 $rootRec = $docRec->documentElement;
 $listaRec = $rootRec->childNodes;
 
+$docOrd = openXML("../../dati/xml/ordini.xml");
+$rootOrd = $docOrd->documentElement;
+$listaOrd = $rootOrd->childNodes;
+
 
 //stampa le note
-function stampaRecensioni($listRecensioni, $tipologia){
+function stampaRecensioni($listOrd, $listRecensioni, $tipologia){
 
     $find = 0;
 	$tabNote = "<table id=\"table_commenti\">";
 	
-	for ( $i=0; $i < $listRecensioni->length; $i++ ) {
-        $recensione = $listRecensioni->item($i);
+	for ( $c=0; $c < $listOrd->length; $c++ ) {
+        $ordine = $listOrd->item($c);
 
-        if( $tipologia == $recensione->getAttribute('tipologia_spedizione')){
+        if( $ordine->getAttribute('tipologia_spedizione') == $tipologia ){
+                    
+            for( $i=0; $i < $listRecensioni->length; $i++ ) {
+                $recensione = $listRecensioni->item($i);            
 
-		    $author = $recensione->getAttribute('username');
-            $voto = $recensione->getAttribute('voto');
-		    $text = $recensione->textContent;
+                if( $recensione->getAttribute('id_ordine') == $ordine->getAttribute('id_richiesta') ){
+                    
+		            $author = $ordine->getAttribute('username');
+                    $voto = $recensione->getAttribute('voto');
+		            $text = $recensione->textContent;
 		
-		    $tabNote .="<tr>
-		              <td><strong>Autore:</strong> $author <strong>Valutazione:</strong> $voto stelle</td>
-                      <td rowspan=\"2\"></td>
-				    </tr>
-				    <tr class=\"tr_bordo\">
-				       <td>$text</td>
-
-				    </tr>";
-            $find = 1;
+		            $tabNote .="<tr>
+		                        <td><strong>Autore:</strong> $author <br /><strong>Valutazione:</strong> $voto stelle</td>
+                                <td rowspan=\"2\"></td>
+	            			    </tr>
+				                <tr class=\"tr_bordo\">
+	             		        <td>$text</td>
+				                </tr>";
+                    $find = 1;
+                }
+            }
         }	
 	}
 	$tabNote .= "</table>";
@@ -73,7 +83,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      
      <?php         
         echo '<h2>Recensioni della tipologia "'.$_SESSION['id_tipo'].'"</h2>';
-        echo stampaRecensioni($listaRec, $_SESSION['id_tipo']); 
+        echo stampaRecensioni($listaOrd, $listaRec, $_SESSION['id_tipo']); 
         ?>
    </div>
    

@@ -9,25 +9,60 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if( isset($_POST['id_ordine'])){
-    $_SESSION['id_ordine'] = $_POST['id_ordine'];
+if( isset($_POST['paga'])){
+    $_SESSION['id_ordine'] = $_POST['paga'];
+    $_SESSION['funzione'] = 'pagamento';
 	header('Location:dettagli_ordine.php');
     exit;
 }
 
-function stampaSpedizioni($listOrd) {
+//Seleziona la tipologia di ordini da visualizzare ('in_attesa_pagamento/modificato', in_attesa, accettato)
+$stato_selezionato = 'in_attesa_pagamento';
+if( isset($_POST['tipo_ordine']) ){
+    $stato_selezionato = $_POST['tipo_ordine'];
+}
+
+function stampaSpedizioni($listOrd, $tipo_stato) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
     
-    $table="<table>";  
-    
+    $table='<h2>Ordini</h2>
+            <form action="ordini.php" method="post">
+            <div id="buttons">
+            <button type="submit" name="tipo_ordine" value="in_attesa_pagamento" >Ordini in attesa di pagamento</button>
+            <button type="submit" name="tipo_ordine" value="in_attesa" >Ordini in attesa di accettazione</button>&nbsp
+            <button type="submit" name="tipo_ordine" value="accettato" >Ordini in corso</button>&nbsp
+            <button type="submit" name="tipo_ordine" value="rifiutato" >Ordini rifiutati</button>&nbsp
+            </div>
+            </form>
+            <table>';  
+                  
+    switch($tipo_stato) {
+        case 'in_attesa_pagamento':
+            $table.= '<h3>Ordini in attesa di pagamento</h3>';
+            break;
+        
+        case 'in_attesa':
+            $table.= '<h3>Ordini in attesa di accettazione</h3>';
+            break;
+        
+         case 'accettato':
+            $table.= '<h3>Ordini in corso</h3>';
+            break;
+        
+        case 'rifiutato':
+            $table.= '<h3>Ordini rifiutati</h3>';
+            break;           
+    }
+
     for ($pos = 0; $pos < $listOrd->length; $pos++) {
         $ordine = $listOrd->item($pos);
         $stato = $ordine->getAttribute('stato');
+        if( $stato == 'modificato') $stato = 'in_attesa_pagamento';
 
         //seleziona gli ordini conclusi dal cliente
         if( $ordine->getAttribute('username') == $_SESSION['username'] && 
-            $stato  == 'in_attesa' || $stato == 'in_attesa_pagamento' || $stato == 'modificato' || 'accettato') {                    
+            $stato == $tipo_stato ) {                
 
             $id_ordine = $ordine->getAttribute('id_richiesta');
             $ordine_child = $ordine->firstChild; 
@@ -80,7 +115,7 @@ function stampaSpedizioni($listOrd) {
                 $table .='<td>
                           <form action="ordini.php" method="post">
                           <div id="buttons">
-                          <button type="submit" name="id_ordine" value="'.$id_ordine.'" >Pagamento</button>
+                          <button type="submit" name="paga" value="'.$id_ordine.'" >Pagamento</button>
                           </div>
                           </form>
                           </td>
@@ -128,9 +163,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Ordini in corso</h2>
 
-     <?php echo stampaSpedizioni($listaOrd); ?>
+     <?php echo stampaSpedizioni($listaOrd, $stato_selezionato); ?>
    </div>
    
    <div id="navbar" class="colonna">

@@ -4,21 +4,25 @@ error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 
 require_once("../../dati/lib_xmlaccess.php");
-$docOp = openXML("../../dati/xml/operazioni.xml");
-$docOrd = openXML("../../dati/xml/ordini.xml");
-$docClienti = openXML("../../dati/xml/clienti.xml");
-$docSetting = openXML("../../dati/xml/setting.xml"); 
-  
+
+$docOrd = openXML("../../dati/xml/ordini.xml");  
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+$docOp = openXML("../../dati/xml/operazioni.xml");
 $rootOp = $docOp->documentElement;  
 $listaOp = $rootOp->childNodes;
 
+$docClienti = openXML("../../dati/xml/clienti.xml");
 $rootClienti = $docClienti->documentElement;  
 $listaClienti = $rootClienti->childNodes;
 
+$docSetting = openXML("../../dati/xml/setting.xml"); 
 $rootSetting = $docSetting->documentElement;
+
+$docRec = openXML("../../dati/xml/recensioni.xml");
+$rootRec = $docRec->documentElement;
+$listaRec = $rootRec->childNodes;
 
 $mex_pagamento = '';
 if( isset($_POST['pagamento']) ){
@@ -50,7 +54,7 @@ if( isset($_POST['pagamento']) ){
                 $ordine->setAttribute('stato', 'accettato');
 
                 //creo operazione associata all'ordine
-                $new_id = getId($listaOp);
+                $new_id = getId($listaOp, 'id_operazione');
                 $new_op = $docOp->createElement('operazione');
                 $rootOp->appendChild($new_op);
                 $new_note = $docOp->createElement('note');
@@ -76,9 +80,22 @@ if( isset($_POST['pagamento']) ){
     }
 }
 
+if( isset($_POST['recensione']) ){
 
-$coin =0;  // =1 segnala che è stata trovato trovato l'ordine
-for ($pos = 0; $pos < $listaOrd->length && $coin == 0; $pos++) {
+    $new_id = getId($listaRec, 'id_recensione');
+    $new_rec = $docRec->createElement('recensione', $_POST['testo_recensione']);
+    $rootRec->appendChild($new_rec);
+
+    $new_rec->setAttribute('id_recensione', $new_id);
+    $new_rec->setAttribute('id_ordine', $_SESSION['id_ordine']);
+    $new_rec->setAttribute('voto', $_POST['voto']);
+
+    printFileXML("../../dati/xml/recensioni.xml", $docRec);    
+}
+
+
+$find =0;  // =1 segnala che è stata trovato l'ordine
+for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
     $ordine = $listaOrd->item($pos);
     
     if( $_SESSION['id_ordine'] == $ordine->getAttribute('id_richiesta') ) {                    
@@ -112,12 +129,40 @@ for ($pos = 0; $pos < $listaOrd->length && $coin == 0; $pos++) {
         $larghezza = $ordine->getAttribute('larghezza');
         $altezza = $ordine->getAttribute('altezza');
         $profondita = $ordine->getAttribute('profondita'); 
-        $coin = 1;
+        $find = 1;
     }
 }
-if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'ordine, contattare il supporto tecnico</p>";
+if($find == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'ordine, contattare il supporto tecnico</p>";
 
 
+//Se è un ordine completato si abilita la possibilita di visualizzare la parte relativa alla recensione
+if( $_SESSION['funzione'] == 'recensione' ){
+    
+    $find = 0;
+    for( $i = 0; $i <$listaRec->length && $find == 0; $i++ ){
+        $recensione = $listaRec->item($i);
+        
+        if( $_SESSION['id_ordine'] == $recensione->getAttribute('id_ordine') ){
+
+            $text_rec = '<h3>Recensione</h3>
+                        Voto: '.$recensione->getAttribute('voto').'<br />
+                        '.$recensione->textContent;
+            $find = 1;
+        }
+    }
+    if( $find == 0 ){
+        $text_rec = 
+                  '<br /><br />
+                  <h3>Recensione</h3><br />
+                  <form action="dettagli_ordine.php" method="post" >
+                  Voto: 
+                  <input type="number" name="voto" value="" min="1" max="5" required><br /> <br />
+                  <textarea type="text" name="testo_recensione" placeholder="Recensione..." required></textarea><br /><br />
+                  <button type="submit" name="recensione" value="1">Salva recensione</button>
+                  </form>
+                  </p>';
+    }
+}
 
 //associa automaticamente le operazioni non assegnate ai bytecuorier
 //Per ogni operazione libera si sceglie il bt con meno operazioni in carico in quel momento 
@@ -176,11 +221,11 @@ function countOp($byte, $listOp) {
 }
 
 //ottiene un id disponibile (da chiamare prima che si appenda un nuovo elemento al doc xml)
-function getId($lista) {
+function getId($lista, $nome_attr) {
 
     $pos = $lista->length;
     if( $pos >= 1)
-        $last_id = $lista->item(--$pos)->getAttribute('id_operazione') + 1;
+        $last_id = $lista->item(--$pos)->getAttribute($nome_attr) + 1;
 
     else
         $last_id = 0;
@@ -237,8 +282,17 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />
 	 
      <form action="dettagli_ordine.php" method="post">
-     <?php if ( !isset($_POST['pagamento']) )  
-                echo '<button type="submit" name="pagamento" value="'.$_SESSION['id_ordine'].'">Paga</button>';?>  
+     <?php  
+        //bottone pagamento
+        if ( $_SESSION['funzione'] == 'pagamento' && !isset($_POST['pagamento']) )  
+            echo '<button type="submit" name="pagamento" value="'.$_SESSION['id_ordine'].'">Paga</button>';
+        
+        if( $_SESSION['funzione'] == 'recensione' ){
+            echo $text_rec;
+        }
+
+
+        //stampaNote($listaNote); ?>
      </form>
    </div> 
    
