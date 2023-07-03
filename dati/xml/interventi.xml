@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <lista_interventi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="interventi.xsd" >
-
-<intervento id_intervento="0001" id_risposta="" username="stella">Dove si possono trovare info sulle spedizioni?</intervento>
-
-<intervento id_intervento="0002" id_risposta="0001" username="marco">Nella sezione informazioni!</intervento>
-
-<intervento id_intervento="0003" id_risposta="" username="marco">Ciao a tutti!</intervento>
-
-<intervento id_intervento="0004" id_risposta="0005" username="marco">Vedi bene nella sezione richiedi crediti</intervento>
-
-<intervento id_intervento="0005" id_risposta="" username="marco">Dove posso richiedere i crediti?</intervento>
-
+    xsi:noNamespaceSchemaLocation="interventi.xsd">
+    <intervento id_intervento="1" id_risposta="" username="stella">Dove si possono trovare info sulle spedizioni?</intervento>
+    <intervento id_intervento="2" id_risposta="1" username="marco">Nella sezione informazioni!</intervento>
+    <intervento id_intervento="3" id_risposta="" username="marco">Ciao a tutti!</intervento>
+    <intervento id_intervento="4" id_risposta="" username="marco">Dove posso richiedere i crediti?</intervento>
+    <intervento id_intervento="5" id_risposta="4" username="marco">Vedi bene nella sezione richiedi crediti</intervento>
+    <intervento id_intervento="6" id_risposta="1" username="marcolino71">Guarda nella sezione "informazioni" che si trova qui sulla sinistra. </intervento>
+    <intervento id_intervento="7" id_risposta="6" username="marcolino71">La barra a sinistra dove puoi fare anche il Logout</intervento>
+    <intervento id_intervento="8" id_risposta="" username="marcolino71">Posso visualizzare lo storico degli ordini?</intervento>
 </lista_interventi>

@@ -3,7 +3,7 @@
 <faq xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="faq.xsd" >
 
-<intervento id_intervento="0001" id_risposta="0002" />
-<intervento id_intervento="0005" id_risposta="0004" />
+<intervento id_intervento="1" id_risposta="2" />
+<intervento id_intervento="4" id_risposta="5" />
 
 </faq>

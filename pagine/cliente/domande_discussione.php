@@ -10,41 +10,59 @@ $listaInt = $rootInt->childNodes;
 
 
 if( isset($_POST['risposta']) ){
-    
+
     $_SESSION['id_intervento'] = $_POST['risposta'];
     header('Location:domande_discussione.php');
     exit;
 }
 
-if( isset($_POST['nuova_domanda']) ){
+if( isset($_POST['nuova_risposta']) ){
 
     $new_id = getId($listaInt, 'id_intervento');
-    $new_intervento = $docInt->createElement('intervento', $_POST['testo_domanda']);
+    $new_intervento = $docInt->createElement('intervento', $_POST['testo_risposta']);
     $rootInt->appendChild($new_intervento);
 
     $new_intervento->setAttribute('id_intervento', $new_id);
-    $new_intervento->setAttribute('id_risposta', "");
+    $new_intervento->setAttribute('id_risposta', $_SESSION['id_intervento']);
     $new_intervento->setAttribute('username', $_SESSION['username']);
 
     printFileXML("../../dati/xml/interventi.xml", $docInt);    
 }
 
-function stampaInterventi($listI) {
-
-	$stampa .= 
-             "<h2>Scrivi nuova domanda</h2>
-              <form action=\"domande.php\" method=\"post\" >
-              <textarea type=\"text\" name=\"testo_domanda\" placeholder=\"Nuova domanda\" required></textarea><br />
-              <button type=\"submit\" name=\"nuova_domanda\" value=\"$id_intervento\">Salva</button>
-              </form>  ";
-
-    $stampa .= "<h2>Domande</h2>";
+function stampaInterventi($listI, $id_domanda) {
 
     for( $i=0; $i < $listI->length; $i++ ) {
         $intervento = $listI->item($i);
 
-        //Verifico che l'intervento non sia una risposta ad un'altro intervento, voglio stampare solo le domande
-        if( $intervento->getAttribute('id_risposta') == "" ){
+        //Verifico che l'intervento sia una risposta alla domanda selezionata nella pagina precedente
+        if( $intervento->getAttribute('id_intervento') == $id_domanda ){
+                        
+            $id_intervento = $intervento->getAttribute('id_intervento');
+            $testo = $intervento->firstChild->textContent; 
+            $autore = $intervento->getAttribute('username');
+		    $stampa .= 
+                "<table id=\"table_commenti\">
+                  <tr>
+                  <td>
+                  <strong>Autore:</strong> $autore<br /><br />
+                  $testo
+                  </td>
+                 </tr></table>
+                        
+                 <form action=\"domande_discussione.php\" method=\"post\" >
+                  <textarea type=\"text\" name=\"testo_risposta\" placeholder=\"Scrivi risposta\" required></textarea><br />
+                  <button type=\"submit\" name=\"nuova_risposta\" value=\"$id_intervento\">Rispondi</button>
+                 </form>  ";
+        }
+    }
+
+    $stampa .= "<h2>Risposte</h2>";
+
+    for( $i=0; $i < $listI->length; $i++ ) {
+        $intervento = $listI->item($i);
+
+        //Verifico che l'intervento sia una risposta alla domanda selezionata nella pagina precedente
+        if( $intervento->getAttribute('id_risposta') == $id_domanda ){
             
             $id_intervento = $intervento->getAttribute('id_intervento');
             $testo = $intervento->firstChild->textContent; 
@@ -58,15 +76,14 @@ function stampaInterventi($listI) {
                   </td>
                  </tr></table>
                         
-                 <form action=\"domande.php\" method=\"post\" >
-                  <button type=\"submit\" name=\"risposta\" value=\"$id_intervento\">Risposte</button>
+                 <form action=\"domande_discussione.php\" method=\"post\" >
+                  <button type=\"submit\" name=\"risposta\" value=\"$id_intervento\">Discussione</button>
                  </form>  ";
         }
     }
 	
 	return $stampa;
 }
-
 
 //ottiene un id disponibile (da chiamare prima che si appenda un nuovo elemento al doc xml)
 function getId($lista, $nome_attr) {
@@ -81,7 +98,6 @@ function getId($lista, $nome_attr) {
     return $last_id;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -93,7 +109,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Domande</title>
+    <title>Risposte</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
     <link rel="stylesheet" href="../tabcommenti.css" type="text/css">
@@ -111,7 +127,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
      
-	 <?php echo stampaInterventi($listaInt);?>
+	 <?php echo stampaInterventi($listaInt, $_SESSION['id_intervento']);?>
 		
    </div>
    
