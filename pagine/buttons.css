@@ -1,0 +1,58 @@
+
+  /*.btn {
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+*/
+  .btn-primary {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #3c92ee;
+    color: #fff;
+  }
+
+/*
+  .btn-secondary {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+*/
+  .btn-outline {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background-color: transparent;
+    color: #000;
+  }
+/*
+  .btn-shadow {
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+*/

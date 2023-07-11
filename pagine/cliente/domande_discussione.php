@@ -9,22 +9,37 @@ $rootInt = $docInt->documentElement;
 $listaInt = $rootInt->childNodes;
 
 
-if( isset($_POST['risposta']) ){
+if( isset($_POST['like']) ){
 
-    $_SESSION['id_intervento'] = $_POST['risposta'];
-    header('Location:domande_discussione.php');
-    exit;
+    $find = 0;
+    for( $i=0; $i < $listaInt->length && $find == 0; $i++ ) {
+        $intervento = $listaInt->item($i);
+
+        //Verifico che l'intervento sia una risposta alla domanda selezionata nella pagina precedente
+        if( $intervento->getAttribute('id_intervento') == $_POST['like'] ){
+            $new_like = $docInt->createElement('valutazione_utente');
+            $intervento->appendChild($new_like);
+
+            $new_like->setAttribute('id_user', $_SESSION['username']);
+
+            printFileXML("../../dati/xml/interventi.xml", $docInt);  
+            $find = 1;
+        }
+    }
 }
 
 if( isset($_POST['nuova_risposta']) ){
 
     $new_id = getId($listaInt, 'id_intervento');
-    $new_intervento = $docInt->createElement('intervento', $_POST['testo_risposta']);
+    $new_intervento = $docInt->createElement('intervento');
     $rootInt->appendChild($new_intervento);
+    $new_testo = $docInt->createElement('testo', $_POST['testo_risposta']);
+    $new_intervento->appendChild($new_testo);
 
     $new_intervento->setAttribute('id_intervento', $new_id);
     $new_intervento->setAttribute('id_risposta', $_SESSION['id_intervento']);
     $new_intervento->setAttribute('username', $_SESSION['username']);
+    $new_intervento->setAttribute('admin', "false");
 
     printFileXML("../../dati/xml/interventi.xml", $docInt);    
 }
@@ -57,6 +72,7 @@ function stampaInterventi($listI, $id_domanda) {
     }
 
     $stampa .= "<h2>Risposte</h2>";
+    $presente = 0;
 
     for( $i=0; $i < $listI->length; $i++ ) {
         $intervento = $listI->item($i);
@@ -74,14 +90,36 @@ function stampaInterventi($listI, $id_domanda) {
                   <strong>Autore:</strong> $autore<br /><br />
                   $testo
                   </td>
-                 </tr></table>
-                        
-                 <form action=\"domande_discussione.php\" method=\"post\" >
-                  <button type=\"submit\" name=\"risposta\" value=\"$id_intervento\">Discussione</button>
-                 </form>  ";
+                 </tr></table>";
+
+            $presente = 1;
+
+                $find_like = 0;
+                foreach( $intervento->getElementsByTagName("valutazione_utente") as $like ){
+                
+                    if( $like->getAttribute('id_user') == $_SESSION['username'] ){
+
+                        $stampa .= 
+                        '<form action="domande_discussione.php" method="post" >
+                        <button disabled class="btn-outline">Ti piace</button>
+                        <strong>'.$intervento->getElementsByTagName("valutazione_utente")->length.' Like</strong> 
+                       </form>';
+
+                       $find_like = 1;
+                    }
+                
+                }
+                if( $find_like == 0 ){
+                    $stampa .= 
+                    '<form action="domande_discussione.php" method="post" >
+                    <button type="submit" name="like" value="'.$id_intervento.'" class="btn-primary">Mi piace</button>
+                    <strong>'.$intervento->getElementsByTagName("valutazione_utente")->length.' Like</strong> 
+                   </form>';
+                }
         }
     }
 	
+    if( $presente == 0)  $stampa .= '<p>non sono presenti risposte</p>';
 	return $stampa;
 }
 
@@ -113,6 +151,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
     <link rel="stylesheet" href="../tabcommenti.css" type="text/css">
+    <link rel="stylesheet" href="../buttons.css" type="text/css">
 </head>
 
 <body>
@@ -126,7 +165,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     
+
 	 <?php echo stampaInterventi($listaInt, $_SESSION['id_intervento']);?>
 		
    </div>

@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lista_interventi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="interventi.xsd">
-    <intervento id_intervento="1" id_risposta="" username="stella">Dove si possono trovare info sulle spedizioni?</intervento>
-    <intervento id_intervento="2" id_risposta="1" username="marco">Nella sezione informazioni!</intervento>
-    <intervento id_intervento="3" id_risposta="" username="marco">Ciao a tutti!</intervento>
-    <intervento id_intervento="4" id_risposta="" username="marco">Dove posso richiedere i crediti?</intervento>
-    <intervento id_intervento="5" id_risposta="4" username="marco">Vedi bene nella sezione richiedi crediti</intervento>
-    <intervento id_intervento="6" id_risposta="1" username="marcolino71">Guarda nella sezione "informazioni" che si trova qui sulla sinistra. </intervento>
-    <intervento id_intervento="7" id_risposta="6" username="marcolino71">La barra a sinistra dove puoi fare anche il Logout</intervento>
-    <intervento id_intervento="8" id_risposta="" username="marcolino71">Posso visualizzare lo storico degli ordini?</intervento>
+    <intervento id_intervento="1" id_risposta="" username="stella" admin="false">
+        <testo>Dove si possono trovare info sulle spedizioni?</testo>
+    </intervento>
+    <intervento id_intervento="2" id_risposta="1" username="marco" admin="false">
+        <testo>sezione informazioni!</testo>
+        <valutazione_utente id_user="marcolino71" />
+        <valutazione_utente id_user="stella" />
+    </intervento>
+    <intervento id_intervento="3" id_risposta="" username="marco" admin="false">
+        <testo>Ciao a tutti!</testo>
+    </intervento>
+    <intervento id_intervento="4" id_risposta="" username="marco" admin="false">
+        <testo>Dove posso richiedere i crediti?</testo>
+    </intervento>
+    <intervento id_intervento="5" id_risposta="4" username="marco" admin="false">
+        <testo>Vedi bene nella sezione richiedicrediti</testo>
+    </intervento>
+    <intervento id_intervento="6" id_risposta="1" username="marcolino71" admin="false">
+        <testo>Guarda nella sezione"informazioni" che si trova qui sulla sinistra. </testo>
+        <valutazione_utente id_user="marcolino71" />
+    </intervento>
+    <intervento id_intervento="7" id_risposta="1" username="marcolino71" admin="false">
+        <testo>La barra a sinistra dovepuoi fare anche il Logout</testo>
+    </intervento>
+    <intervento id_intervento="8" id_risposta="" username="marcolino71" admin="false">
+        <testo>Posso visualizzare lo storico degli ordini?</testo>
+    </intervento>
+    <intervento id_intervento="9" id_risposta="" username="admin" admin="true">
+        <testo>Come accedo al sito?</testo>
+    </intervento>
+    <intervento id_intervento="10" id_risposta="9" username="admin" admin="true">
+        <testo>È sufficiente inserire le proprie credenziali nella sezione di login. </testo>
+    </intervento>
+    <intervento id_intervento="11" id_risposta="8" username="marcolino71" admin="false">
+        <testo>Basta cercare "storico ordini" nel menu di fianco a sinistra.</testo>
+    </intervento>
 </lista_interventi>

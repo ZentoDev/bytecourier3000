@@ -1,24 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<xs:element name="lista_interventi">
-    <xs:complexType>
-        <xs:sequence>
-            <xs:element ref="intervento" maxOccurs="unbounded" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-</xs:element>
+    <xs:element name="lista_interventi">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="intervento" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-<xs:element name="intervento">
-    <xs:complexType>
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="id_intervento" type="xs:string" use="required" />
-                <xs:attribute name="id_risposta" type="xs:string" use="required" />
-                <xs:attribute name="username" type="xs:string" use="required" />
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-</xs:element>
+    <xs:element name="intervento">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="testo" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="valutazione_utente" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="id_intervento" type="xs:string" use="required" />
+            <xs:attribute name="id_risposta" type="xs:string" use="required" />
+            <xs:attribute name="username" type="xs:string" use="required" />
+            <xs:attribute name="admin" type="xs:boolean" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="valutazione_utente">
+        <xs:complexType>
+            <xs:attribute name="id_user" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

@@ -19,12 +19,15 @@ if( isset($_POST['risposta']) ){
 if( isset($_POST['nuova_domanda']) ){
 
     $new_id = getId($listaInt, 'id_intervento');
-    $new_intervento = $docInt->createElement('intervento', $_POST['testo_domanda']);
+    $new_intervento = $docInt->createElement('intervento');
     $rootInt->appendChild($new_intervento);
+    $new_testo = $docInt->createElement('testo', $_POST['testo_domanda']);
+    $new_intervento->appendChild($new_testo);
 
     $new_intervento->setAttribute('id_intervento', $new_id);
     $new_intervento->setAttribute('id_risposta', "");
     $new_intervento->setAttribute('username', $_SESSION['username']);
+    $new_intervento->setAttribute('admin', "false");
 
     printFileXML("../../dati/xml/interventi.xml", $docInt);    
 }
@@ -43,12 +46,14 @@ function stampaInterventi($listI) {
     for( $i=0; $i < $listI->length; $i++ ) {
         $intervento = $listI->item($i);
 
-        //Verifico che l'intervento non sia una risposta ad un'altro intervento, voglio stampare solo le domande
-        if( $intervento->getAttribute('id_risposta') == "" ){
+        //Verifico che l'intervento non sia una risposta ad un'altro intervento o una domanda posta da un admin con lo scopo di farla apparire tra le FAQ,
+        //voglio stampare solo le domande poste da clienti
+        if( $intervento->getAttribute('id_risposta') == "" && $intervento->getAttribute('admin') == 'false'){
             
             $id_intervento = $intervento->getAttribute('id_intervento');
-            $testo = $intervento->firstChild->textContent; 
             $autore = $intervento->getAttribute('username');
+            $testo = $intervento->firstChild->textContent; 
+
 		    $stampa .= 
                 "<table id=\"table_commenti\">
                   <tr>
