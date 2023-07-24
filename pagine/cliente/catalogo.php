@@ -19,6 +19,7 @@ if( isset($_POST['vedi_opzioni']) ){
 if( isset($_POST['recensioni']) ){
   
   $_SESSION['id_tipo'] = $_POST['recensioni'];
+  $_SESSION['ordine_visualizzazione'] = 1;
   header('Location:recensioni_tipologia.php');
   exit;  
 }

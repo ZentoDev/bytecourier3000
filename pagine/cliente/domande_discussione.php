@@ -94,28 +94,28 @@ function stampaInterventi($listI, $id_domanda) {
 
             $presente = 1;
 
-                $find_like = 0;
-                foreach( $intervento->getElementsByTagName("valutazione_utente") as $like ){
+            $find_like = 0;
+            foreach( $intervento->getElementsByTagName("valutazione_utente") as $like ){
                 
-                    if( $like->getAttribute('id_user') == $_SESSION['username'] ){
+                if( $like->getAttribute('id_user') == $_SESSION['username'] ){
 
-                        $stampa .= 
+                    $stampa .= 
                         '<form action="domande_discussione.php" method="post" >
                         <button disabled class="btn-outline">Ti piace</button>
                         <strong>'.$intervento->getElementsByTagName("valutazione_utente")->length.' Like</strong> 
                        </form>';
 
-                       $find_like = 1;
-                    }
-                
+                   $find_like = 1;
                 }
-                if( $find_like == 0 ){
-                    $stampa .= 
+                
+            }
+            if( $find_like == 0 ){
+                $stampa .= 
                     '<form action="domande_discussione.php" method="post" >
                     <button type="submit" name="like" value="'.$id_intervento.'" class="btn-primary">Mi piace</button>
                     <strong>'.$intervento->getElementsByTagName("valutazione_utente")->length.' Like</strong> 
                    </form>';
-                }
+            }
         }
     }
 	

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <recensioni xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="recensioni.xsd" >
-
-<recensione id_recensione="1" id_ordine="3" voto="5">Servizio ottimo, puntuale e attento! Per spedire in provincia scelgo solo ByteCourier3000</recensione>
-<recensione id_recensione="2" id_ordine="4" voto="3">Pacco arrivato in ritardo rispetto ai tempo previsti</recensione>
-<recensione id_recensione="3" id_ordine="10" voto="4">Sono soddisfatto del servizio</recensione>
-
+    xsi:noNamespaceSchemaLocation="recensioni.xsd">
+    <recensione id_recensione="1" id_ordine="3" data="2020-02-04" voto="5">
+        <testo>Servizio ottimo, puntuale e attento! Per spedire in provincia scelgo solo ByteCourier3000</testo>
+        <valutazione_utente id_user="marcolino71" tipologia="dislike" />
+        <valutazione_utente id_user="stella" tipologia="like" />
+        <valutazione_utente id_user="piero" tipologia="dislike" />
+        <valutazione_utente id_user="giada" tipologia="like" />
+    </recensione>
+    <recensione id_recensione="2" id_ordine="4" data="2022-08-15" voto="3">
+        <testo>Pacco arrivato in ritardo rispetto ai tempo previsti</testo>
+        <valutazione_utente id_user="marcolino71" tipologia="like" />
+    </recensione>
+    <recensione id_recensione="3" id_ordine="10" data="2022-12-29" voto="4">
+        <testo>Sono soddisfatto del servizio</testo>
+        <valutazione_utente id_user="marcolino71" tipologia="dislike" />
+    </recensione>
 </recensioni>

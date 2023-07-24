@@ -34,6 +34,15 @@ if(isset($_POST['invio'])){
 
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente
+
+                    if($_SESSION['ban'] == 1){
+                        unset($_SESSION);
+                        //session_destroy() permette di distruggere i dati della sessione memorizzati nella memoria della sessione
+                        session_destroy();
+                        header('Location: ban.php');
+                        exit();
+                    }
+
                     header('Location: cliente/home_cliente.php');
                     exit();
                 }

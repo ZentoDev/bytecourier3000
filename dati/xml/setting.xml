@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <setting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="setting.xsd" assegnazione_automatica="true">
+    xsi:noNamespaceSchemaLocation="setting.xsd" assegnazione_automatica="false">
     <setting_spedizioni>
         <tipologia_spedizione nome="citta" durata="12" abilitazione="true">
             <tipo_pacco cod="1" larghezza="10" altezza="10" profondita="10" peso_max="0.5" costo="5" />
