@@ -1,10 +1,11 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 
+$err = '';
 //se mancano dati utente, vengono letti dal db (necessario quando si carica la pagina per la prima volta durante la sessione)
-if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SESSION['pw'], $_SESSION['data'],  $_SESSION['cf'],  $_SESSION['email'],  $_SESSION['tel'],  $_SESSION['indirizzo'],  $_SESSION['num_civico'],  $_SESSION['citta'],  $_SESSION['nazione'] )  ) {
+if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SESSION['pw'], $_SESSION['data'],  $_SESSION['cf'],  $_SESSION['email'],  $_SESSION['tel']) ){
     
     require_once("../../mysql/connection.php");
     if( !$connection_mysqli )   return 'problemi interni al sistema, contattare un amministratore';
@@ -23,15 +24,11 @@ if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SE
         $_SESSION['email'] = $row['email'];
         $_SESSION['cf'] = $row['cf'];
         $_SESSION['tel'] = $row['tel'];
-        $_SESSION['indirizzo'] = $row['indirizzo'];
-        $_SESSION['num_civico'] = $row['num_civico'];
-        $_SESSION['citta'] = $row['citta'];
-        $_SESSION['nazione'] = $row['nazione'];
     }
 }
 
 //viene eseguita in caso di attivazione della form
-if($_POST['invio']) $mod = modifica_valori();
+if( isset($_POST['invio']) ) $mod = modifica_valori();
 
 
 function modifica_valori(){
@@ -136,14 +133,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
    <div id="center" class="colonna">
 
      <h2 style="margin-left:50px; text-align: center;">Profilo di <?php echo $_SESSION['username'];?> </h2>
-	 <?php if( $_POST['invio'])   echo "<p><strong>$mod</strong></p>"; ?>
+	 <?php if( isset($_POST['invio']) )   echo "<p><strong>$mod</strong></p>"; ?>
      <form action="profilo.php" method="post" > 
             <div class="flex-container">
                 <div>

@@ -1,6 +1,7 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
+require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
 
 
@@ -22,7 +23,7 @@ function stampaFAQ($listF, $listI) {
         $id_domanda= $coppia_faq->getAttribute('id_intervento');
         $id_risposta = $coppia_faq->getAttribute('id_risposta');
 
-        for( $i=0; $i < $listI->length && !$domanda; $i++ ) {
+        for( $i=0; $i < $listI->length && !isset($domanda); $i++ ) {
 
             $intervento = $listI->item($i);
             $id_intervento = $intervento->getAttribute('id_intervento');
@@ -31,7 +32,7 @@ function stampaFAQ($listF, $listI) {
                 $domanda = $intervento->firstChild->textContent;}
         }
 
-        for( $i=0; $i < $listI->length && !$risposta; $i++ ) {
+        for( $i=0; $i < $listI->length && !isset($risposta); $i++ ) {
 
             $intervento = $listI->item($i);
             $id_intervento = $intervento->getAttribute('id_intervento');
@@ -75,7 +76,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
@@ -83,7 +84,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <h2>FAQ</h2>
      
 	 <?php echo stampaFAQ($listaFAQ, $listaInt);?>
-		
    </div>
    
    <div id="navbar" class="colonna">

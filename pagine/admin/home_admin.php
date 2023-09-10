@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
-
+require_once("login_admin.php");
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 
@@ -22,7 +22,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+  <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">

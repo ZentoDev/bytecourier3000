@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faq xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="faq.xsd">
-    <intervento id_intervento="1" id_risposta="2" />
-    <intervento id_intervento="4" id_risposta="5" />
     <intervento id_intervento="9" id_risposta="10" />
+    <intervento id_intervento="1" id_risposta="2" />
+    <intervento id_intervento="8" id_risposta="11" />
 </faq>

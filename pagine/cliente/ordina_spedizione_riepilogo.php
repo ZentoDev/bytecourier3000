@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
@@ -61,16 +61,16 @@ if( isset( $_POST['invio'] )) {
     $_SESSION['cod_dim'] = '';
     $_SESSION['ritiro'] = '';
     $_SESSION['tipo_spedizione'] = '';
-    $_SESSION['ritiro'] = '';
     $_SESSION['nome_dest'] = '';
     $_SESSION['cognome_dest'] = '';
     $_SESSION['via_dest'] = '';
     $_SESSION['nazione_dest'] = '';
     $_SESSION['citta_dest'] = '';
     $_SESSION['civico_dest'] = '';
-    $_SESSION['via_rit'] = '';
-    $_SESSION['nazione_rit'] = '';
-    $_SESSION['citta_rit'] = '';
+    $_SESSION['via_rit'] = $_SESSION['via'];
+    $_SESSION['nazione_rit'] = $_SESSION['nazione'];
+    $_SESSION['citta_rit'] = $_SESSION['citta'];
+    $_SESSION['civico_rit'] = $_SESSION['num_civ'];
 }
 
 //ottiene un id disponibile 
@@ -110,7 +110,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>	
 </div>
 
 <div id="content">

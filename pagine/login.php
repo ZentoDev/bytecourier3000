@@ -31,9 +31,29 @@ if(isset($_POST['invio'])){
                 $_SESSION['nome']=$row['nome'];
                 $_SESSION['cognome']=$row['cognome'];
                 $_SESSION['data_nascita']=$row['data_nascita'];
+                
 
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente
+
+                    $_SESSION['num_civ'] = $row['num_civico'];
+                    $_SESSION['via'] = $row['indirizzo'];
+                    $_SESSION['citta'] = $row['citta'];
+                    $_SESSION['nazione'] = $row['nazione'];
+                    $_SESSION['civico_rit'] = $row['num_civico'];
+                    $_SESSION['via_rit'] = $row['indirizzo'];
+                    $_SESSION['citta_rit'] = $row['citta'];
+                    $_SESSION['nazione_rit'] = $row['nazione'];
+                    $_SESSION['nome_dest'] = '';
+                    $_SESSION['cognome_dest'] = '';
+                    $_SESSION['via_dest'] = '';
+                    $_SESSION['nazione_dest'] = '';
+                    $_SESSION['citta_dest'] = '';
+                    $_SESSION['civico_dest'] = '';
+                    $_SESSION['ritiro'] = '';
+                    $_SESSION['tipo_spedizione'] = '';
+
+                    $_SESSION['ruolo'] = 'cliente';
 
                     if($_SESSION['ban'] == 1){
                         unset($_SESSION);
@@ -48,16 +68,25 @@ if(isset($_POST['invio'])){
                 }
 
                 if($_SESSION['permesso'] == 10) {   //10 = byte courier
+
+                    $_SESSION['ruolo'] = 'byte courier';
+
                     header('Location: courier/home_courier.php');
                     exit();
                 }
 
                 if($_SESSION['permesso'] == 100) {   //100 = gestore
+
+                    $_SESSION['ruolo'] = 'gestore';
+
                     header('Location: gestore/home_gestore.php');
                     exit();
                 }
 
                 if($_SESSION['permesso'] == 1000) {   //1000 = amministratore
+
+                    $_SESSION['ruolo'] = 'amministratore';
+
                     header('Location: admin/home_admin.php');
                     exit();
                 }
@@ -98,7 +127,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: visitatore</strong></p>
 </div>
 
 <div id="content">

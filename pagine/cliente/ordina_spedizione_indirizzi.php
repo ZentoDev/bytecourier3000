@@ -1,20 +1,16 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
 
 //variabili della form
-$nome_dest = $_SESSION['nome_dest'];
 $cognome_dest = $_SESSION['cognome_dest'];
 $via_dest = $_SESSION['via_dest'];
 $nazione_dest = $_SESSION['nazione_dest'];
 $citta_dest = $_SESSION['citta_dest'];
 $civico_dest = $_SESSION['civico_dest'];
 $via_rit = $_SESSION['via_rit'];
-$nazione_rit = $_SESSION['nazione_rit'];
-$citta_rit = $_SESSION['citta_rit'];
-$civico_rit = $_SESSION['civico_rit'];
 
 if( isset($_POST['invio']) ) {
     //Salvo il valore delle variabili inserite, ciò permette all'utente di non doverle reinserire in caso di ripetizione della form
@@ -93,6 +89,7 @@ function stampaType($tipo) {
         if( $tipo == $type->getAttribute('nome') ){
             $find = 1; //tipologia spedizione trovata, interrompe i successivi cicli del for
             
+            $input = "";
             $lista_dim = $type->childNodes;
             for ($c = 0; $c < $lista_dim->length; $c++ ) {
 
@@ -140,7 +137,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
@@ -157,7 +154,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <div class="flex-container" style="padding:0%; margin: -5%;">
                 <div>
                 <strong>Nome destinatario</strong><br />
-                <input type="text" name="nome_dest" value="<?php echo $nome_dest;?>" required><br />
+                <input type="text" name="nome_dest" value="<?php echo $_SESSION['nome_dest'];?>" required><br />
                 <br />
                 <strong>Nazione</strong><br />
                 <input type="text" name="nazione_dest" value="<?php echo $nazione_dest;?>" required><br />
@@ -184,15 +181,15 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <div class="flex-container" style="padding:0%; margin: -5%;">
                 <div>
                 <strong>Nazione</strong><br />
-                <input type="text" name="nazione_rit" value="'.$nazione_rit.'" required><br />
+                <input type="text" name="nazione_rit" value="'.$_SESSION['nazione_rit'].'" required><br />
                 <strong>Via</strong><br />
-                <input type="text" name="via_rit" value="'.$via_rit.'" required><br />
+                <input type="text" name="via_rit" value="'.$_SESSION['via'].'" required><br />
                 </div>
                 <div>
                 <strong>Citt&agrave;</strong><br />
-                <input type="text" name="citta_rit" value="'.$citta_rit.'" required><br />
+                <input type="text" name="citta_rit" value="'.$_SESSION['citta_rit'].'" required><br />
                 <strong>Numero civico</strong><br />
-                <input type="number" name="civico_rit" value="'.$civico_rit.'" required><br />
+                <input type="number" name="civico_rit" value="'.$_SESSION['civico_rit'].'" required><br />
                 </div>
             </div>';
             }

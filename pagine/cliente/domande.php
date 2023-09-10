@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
@@ -34,12 +34,12 @@ if( isset($_POST['nuova_domanda']) ){
 
 function stampaInterventi($listI) {
 
-	$stampa .= 
+	$stampa = 
              "<h2>Scrivi nuova domanda</h2>
               <form action=\"domande.php\" method=\"post\" >
               <textarea type=\"text\" name=\"testo_domanda\" placeholder=\"Nuova domanda\" required></textarea><br />
-              <button type=\"submit\" name=\"nuova_domanda\" value=\"$id_intervento\">Salva</button>
-              </form>  ";
+              <button type=\"submit\" name=\"nuova_domanda\" value=\"1\">Salva</button>
+              </form> ";
 
     $stampa .= "<h2>Domande</h2>";
 
@@ -110,14 +110,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
    <div id="center" class="colonna">
      
 	 <?php echo stampaInterventi($listaInt);?>
-		
    </div>
    
    <div id="navbar" class="colonna">

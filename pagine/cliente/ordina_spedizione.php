@@ -1,16 +1,12 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
 
 $docType = openXML("../../dati/xml/setting.xml");
 $rootType = $docType->documentElement;  
-$listaType = $rootType->firstChild->childNodes;
-
-//variabili della form
-$tipo_sp = $_SESSION['tipo_spedizione'];
-$ritiro = $_SESSION['ritiro'];
+$listaType = $rootType->firstChild->childNodes; 
 
 if( isset($_POST['invio']) ) {
 
@@ -34,6 +30,7 @@ if( isset($_POST['invio']) ) {
 function stampaType($nome, $lista) {
 
     $select = '<br />Non sono disponibili opzioni, contattare un gestore';
+    $option = '';
     $num_elem = 0;
     for ($i = 0; $i < $lista->length; $i++ ) {
         $type = $lista->item($i);
@@ -74,7 +71,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
@@ -86,13 +83,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <div class="flex-container">
                 <div>
                 <strong>Tipologia spedizione</strong><br />
-                <?php echo stampaType($tipo_sp ,$listaType);?>
+                <?php echo stampaType($_SESSION['tipo_spedizione'] ,$listaType);?>
 	            </div>
 	            <div>
                 <strong>Tipologia ritiro</strong><br />
 				<select name="ritiro" size="2">
-					<option value="in_loco" <?php if ($ritiro == 'in_loco') echo 'selected';?>>Domicilio</option>
-					<option value="centro" <?php if ($ritiro == 'centro') echo 'selected';?>>Centro spedizioni</option>
+					<option value="in_loco" <?php if ($_SESSION['ritiro'] == 'in_loco') echo 'selected';?>>Domicilio</option>
+					<option value="centro" <?php if ($_SESSION['ritiro'] == 'centro') echo 'selected';?>>Centro spedizioni</option>
 				</select>
 	            </div>
             </div>

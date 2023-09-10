@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 require_once("../../dati/lib_xmlaccess.php");
@@ -46,6 +46,7 @@ if( isset($_POST['nuova_risposta']) ){
 
 function stampaInterventi($listI, $id_domanda) {
 
+    $stampa = '';
     for( $i=0; $i < $listI->length; $i++ ) {
         $intervento = $listI->item($i);
 
@@ -66,7 +67,7 @@ function stampaInterventi($listI, $id_domanda) {
                         
                  <form action=\"domande_discussione.php\" method=\"post\" >
                   <textarea type=\"text\" name=\"testo_risposta\" placeholder=\"Scrivi risposta\" required></textarea><br />
-                  <button type=\"submit\" name=\"nuova_risposta\" value=\"$id_intervento\">Rispondi</button>
+                  <button type=\"submit\" name=\"nuova_risposta\" value=\"1\">Rispondi</button>
                  </form>  ";
         }
     }
@@ -160,7 +161,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <img src="../../picture/logo.png" width="120" alt="Logo" class="logo" />
 
 	<h1 class="title">ByteCourier3000</h1>
-	
+    <p><strong>&nbspUtente: <?php echo $_SESSION['username'].' ('.$_SESSION['ruolo'].')'?> </strong></p>
 </div>
 
 <div id="content">
