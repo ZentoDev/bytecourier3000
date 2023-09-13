@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
-require_once("login_courier.php");
+require_once("login_gestore.php");
 
 require_once("../../dati/lib_xmlaccess.php");
 $docOp = openXML("../../dati/xml/operazioni.xml");
@@ -49,6 +49,7 @@ if($coin == 1) {
             $ordine_child = $ordine_child->nextSibling;  //nodo destinatario
             $nome = $ordine_child->getAttribute('nome');
             $cognome = $ordine_child->getAttribute('cognome');
+            $courier = $operazione->getAttribute('username_bytecourier');
 
             $listaNote = $operazione->firstChild->childNodes;
 
@@ -58,7 +59,7 @@ if($coin == 1) {
 }
 if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'operazione, contattare il supporto tecnico</p>";
 
-
+/*
 //aggiornamento stato
 if( $_POST['next_stat'] == 1) {
 
@@ -96,6 +97,7 @@ if( $_POST['next_stat'] == 1) {
     if( $fail == 0)   printFileXML("../../dati/xml/operazioni.xml", $docOp);
 }
 
+
 //inserimento nuova nota
 if( $_POST['invio_nota'] == 1) {
     $note = $operazione->firstChild;
@@ -109,7 +111,7 @@ if( $_POST['invio_nota'] == 1) {
     //permette di salvare il documento in un file xml
     printFileXML("../../dati/xml/operazioni.xml", $docOp);
 }
-
+*/
 //restituisce il nome associato allo stato dell'operazione
 function statoOperazione($stat) {
 
@@ -224,6 +226,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h3>Operazione <?php echo $_POST['id_operazione']; ?></h3>
 	 <p>
+        <strong>Courier:</strong> <?php echo $courier; ?> <br /><br />
 	    <strong>Nome:</strong> <?php echo $nome; ?> <br />
 	    <strong>Cognome:</strong> <?php echo $cognome; ?> <br />
 		<strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />
@@ -231,7 +234,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
         <?php echo statoOperazione($stato);?>
         <br /><br />
-        <?php 
+        <?php /*
         if( $stato != 5 && $operazione->getAttribute('username_bytecourier') == $_SESSION['username'] ) {
             echo '
                 Quando la seguente fase dell\'operazione viene completata, aggiorna lo stato premendo sul seguente pulsante <br />
@@ -252,7 +255,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <input type="hidden" name="datetime" value="'. date("Y-m-d").'T'.date("H:i:s") .'">
 			<button type="submit" name="invio_nota" value="1">Invia nota</button>
 	    </form>
-	    </p>';
+	    </p>';*/
 
         stampaNote($listaNote); 
         ?>
@@ -260,7 +263,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     </div> 
    
     <div id="navbar" class="colonna">
-    <?php require_once("menu_courier.php");?>
+    <?php require_once("menu_gestore.php");?>
     </div>
 </div>
 

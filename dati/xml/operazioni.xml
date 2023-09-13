@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lista_operazioni xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="operazioni.xsd">
-    <operazione id_operazione="1" username_bytecourier="Locky89" id_ordine="1" stato="1">
+    <operazione id_operazione="1" username_bytecourier="Wick64" id_ordine="1" stato="1">
         <note />
     </operazione>
-    <operazione id_operazione="2" username_bytecourier="Wick64" id_ordine="2" stato="4">
+    <operazione id_operazione="2" username_bytecourier="Wick64" id_ordine="2" stato="2">
         <note>
             <nota data_nota="2022-09-14T09:30:00" username="Wick64">Il ritiro è proceduto secondo i piani</nota>
             <nota data_nota=" 2022-12-26T19:25:21" username="Wick64">hoho</nota>
@@ -37,7 +37,7 @@
     <operazione id_operazione="8" username_bytecourier="Wick64" id_ordine="10" stato="5">
         <note />
     </operazione>
-    <operazione id_operazione="9" username_bytecourier="Locky89" id_ordine="17" stato="1">
+    <operazione id_operazione="9" username_bytecourier="Locky89" id_ordine="17" stato="5">
         <note>
             <nota data_nota="2023-07-24T16:23:53" username="Wick64">hhhh</nota>
             <nota data_nota="2023-07-24T16:26:32" username="Wick64">hhhh</nota>

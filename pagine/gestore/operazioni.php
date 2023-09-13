@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
-require_once("login_courier.php");
+require_once("login_gestore.php");
 
 require_once("../../dati/lib_xmlaccess.php");
 $docOp = openXML("../../dati/xml/operazioni.xml");
@@ -13,6 +13,9 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+if($_POST['dettagli'])  $mess = mostraDettagli($docOp);
+
+
 function stampaOperazioni($listOp, $listOrd){
 
 	$presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
@@ -22,39 +25,45 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		if( $operazione->getAttribute('username_bytecourier') && 
-            $operazione->getAttribute('stato') == 5 )      
-            { //seleziona le operazioni concluse dall'operatore
+		if( $operazione->getAttribute('stato') != 5 )      
+            { //seleziona le operazioni in carico all'operatore non concluse
 
-		    $id_operazione = $operazione->getAttribute('id_operazione');
+            $id_operazione = $operazione->getAttribute('id_operazione');
 			$id_ordine = $operazione->getAttribute('id_ordine');
 
 			$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 		    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 				$ordine = $listOrd->item($i);
 
-			    if( $id_ordine ==  $ordine->getAttribute('id_richiesta')) {
+			    if( $id_ordine ==  $ordine->getAttribute('id_richiesta') ) {
 
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-					$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
-		
+					if( $stato >= 3) {
+						$indirizzo_ritiro = 'centro byte courier';
+					}
+					else  {
+						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+						$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+					}
+
 					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
 					$destinazione = $ordine_child->getAttribute('strada').' ';
 					$destinazione .= $ordine_child->getAttribute('numero').', ';
 					$destinazione .= $ordine_child->getAttribute('citta').', ';
 					$destinazione .= $ordine_child->getAttribute('nazione');
-		
+					
 					$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
 					$nome = $ordine_child->getAttribute('nome').' ';
 					$nome .= $ordine_child->getAttribute('cognome');
 
                     $stato = $operazione->getAttribute('stato');   
+                    $courier = $operazione->getAttribute('username_bytecourier');
 
 				    $table.='<tr>
-				              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
+				              <th><strong>Id operazione:</strong> '.$id_operazione.'<br \>
+                              Courier:</strong> '.$courier.'</th>
 				             <td>   
 							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
@@ -89,15 +98,15 @@ function stampaOperazioni($listOp, $listOrd){
 function statoOperazione($stat) {
     switch ($stat) {
         case 1:
-            return "transito verso il cliente per il ritiro";
+            return "1 - transito verso il cliente per il ritiro";
         case 2:
-            return "transito verso il centro byte courier";
+            return "2 - transito verso il centro byte courier";
         case 3:
-            return "pacco al centro byte courier";
+            return "3 - pacco al centro byte courier";
         case 4:
-            return "transito verso il destinatario";
+            return "4 - transito verso il destinatario";
         case 5:
-            return "consegna effettuata";
+            return "5 - consegna effettuata";
 
         default: return "errore nel riconoscimento dello stato, contattare il supporto tecnico";
     }
@@ -115,7 +124,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Operazioni concluse</title>
+    <title>Operazioni in corso</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	<link rel="stylesheet" href="../style1.css" type="text/css">
 	<link rel="stylesheet" href="../tabselezione.css" type="text/css">
@@ -132,14 +141,18 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Operazioni concluse</h2>
+     <h2>Operazioni in corso</h2>
 
-     <?php stampaOperazioni($listaOp, $listaOrd); ?>
+     <?php 
+	 if( $_POST['dettagli'])   echo "<p><strong>$mess</strong></p>";
+
+	 stampaOperazioni($listaOp, $listaOrd); 
+     ?>
 		
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_courier.php");?>
+   <?php require_once("menu_gestore.php");?>
    </div>
 </div>
 

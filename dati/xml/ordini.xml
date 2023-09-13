@@ -1,1 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?><ordini xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ordini.xsd"><ordine id_richiesta="1" username="marcolino71" tipologia_spedizione="provincia" costo="87" stato="concluso" ritiro="in_loco" peso="7" larghezza="13" altezza="15" profondita="10"><indirizzo_ritiro citta="Pisa" nazione="Italia" strada="via montepulciano" numero="27"/><indirizzo_destinazione citta="Livorno" nazione="Italia" strada="viale manzoni" numero="57"/><destinatario nome="Maria" cognome="Gresini"/></ordine><ordine id_richiesta="2" username="stella" tipologia_spedizione="citta;" costo="22" stato="accettato" ritiro="in_loco" peso="4" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Firenze" nazione="Italia" strada="via leonardo" numero="7"/><indirizzo_destinazione citta="Firenze" nazione="Italia" strada="via tripoli" numero="43"/><destinatario nome="Giorgia" cognome="Benedetti"/></ordine><ordine id_richiesta="3" username="stella" tipologia_spedizione="provincia" costo="120" stato="concluso" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Latina" nazione="Italia" strada="via leonida" numero="14"/><indirizzo_destinazione citta="Anzio" nazione="Italia" strada="via ardeatina" numero="112"/><destinatario nome="Lucas" cognome="Pleus"/></ordine><ordine id_richiesta="4" username="marcolino71" tipologia_spedizione="citta" costo="10" stato="concluso" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Napoli" nazione="Italia" strada="viale caporetto" numero="25"/><indirizzo_destinazione citta="Napoli" nazione="Italia" strada="via del corso" numero="14"/><destinatario nome="Gennaro" cognome="Immobile"/></ordine><ordine id_richiesta="5" username="marcolino71" tipologia_spedizione="citta" costo="10" stato="accettato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Roma" nazione="Italia" strada="via duomo" numero="8"/><indirizzo_destinazione citta="Roma" nazione="Italia" strada="via del tasso" numero="23"/><destinatario nome="Miriam" cognome="Zecchinelli"/></ordine><ordine id_richiesta="6" username="marcolino71" tipologia_spedizione="provincia" costo="100" stato="concluso" ritiro="in_loco" peso="20" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Firenze" nazione="Italia" strada="via torino" numero="77"/><indirizzo_destinazione citta="Milano" nazione="Italia" strada="viale san tommaso" numero="3"/><destinatario nome="Luca" cognome="Barbero"/></ordine><ordine id_richiesta="7" username="stella" tipologia_spedizione="provincia" costo="120" stato="concluso" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7"/><indirizzo_destinazione citta="Sanigallia" nazione="Italia" strada="via abete" numero="12"/><destinatario nome="Nando" cognome="Alonso"/></ordine><ordine id_richiesta="8" username="marcolino71" tipologia_spedizione="citta" costo="10" stato="rifiutato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7"/><indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via pineta" numero="4"/><destinatario nome="Sofia" cognome="Bianchi"/></ordine><ordine id_richiesta="9" username="marcolino71" tipologia_spedizione="provincia" costo="100" stato="modificato" ritiro="in_loco" peso="2" larghezza="200" altezza="25" profondita="15"><indirizzo_ritiro citta="Padova" nazione="Italia" strada="via nastri" numero="7"/><indirizzo_destinazione citta="Biella" nazione="Italia" strada="via cinema" numero="4"/><destinatario nome="Gregorio" cognome="Annunziato"/></ordine><ordine id_richiesta="10" username="marcolino71" tipologia_spedizione="provincia" costo="166" stato="concluso" ritiro="in_loco" peso="52" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Bari" nazione="Italia" strada="via broccolo" numero="3"/><indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili" numero="5"/><destinatario nome="Lino" cognome="Banfi"/></ordine><ordine id_richiesta="11" username="marcolino71" tipologia_spedizione="citta" costo="112" stato="in_attesa" ritiro="centro" peso="70" larghezza="20" altezza="25" profondita="15"><indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili" numero="5"/><destinatario nome="Laura" cognome="Saltelletti"/></ordine><ordine id_richiesta="12" username="marcolino71" tipologia_spedizione="provincia" costo="145" stato="in_attesa_pagamento" ritiro="in_loco" peso="90" larghezza="20" altezza="25" profondita="15"><indirizzo_ritiro citta="Milano" nazione="Italia" strada="via della moda" numero="44"/><indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via stroboscopio" numero="1"/><destinatario nome="Giorgio" cognome="Armani"/></ordine><ordine id_richiesta="16" username="marcolino71" tipologia_spedizione="provincia" costo="15" stato="in_attesa" ritiro="in_loco" peso="20" larghezza="200" altezza="200" profondita="100"><indirizzo_ritiro citta="Potenza" nazione="Italia" strada="via olimpica" numero="3"/><indirizzo_destinazione citta="Sezze" nazione="Italia" strada="piazza circensi" numero="1"/><destinatario nome="Lino" cognome="Saltelletti"/></ordine><ordine id_richiesta="17" username="marcolino71" tipologia_spedizione="provincia" costo="15" stato="accettato" ritiro="in_loco" peso="10" larghezza="100" altezza="50" profondita="50"><indirizzo_ritiro citta="anzio" nazione="italia" strada="via dei lino" numero="11"/><indirizzo_destinazione citta="nettuno" nazione="italia" strada="via balbo" numero="25"/><destinatario nome="marco" cognome="lino"/></ordine><ordine id_richiesta="18" username="marcolino71" tipologia_spedizione="citta" costo="5" stato="in_attesa" ritiro="in_loco" peso="0.5" larghezza="10" altezza="10" profondita="10"><indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="98"/><indirizzo_destinazione citta="ff" nazione="ff" strada="ff" numero="4"/><destinatario nome=" ff" cognome="ff"/></ordine></ordini>
+<?xml version="1.0" encoding="UTF-8"?>
+<ordini xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ordini.xsd">
+    <ordine id_richiesta="1" username="marcolino71" tipologia_spedizione="provincia" costo="87"
+        stato="concluso" ritiro="in_loco" peso="7" larghezza="13" altezza="15" profondita="10">
+        <indirizzo_ritiro citta="Pisa" nazione="Italia" strada="via montepulciano" numero="27" />
+        <indirizzo_destinazione citta="Livorno" nazione="Italia" strada="viale manzoni" numero="57" />
+        <destinatario nome="Maria" cognome="Gresini" />
+    </ordine>
+    <ordine id_richiesta="2" username="stella" tipologia_spedizione="citta;" costo="22"
+        stato="accettato" ritiro="in_loco" peso="4" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Firenze" nazione="Italia" strada="via leonardo" numero="7" />
+        <indirizzo_destinazione citta="Firenze" nazione="Italia" strada="via tripoli" numero="43" />
+        <destinatario nome="Giorgia" cognome="Benedetti" />
+    </ordine>
+    <ordine id_richiesta="3" username="stella" tipologia_spedizione="provincia" costo="120"
+        stato="concluso" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Latina" nazione="Italia" strada="via leonida" numero="14" />
+        <indirizzo_destinazione citta="Anzio" nazione="Italia" strada="via ardeatina" numero="112" />
+        <destinatario nome="Lucas" cognome="Pleus" />
+    </ordine>
+    <ordine id_richiesta="4" username="marcolino71" tipologia_spedizione="citta" costo="10"
+        stato="concluso" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Napoli" nazione="Italia" strada="viale caporetto" numero="25" />
+        <indirizzo_destinazione citta="Napoli" nazione="Italia" strada="via del corso" numero="14" />
+        <destinatario nome="Gennaro" cognome="Immobile" />
+    </ordine>
+    <ordine id_richiesta="5" username="marcolino71" tipologia_spedizione="citta" costo="10"
+        stato="accettato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via duomo" numero="8" />
+        <indirizzo_destinazione citta="Roma" nazione="Italia" strada="via del tasso" numero="23" />
+        <destinatario nome="Miriam" cognome="Zecchinelli" />
+    </ordine>
+    <ordine id_richiesta="6" username="marcolino71" tipologia_spedizione="provincia" costo="100"
+        stato="concluso" ritiro="in_loco" peso="20" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Firenze" nazione="Italia" strada="via torino" numero="77" />
+        <indirizzo_destinazione citta="Milano" nazione="Italia" strada="viale san tommaso"
+            numero="3" />
+        <destinatario nome="Luca" cognome="Barbero" />
+    </ordine>
+    <ordine id_richiesta="7" username="stella" tipologia_spedizione="provincia" costo="120"
+        stato="concluso" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7" />
+        <indirizzo_destinazione citta="Sanigallia" nazione="Italia" strada="via abete" numero="12" />
+        <destinatario nome="Nando" cognome="Alonso" />
+    </ordine>
+    <ordine id_richiesta="8" username="marcolino71" tipologia_spedizione="citta" costo="10"
+        stato="rifiutato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7" />
+        <indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via pineta" numero="4" />
+        <destinatario nome="Sofia" cognome="Bianchi" />
+    </ordine>
+    <ordine id_richiesta="9" username="marcolino71" tipologia_spedizione="provincia" costo="100"
+        stato="modificato" ritiro="in_loco" peso="2" larghezza="200" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Padova" nazione="Italia" strada="via nastri" numero="7" />
+        <indirizzo_destinazione citta="Biella" nazione="Italia" strada="via cinema" numero="4" />
+        <destinatario nome="Gregorio" cognome="Annunziato" />
+    </ordine>
+    <ordine id_richiesta="10" username="marcolino71" tipologia_spedizione="provincia" costo="166"
+        stato="concluso" ritiro="in_loco" peso="52" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_ritiro citta="Bari" nazione="Italia" strada="via broccolo" numero="3" />
+        <indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili"
+            numero="5" />
+        <destinatario nome="Lino" cognome="Banfi" />
+    </ordine>
+    <ordine id_richiesta="11" username="marcolino71" tipologia_spedizione="citta" costo="112"
+        stato="in_attesa" ritiro="centro" peso="70" larghezza="20" altezza="25" profondita="15">
+        <indirizzo_destinazione citta="Grosseto" nazione="Italia" strada="via dei miserabili"
+            numero="5" />
+        <destinatario nome="Laura" cognome="Saltelletti" />
+    </ordine>
+    <ordine id_richiesta="12" username="marcolino71" tipologia_spedizione="provincia" costo="145"
+        stato="in_attesa_pagamento" ritiro="in_loco" peso="90" larghezza="20" altezza="25"
+        profondita="15">
+        <indirizzo_ritiro citta="Milano" nazione="Italia" strada="via della moda" numero="44" />
+        <indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via stroboscopio" numero="1" />
+        <destinatario nome="Giorgio" cognome="Armani" />
+    </ordine>
+    <ordine id_richiesta="16" username="marcolino71" tipologia_spedizione="provincia" costo="15"
+        stato="in_attesa" ritiro="in_loco" peso="20" larghezza="200" altezza="200" profondita="100">
+        <indirizzo_ritiro citta="Potenza" nazione="Italia" strada="via olimpica" numero="3" />
+        <indirizzo_destinazione citta="Sezze" nazione="Italia" strada="piazza circensi" numero="1" />
+        <destinatario nome="Lino" cognome="Saltelletti" />
+    </ordine>
+    <ordine id_richiesta="17" username="marcolino71" tipologia_spedizione="provincia" costo="15"
+        stato="concluso" ritiro="in_loco" peso="10" larghezza="100" altezza="50" profondita="50">
+        <indirizzo_ritiro citta="anzio" nazione="italia" strada="via dei lino" numero="11" />
+        <indirizzo_destinazione citta="nettuno" nazione="italia" strada="via balbo" numero="25" />
+        <destinatario nome="marco" cognome="lino" />
+    </ordine>
+    <ordine id_richiesta="18" username="marcolino71" tipologia_spedizione="citta" costo="5"
+        stato="in_attesa" ritiro="in_loco" peso="0.5" larghezza="10" altezza="10" profondita="10">
+        <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="98" />
+        <indirizzo_destinazione citta="ff" nazione="ff" strada="ff" numero="4" />
+        <destinatario nome=" ff" cognome="ff" />
+    </ordine>
+</ordini>

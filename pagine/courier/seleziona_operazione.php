@@ -13,7 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['accetta']) $mess = accettaOperazione($listaOp);
+if($_POST['accetta']) $mess = accettaOperazione($docOp);
 
 function stampaOperazioni($listOp, $listOrd){
 
@@ -93,20 +93,21 @@ function stampaOperazioni($listOp, $listOrd){
 }
 
 //associa all'operazione selezionata il bytecourier che l'ha presa in carico
-function accettaOperazione($list) {
+function accettaOperazione($doc) {
+    $list = $doc->documentElement->childNodes;
 	
 	//scorre l'intera lista di nodi
 	for ( $pos = 0; $pos < $list->length; $pos++) {
 		$operazione = $list->item($pos);
 		$id_operazione = $operazione->getAttribute('id_ordine');
-
+		
 		//se id_operazione coincide con quella ricercata si aggiorna il file xml associando il bytecourier all'operazione associata
 		if( $id_operazione == $_POST['id_operazione'] ) {
 			$operazione->setAttribute('username_bytecourier', $_SESSION['username']);
-
+            
 			//permette di salvare il documento in un file xml
 			printFileXML("../../dati/xml/operazioni.xml", $doc);
-
+			
 			return "L'operazione &egrave stata aggiunta correttamente";
 		}
 	}return "Problemi interni nel processo di selezione della operazione, si prega di contattare il supporto tecnico";

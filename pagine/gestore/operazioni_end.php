@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 0);
 error_reporting(E_ALL & ~E_NOTICE);
-require_once("login_courier.php");
+require_once("login_gestore.php");
 
 require_once("../../dati/lib_xmlaccess.php");
 $docOp = openXML("../../dati/xml/operazioni.xml");
@@ -22,17 +22,16 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		if( $operazione->getAttribute('username_bytecourier') && 
-            $operazione->getAttribute('stato') == 5 )      
+		if( $operazione->getAttribute('stato') == 5 )      
             { //seleziona le operazioni concluse dall'operatore
 
-		    $id_operazione = $operazione->getAttribute('id_operazione');
+            $id_operazione = $operazione->getAttribute('id_operazione');
 			$id_ordine = $operazione->getAttribute('id_ordine');
 
 			$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 		    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 				$ordine = $listOrd->item($i);
-
+			    
 			    if( $id_ordine ==  $ordine->getAttribute('id_richiesta')) {
 
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
@@ -52,9 +51,11 @@ function stampaOperazioni($listOp, $listOrd){
 					$nome .= $ordine_child->getAttribute('cognome');
 
                     $stato = $operazione->getAttribute('stato');   
+                    $courier = $operazione->getAttribute('username_bytecourier');
 
 				    $table.='<tr>
-				              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
+                              <th><strong>Id operazione:</strong> '.$id_operazione.'<br \>
+                              Courier:</strong> '.$courier.'</th>
 				             <td>   
 							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
@@ -139,7 +140,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    </div>
    
    <div id="navbar" class="colonna">
-   <?php require_once("menu_courier.php");?>
+   <?php require_once("menu_gestore.php");?>
    </div>
 </div>
 
