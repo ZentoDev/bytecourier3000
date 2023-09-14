@@ -4,6 +4,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 
 $err = '';
+/*
 //se mancano dati utente, vengono letti dal db (necessario quando si carica la pagina per la prima volta durante la sessione)
 if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SESSION['pw'], $_SESSION['data'],  $_SESSION['cf'],  $_SESSION['email'],  $_SESSION['tel']) ){
     
@@ -25,7 +26,7 @@ if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SE
         $_SESSION['cf'] = $row['cf'];
         $_SESSION['tel'] = $row['tel'];
     }
-}
+}*/
 
 //viene eseguita in caso di attivazione della form
 if( isset($_POST['invio']) ) $mod = modifica_valori();
@@ -72,7 +73,7 @@ function modifica_valori(){
         else  $modificato.= '-Il numero di telefono inserito non è valido';
 	} 
 
-	if($_POST['indirizzo'] != $_SESSION['indirizzo'] || $_POST['num_civico'] != $_SESSION['num_civico'] ||
+	if($_POST['indirizzo'] != $_SESSION['via_rit'] || $_POST['num_civico'] != $_SESSION['civico_rit'] ||
 	   $_POST['citta'] != $_SESSION['citta']         || $_POST['nazione'] != $_SESSION['nazione'] )  
 	{
         if( preg_match("/^[a-z-' ]*$/i", $_POST['indirizzo']) && 
@@ -82,8 +83,8 @@ function modifica_valori(){
             if ($res = mysqli_query($connection_mysqli, $update_query)) {
                 $indirizzo = $_POST['indirizzo'].' '.$_POST['num_civico'].', '.$_POST['citta'].', '.$_POST['nazione'];
                 $modificato.="-L'indirizzo di residenza dell'utente &egrave; stato modificato correttamente in '$indirizzo'\n<br />";
-                $_SESSION['indirizzo'] = $_POST['indirizzo'];
-                $_SESSION['num_civico'] = $_POST['num_civico'];
+                $_SESSION['via_rit'] = $_POST['indirizzo'];
+                $_SESSION['civico_rit'] = $_POST['num_civico'];
                 $_SESSION['citta'] = $_POST['citta'];
                 $_SESSION['nazione'] = $_POST['nazione'];
             }
@@ -147,7 +148,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <strong>Nome: </strong><?php echo $_SESSION['nome']?> <br />
                 <strong>Cognome: </strong><?php echo $_SESSION['cognome']?> <br /><br />
 				<strong>Indirizzo residenza: </strong><br />
-                <input type="text" name="indirizzo" value="<?php echo $_SESSION['indirizzo']?>"><br />
+                <input type="text" name="indirizzo" value="<?php echo $_SESSION['via_rit']?>"><br />
 				<strong>citt&agrave;: </strong><br />
                 <input type="text" name="citta" value="<?php echo $_SESSION['citta']?>"><br />
                 <strong>Email: </strong><br />
@@ -159,7 +160,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <strong>Data di nascita: </strong><?php echo $_SESSION['data']?> <br />
                 <strong>Codice fiscale: </strong><?php echo $_SESSION['cf']?> <br /><br />
                 <strong>Numero civico: </strong><br />
-                <input type="number" name="num_civico" value="<?php echo $_SESSION['num_civico']?>"><br />
+                <input type="number" name="num_civico" value="<?php echo $_SESSION['civico_rit']?>"><br />
 				<strong>Nazione: </strong><br />
                 <input type="text" name="nazione" value="<?php echo $_SESSION['nazione']?>"><br />
                 <strong>Telefono: </strong><br />

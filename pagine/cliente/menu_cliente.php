@@ -2,6 +2,8 @@
     <li><a href="home_cliente.php">Home</a></li>
     <li><a href="profilo.php">Profilo</a></li>
     <li><a href="ordina_spedizione.php">Ordina spedizione</a></li>
+    <li><a href="ordini_attesa.php">Ordini in attesa</a></li>
+    <li><a href="ordini_pagamento.php">Ordini in attesa di pagamento</a></li>
     <li><a href="ordini.php">Ordini in corso</a></li>
     <li><a href="storico_ordini.php">Storico ordini</a></li>
     <li><a href="domande.php">Domande</a></li>

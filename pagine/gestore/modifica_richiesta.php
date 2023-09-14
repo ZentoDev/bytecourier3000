@@ -30,16 +30,39 @@ for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
 
 if( isset($_POST['modifica']) ){
 
-    $ordine->setAttribute('stato', 'modificato');
-    $ordine->setAttribute('larghezza', $_POST['larghezza']);
-    $ordine->setAttribute('altezza', $_POST['altezza']);
-    $ordine->setAttribute('profondita', $_POST['profondita']);
-    $ordine->setAttribute('peso', $_POST['peso']);
-    $ordine->setAttribute('costo', $_POST['costo']);
+    if( $_POST['modifica'] == 'rifiuta' ){
 
-    printFileXml("../../dati/xml/ordini.xml", $docOrd);
+        //Aggiorno le informazioni dell'ordine
+        $ordine->setAttribute('stato', 'rifiutato');
+
+        printFileXml("../../dati/xml/ordini.xml", $docOrd);
                     
-    $mod = 'Modifica effettuata';
+        $mod = 'Ordine rifiutato';
+    }
+
+    else{
+        //Aggiorno le informazioni dell'ordine
+        $ordine->setAttribute('stato', 'modificato');
+        $ordine->setAttribute('larghezza', $_POST['larghezza']);
+        $ordine->setAttribute('altezza', $_POST['altezza']);
+        $ordine->setAttribute('profondita', $_POST['profondita']);
+        $ordine->setAttribute('peso', $_POST['peso']);
+        $ordine->setAttribute('costo', $_POST['costo']);
+
+        //Salvo i valori precedenti
+        $new_modify = $docOrd->createElement("modifica");
+        $ordine->appendChild($new_modify);
+
+        $new_modify->setAttribute('costo_old', $costo);
+        $new_modify->setAttribute('peso_old', $peso);
+        $new_modify->setAttribute('larghezza_old', $larghezza);
+        $new_modify->setAttribute('altezza_old', $altezza);
+        $new_modify->setAttribute('profondita_old', $profondita);
+
+        printFileXml("../../dati/xml/ordini.xml", $docOrd);
+                    
+        $mod = 'Modifica effettuata';
+    }
 }
 
 
@@ -96,7 +119,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             </div>
         
 	        <div style="margin-bottom:10px; text-align: center;">
-                <button type="submit" name="modifica" value="signup">Modifica ordine</button>
+                <button type="submit" name="modifica" value="modify">Modifica ordine</button><br /><br />
+                <button type="submit" name="modifica" value="rifiuta">Rifiuta ordine</button>
             </div>
         </form>';
         ?>

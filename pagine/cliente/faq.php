@@ -19,11 +19,12 @@ function stampaFAQ($listF, $listI) {
 	$faq = "<table id=\"table_commenti\">";	
 	for ( $pos=0; $pos < $listF->length; $pos++ ) {
 
+        $risposta = $domanda = '';
 		$coppia_faq = $listF->item($pos);
         $id_domanda= $coppia_faq->getAttribute('id_intervento');
         $id_risposta = $coppia_faq->getAttribute('id_risposta');
 
-        for( $i=0; $i < $listI->length && !isset($domanda); $i++ ) {
+        for( $i=0; $i < $listI->length && !$domanda; $i++ ) {
 
             $intervento = $listI->item($i);
             $id_intervento = $intervento->getAttribute('id_intervento');
@@ -32,7 +33,7 @@ function stampaFAQ($listF, $listI) {
                 $domanda = $intervento->firstChild->textContent;}
         }
 
-        for( $i=0; $i < $listI->length && !isset($risposta); $i++ ) {
+        for( $i=0; $i < $listI->length && !$risposta; $i++ ) {
 
             $intervento = $listI->item($i);
             $id_intervento = $intervento->getAttribute('id_intervento');
@@ -48,7 +49,6 @@ function stampaFAQ($listF, $listI) {
 				    <td><strong>Risposta:</strong> $risposta</td>
 				</tr>";
         
-        $risposta = $domanda = '';
 	}
 	$faq .= "</table>";
 	return $faq;

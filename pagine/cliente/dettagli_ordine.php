@@ -27,11 +27,26 @@ $listaRec = $rootRec->childNodes;
 $mex_pagamento = '';
 if( isset($_POST['pagamento']) ){
 
+    //ricerco l'ordine
     $find = 0;
     for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
         $ordine = $listaOrd->item($pos);
 
-        if( $_POST['pagamento'] == $ordine->getAttribute('id_richiesta') ){
+        if( $_SESSION['id_ordine'] == $ordine->getAttribute('id_richiesta') ){
+
+          //Se l'utente annulla l'ordine, si modifica lo stato in 'rifiutato'
+          if( $_POST['pagamento'] == "delete"){
+            
+            //aggiorno lo stato dell'ordine
+            $ordine->setAttribute('stato', 'rifiutato');
+
+            printFileXML("../../dati/xml/ordini.xml", $docOrd);
+            $mex_pagamento = 'L\'ordine è stato annullato';
+          }
+
+          //Se accetta di pagare, verranno verificati i crediti residui del cliente; in caso siano sufficienti 
+          //si procedere alle operazioni di pagamento
+          else{
             $costo = $ordine->getAttribute('costo');
 
             for( $i = 0; $i < $listaClienti->length && $find == 0; $i++) {
@@ -62,7 +77,7 @@ if( isset($_POST['pagamento']) ){
 
                 $new_op->setAttribute('id_operazione', $new_id);
                 $new_op->setAttribute('username_bytecourier', '');
-                $new_op->setAttribute('id_ordine', $_POST['pagamento']);
+                $new_op->setAttribute('id_ordine', $_SESSION['id_ordine']);
                 $new_op->setAttribute('stato', 1);
 
                 //verifico che sia abilitata l'autoassegnazione del bytecourier
@@ -76,6 +91,7 @@ if( isset($_POST['pagamento']) ){
 
                 $mex_pagamento = 'L\'ordine è stato pagato, adesso hai '.$cr_client - $costo.' crediti';
             }
+          }
         }
     }
 }
@@ -93,7 +109,7 @@ if( isset($_POST['recensione']) ){
     printFileXML("../../dati/xml/recensioni.xml", $docRec);    
 }
 
-
+//Leggo i valori dell'ordine
 $find =0;  // =1 segnala che è stata trovato l'ordine
 for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
     $ordine = $listaOrd->item($pos);
@@ -122,6 +138,16 @@ for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
         $ordine_child = $ordine_child->nextSibling;  //nodo destinatario
         $nome = $ordine_child->getAttribute('nome').' ';
         $nome .= $ordine_child->getAttribute('cognome');
+
+        if( $ordine->getAttribute('stato') == 'modificato' ){
+
+        $ordine_child = $ordine_child->nextSibling;  //nodo modificato (contiene valori precedenti alla modifica)
+        $costo_old = $ordine_child->getAttribute('costo_old');
+        $peso_old = $ordine_child->getAttribute('peso_old');
+        $larghezza_old = $ordine_child->getAttribute('larghezza_old');
+        $altezza_old = $ordine_child->getAttribute('altezza_old');
+        $profondita_old = $ordine_child->getAttribute('profondita_old');
+        }
 
         $tipologia = $ordine->getAttribute('tipologia_spedizione');   
         $costo = $ordine->getAttribute('costo');  
@@ -162,6 +188,49 @@ if( $_SESSION['funzione'] == 'recensione' ){
                   </form>
                   </p>';
     }
+}
+
+if( $ordine->getAttribute('stato') == 'modificato' ){
+    $print = '<p>
+    <strong>Larghezza:</strong> '.$larghezza.' cm ';
+    if( $larghezza != $larghezza_old ){
+        $print .= '<span style="color:red">(precedente valore: '.$larghezza_old.'cm)</span>';
+    }
+    $print .= '<br />
+    <strong>Altezza:</strong> '.$altezza.' cm ';
+    if( $altezza != $altezza_old ){
+        $print .= '<span style="color:red">(precedente valore: '.$altezza_old.'cm)</span>';
+    }
+    $print .= '<br />
+    <strong>Profondità:</strong> '.$profondita.' cm ';
+    if( $profondita != $profondita_old ){
+        $print .= '<span style="color:red">(precedente valore: '.$profondita_old.'cm)</span>';
+    }
+    $print .= '<br />
+    <strong>Peso:</strong> '.$peso.' kg ';
+    if( $peso != $peso_old ){
+        $print .= '<span style="color:red">(precedente valore: '.$peso_old.'kg)</span>';
+    }
+    $print .= '
+    <br />
+	<strong>Tipologia spedizione:</strong> '.$tipologia.' <br />
+	<strong>Tipologia ritiro:</strong> '.$ritiro.' <br />
+    <strong>Costo:</strong> '.$costo.' € ';
+    if( $costo != $costo_old ){
+        $print .= '<span style="color:red">(precedente valore: '.$costo_old.'€)</span>';
+    }
+}
+else{
+    $print = '
+    <p>
+    <strong>Larghezza:</strong> '.$larghezza.' cm <br />
+    <strong>Altezza:</strong> '.$altezza.' cm <br />
+    <strong>Profondita:</strong> '.$profondita.' cm <br />
+    <strong>Peso:</strong> '.$peso.' kg<br />
+	<strong>Tipologia spedizione:</strong> '.$tipologia.' <br />
+	<strong>Tipologia ritiro:</strong> '.$ritiro.' <br />
+    <strong>Costo:</strong> '.$costo.' €<br /> 
+    </p>';
 }
 
 //associa automaticamente le operazioni non assegnate ai bytecuorier
@@ -266,15 +335,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <?php echo $mex_pagamento;?>
 
      <h3>Informazioni pacco</h3>
-	 <p>
-        <strong>Larghezza:</strong> <?php echo $larghezza; ?> cm <br />
-        <strong>Altezza:</strong> <?php echo $altezza; ?> cm <br />
-        <strong>Profondita:</strong> <?php echo $profondita; ?> cm <br />
-	    <strong>Peso:</strong> <?php echo $peso; ?> kg<br />
-	    <strong>Tipologia spedizione:</strong> <?php echo $tipologia; ?> <br />
-	    <strong>Tipologia ritiro:</strong> <?php echo $ritiro; ?> <br />
-        <strong>Costo:</strong> <?php echo $costo; ?> €<br /> 
-    </p>
+     <?php echo $print; ?>
+
     <h3>Indirizzi</h3>
 	 <p>
         <strong>Destinatario:</strong> <?php echo $nome; ?> <br />
@@ -285,14 +347,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <?php  
         //bottone pagamento
         if ( $_SESSION['funzione'] == 'pagamento' && !isset($_POST['pagamento']) )  
-            echo '<button type="submit" name="pagamento" value="'.$_SESSION['id_ordine'].'">Paga</button>';
+            echo '
+            <button type="submit" name="pagamento" value="pay">Paga</button>
+            <button type="submit" name="pagamento" value="delete">Annulla ordine</button>';
         
         if( $_SESSION['funzione'] == 'recensione' ){
             echo $text_rec;
         }
-
-
-        //stampaNote($listaNote); ?>
+        ?>
      </form>
    </div> 
    

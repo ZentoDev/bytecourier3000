@@ -15,6 +15,7 @@
             <xs:element name="indirizzo_ritiro" type="indirizzo" minOccurs="0" />
             <xs:element name="indirizzo_destinazione" type="indirizzo" minOccurs="1" />
             <xs:element ref="destinatario" minOccurs="1" />
+            <xs:element name="modifica" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="id_richiesta" type="xs:string" use="required"/>
         <xs:attribute name="username" type="xs:string" use="required"/>
@@ -59,6 +60,14 @@
     <xs:attribute name="nazione" type="xs:string" use="required"/>
     <xs:attribute name="strada" type="xs:string" use="required"/>
     <xs:attribute name="numero" type="xs:integer" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="modifica">
+    <xs:attribute name="costo_old" type="xs:float" use="required" />
+    <xs:attribute name="peso_old" type="xs:float" use="required"/>
+    <xs:attribute name="larghezza_old" type="xs:float" use="required"/>
+    <xs:attribute name="altezza_old" type="xs:float" use="required"/>
+    <xs:attribute name="profondita_old" type="xs:float" use="required"/>
 </xs:complexType>
 
 </xs:schema>

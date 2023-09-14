@@ -55,6 +55,7 @@
         <indirizzo_ritiro citta="Padova" nazione="Italia" strada="via nastri" numero="7" />
         <indirizzo_destinazione citta="Biella" nazione="Italia" strada="via cinema" numero="4" />
         <destinatario nome="Gregorio" cognome="Annunziato" />
+        <modifica costo_old="75" peso_old="" larghezza_old="" altezza_old="" profondita_old="" />
     </ordine>
     <ordine id_richiesta="10" username="marcolino71" tipologia_spedizione="provincia" costo="166"
         stato="concluso" ritiro="in_loco" peso="52" larghezza="20" altezza="25" profondita="15">
@@ -93,5 +94,29 @@
         <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="98" />
         <indirizzo_destinazione citta="ff" nazione="ff" strada="ff" numero="4" />
         <destinatario nome=" ff" cognome="ff" />
+    </ordine>
+    <ordine id_richiesta="19" username="marcolino71" tipologia_spedizione="estero" costo="15"
+        stato="in_attesa" ritiro="in_loco" peso="20" larghezza="200" altezza="200" profondita="100">
+        <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="97" />
+        <indirizzo_destinazione citta="Paris" nazione="Francia" strada="rue firte" numero="7" />
+        <destinatario nome="Jean" cognome="Jarre" />
+    </ordine>
+    <ordine id_richiesta="20" username="marcolino71" tipologia_spedizione="estero" costo="40"
+        stato="modificato" ritiro="in_loco" peso="20" larghezza="200" altezza="200" profondita="100">
+        <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="98" />
+        <indirizzo_destinazione citta="Montecarlo" nazione="Monaco" strada="victory plaza"
+            numero="1" />
+        <destinatario nome="Niko" cognome="Rosberg" />
+        <modifica costo_old="15" peso_old="20" larghezza_old="200" altezza_old="200"
+            profondita_old="100" />
+    </ordine>
+    <ordine id_richiesta="21" username="marcolino71" tipologia_spedizione="provincia" costo="8.5"
+        stato="modificato" ritiro="in_loco" peso="5" larghezza="60" altezza="50" profondita="50">
+        <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via dei fatali" numero="98" />
+        <indirizzo_destinazione citta="Aci Trezza" nazione="Italia" strada="via dei faraglioni"
+            numero="24" />
+        <destinatario nome="Aurelio" cognome="Marchi" />
+        <modifica costo_old="7.5" peso_old="5" larghezza_old="50" altezza_old="50"
+            profondita_old="50" />
     </ordine>
 </ordini>

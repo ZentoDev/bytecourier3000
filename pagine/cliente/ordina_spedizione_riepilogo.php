@@ -8,6 +8,20 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+$peso             = $_SESSION['peso'];
+$larghezza        = $_SESSION['larghezza'];
+$altezza          = $_SESSION['altezza'];
+$profondita       = $_SESSION['profondita'];
+$costo            = $_SESSION['costo'];
+$cod_dim          = $_SESSION['cod_dim'];
+$ritiro           = $_SESSION['ritiro'];
+$tipo_spedizione  = $_SESSION['tipo_spedizione'];
+$nome_dest        = $_SESSION['nome_dest'];
+$cognome_dest     = $_SESSION['cognome_dest'];
+$via_dest         = $_SESSION['via_dest'];
+$nazione_dest     = $_SESSION['nazione_dest'];
+$citta_dest       = $_SESSION['citta_dest'];
+$civico_dest      = $_SESSION['civico_dest'];
 
 $mex = '';
 if( isset( $_POST['invio'] )) {
@@ -67,10 +81,6 @@ if( isset( $_POST['invio'] )) {
     $_SESSION['nazione_dest'] = '';
     $_SESSION['citta_dest'] = '';
     $_SESSION['civico_dest'] = '';
-    $_SESSION['via_rit'] = $_SESSION['via'];
-    $_SESSION['nazione_rit'] = $_SESSION['nazione'];
-    $_SESSION['citta_rit'] = $_SESSION['citta'];
-    $_SESSION['civico_rit'] = $_SESSION['num_civ'];
 }
 
 //ottiene un id disponibile 
@@ -120,20 +130,20 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h3>Informazioni pacco</h3>
 	 <p>
-        <strong>Larghezza:</strong> <?php echo $_SESSION['larghezza']; ?> cm <br />
-        <strong>altezza:</strong> <?php echo $_SESSION['altezza']; ?> cm <br />
-        <strong>Profondità:</strong> <?php echo $_SESSION['profondita']; ?> cm <br />
-	    <strong>Peso:</strong> <?php echo $_SESSION['peso']; ?> kg<br />
-	    <strong>Tipologia spedizione:</strong> <?php echo $_SESSION['tipo_spedizione']; ?> <br />
-	    <strong>Tipologia ritiro:</strong> <?php echo $_SESSION['ritiro']; ?> <br />
-        <strong>Costo:</strong> <?php echo $_SESSION['costo']; ?> €<br /> 
+        <strong>Larghezza:</strong> <?php echo $larghezza; ?> cm <br />
+        <strong>altezza:</strong> <?php echo $altezza; ?> cm <br />
+        <strong>Profondità:</strong> <?php echo $profondita; ?> cm <br />
+	    <strong>Peso:</strong> <?php echo $peso; ?> kg<br />
+	    <strong>Tipologia spedizione:</strong> <?php echo $tipo_spedizione; ?> <br />
+	    <strong>Tipologia ritiro:</strong> <?php echo $ritiro; ?> <br />
+        <strong>Costo:</strong> <?php echo $costo; ?> €<br /> 
     </p>
     <h3>Indirizzi</h3>
 	 <p>
-        <strong>Destinatario:</strong> <?php echo $_SESSION['nome_dest'].' '.$_SESSION['cognome_dest']; ?> <br />
-		<strong>Indirizzo destinazione:</strong> <?php echo $_SESSION['via_dest'].' '.$_SESSION['civico_dest'].', '.$_SESSION['citta_dest'].', '.$_SESSION['nazione_dest']; ?> <br />
+        <strong>Destinatario:</strong> <?php echo $nome_dest.' '.$cognome_dest; ?> <br />
+		<strong>Indirizzo destinazione:</strong> <?php echo $via_dest.' '.$civico_dest.', '.$citta_dest.', '.$nazione_dest;?> <br />
         <?php 
-        if( $_SESSION['ritiro'] == 'centro') {
+        if( $ritiro == 'centro') {
             $indirizzo_rit = 'da consegnare in un centro spedizioni';
         }
         else {
