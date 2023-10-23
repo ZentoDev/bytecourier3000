@@ -25,10 +25,6 @@ if( isset( $_POST['delete'] )) {
 	}
 }
 
-
-if( isset($_POST['invio_domanda']) ) 	$aggiunta = aggiungiFAQ($docum);
-
-
 function stampaFAQ($listF, $listI) {
 
 	$faq = "<table id=\"table_commenti\">";	
@@ -107,17 +103,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-     <h2>Gestione FAQ</h2>
-	 
-     <?php if(isset($_POST['up'])){
-		 echo $message;
-	 }
-	 if(isset($_POST['invio_domanda'])){
-		 echo $aggiunta;
-	 }
-	 ?>
-	
-	<h3>Aggiunta FAQ</h3> 
+     <h2>Gestione FAQ</h2>	
+	 <h3>Aggiunta FAQ</h3> 
 
 	<form action="crea_faq.php" method="post" >
         <button type="submit" name="add_faq" value="signup">Aggiungi nuova FAQ</button><br /><br />

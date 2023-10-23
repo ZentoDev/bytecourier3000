@@ -2,7 +2,7 @@
 
 <setting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation="setting.xsd" 
-assegnazione_automatica="true">
+assegnazione_automatica="false">
 
 <setting_spedizioni>
     <tipologia_spedizione nome="citta" durata="12" abilitazione="true" >

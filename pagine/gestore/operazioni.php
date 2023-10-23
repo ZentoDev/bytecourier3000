@@ -25,8 +25,9 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		if( $operazione->getAttribute('stato') != 5 )      
-            { //seleziona le operazioni in carico all'operatore non concluse
+		if( $operazione->getAttribute('stato') != 5 &&
+		    $operazione->getAttribute('username_bytecourier') != '' ){ 
+		//seleziona le operazioni in corso
 
             $id_operazione = $operazione->getAttribute('id_operazione');
 			$id_ordine = $operazione->getAttribute('id_ordine');
@@ -36,31 +37,37 @@ function stampaOperazioni($listOp, $listOrd){
 				$ordine = $listOrd->item($i);
 
 			    if( $id_ordine ==  $ordine->getAttribute('id_richiesta') ) {
-
+					
+					$stato = $operazione->getAttribute('stato');
+							
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-					if( $stato >= 3) {
-						$indirizzo_ritiro = 'centro byte courier';
-					}
-					else  {
-						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
-					}
 
-					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+						if( $stato >= 3) {
+							$indirizzo_ritiro = 'centro byte courier';
+						}
+						else{
+							$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+						}
+						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					}
+					else  $indirizzo_ritiro = 'centro byte courier';
+
 					$destinazione = $ordine_child->getAttribute('strada').' ';
 					$destinazione .= $ordine_child->getAttribute('numero').', ';
 					$destinazione .= $ordine_child->getAttribute('citta').', ';
 					$destinazione .= $ordine_child->getAttribute('nazione');
-					
+						
 					$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
 					$nome = $ordine_child->getAttribute('nome').' ';
 					$nome .= $ordine_child->getAttribute('cognome');
-
+					
                     $stato = $operazione->getAttribute('stato');   
                     $courier = $operazione->getAttribute('username_bytecourier');
-
+					
 				    $table.='<tr>
 				              <th><strong>Id operazione:</strong> '.$id_operazione.'<br \>
                               Courier:</strong> '.$courier.'</th>
@@ -68,7 +75,7 @@ function stampaOperazioni($listOp, $listOrd){
 							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
 				              <strong>Destinatario:</strong> '.$nome.'<br />
-					          <strong>Stato:</strong> '.statoOperazione($stato).'<br />
+					          <strong>Stato:</strong> '.statoOperazione($operazione->getAttribute('stato')).'<br />
 				             </td>   
 			            	 <td>
 				              <form action="dettagli_operazione.php" method="post">
@@ -83,7 +90,7 @@ function stampaOperazioni($listOp, $listOrd){
 				}
 			}
 		}
-            
+           
     }
 
 	if($presente == 0)    echo $table = "<p>Non sono presenti operazioni</p>";

@@ -4,30 +4,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
 
 $err = '';
-/*
-//se mancano dati utente, vengono letti dal db (necessario quando si carica la pagina per la prima volta durante la sessione)
-if( !isset( $_SESSION['nome'], $_SESSION['cognome'],  $_SESSION['cognome'], $_SESSION['pw'], $_SESSION['data'],  $_SESSION['cf'],  $_SESSION['email'],  $_SESSION['tel']) ){
-    
-    require_once("../../mysql/connection.php");
-    if( !$connection_mysqli )   return 'problemi interni al sistema, contattare un amministratore';
-    //query per accedere ai dati dell'utente
-    $select_query = "SELECT * FROM $user_table_name
-    WHERE username = \"$_SESSION[username]\"";
-
-    if ( $res = mysqli_query($connection_mysqli, $select_query) ) {
- 
-        $row = mysqli_fetch_array($res);  
-
-        $_SESSION['nome'] = $row['nome'];
-        $_SESSION['cognome'] = $row['cognome'];
-        $_SESSION['pw'] = $row['password'];
-        $_SESSION['data'] = $row['data_nascita'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['cf'] = $row['cf'];
-        $_SESSION['tel'] = $row['tel'];
-    }
-}*/
-
 //viene eseguita in caso di attivazione della form
 if( isset($_POST['invio']) ) $mod = modifica_valori();
 
@@ -35,7 +11,7 @@ if( isset($_POST['invio']) ) $mod = modifica_valori();
 function modifica_valori(){
 
     require_once("../../mysql/connection.php");
-    if( !$connection_mysqli )   $mod = 'problemi interni al sistema, contattare un amministratore0';
+    if( !$connection_mysqli )   $mod = 'problemi interni al sistema, contattare un amministratore';
 
 	$modificato="";
 

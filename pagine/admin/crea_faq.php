@@ -69,7 +69,7 @@ if( isset($_POST['new_faq_domanda']) ){
     $aggiunta = "Nuova faq aggiunta";
 }
 
-function stampaFAQ($listF, $listI) {
+function stampaInterventi($listF, $listI) {
 
     $presente = 0;
 	$stampa = "<table id=\"table_commenti\">";	
@@ -199,7 +199,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	</form>
 	<h3>Seleziona interventi da elevare a FAQ</h3> 
 	 <?php
-	 echo stampaFAQ($listaFAQ, $listaInt);?>
+	 echo stampaInterventi($listaFAQ, $listaInt);?>
 		
    </div>
    

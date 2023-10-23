@@ -24,40 +24,50 @@ function stampaOperazioni($listOp, $listOrd){
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);
 
-		$stato = $operazione->getAttribute('stato');   
-		if( $stato == 1 || $stato == 3 ) {   //si possono selezionare solo le operazioni i cui pacchi possono essere ritirati dal domicilio del cliente o dal centro spedizioni 
+		if( $operazione->getAttribute('username_bytecourier') == $_SESSION['username'] && 
+            $operazione->getAttribute('stato') == 1 || $operazione->getAttribute('stato') ){      
+            //si possono selezionare solo le operazioni i cui pacchi possono essere ritirati dal domicilio del cliente o dal centro spedizioni
 
-			if( !$operazione->getAttribute('username_bytecourier') ) {    //operazione già presa in carico? in tal caso non mostrarla
+				if( !$operazione->getAttribute('username_bytecourier') ) {    //operazione già presa in carico? in tal caso non mostrarla
 
-				$id_operazione = $operazione->getAttribute('id_ordine');
+					$id_operazione = $operazione->getAttribute('id_operazione');
+			        $id_ordine = $operazione->getAttribute('id_ordine');
 
-				$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
-			    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
-					$ordine = $listOrd->item($i);
-				    $id_ordine = $ordine->getAttribute('id_richiesta');
+			        $coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
+		            for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
+				        $ordine = $listOrd->item($i);
 
-				    if( $id_ordine ==  $id_operazione) {
+			            if( $ordine->getAttribute('id_richiesta') ==  $id_ordine) {
 
-						$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-						if( $stato == 1) {
-							$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-							$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-							$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-							$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
-						}
-						else  $indirizzo_ritiro = 'centro byte courier';
+							$stato = $operazione->getAttribute('stato');
+							
+							$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
+		
+							if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+								if( $stato >= 3) {
+									$indirizzo_ritiro = 'centro byte courier';
+								}
+								else{
+									$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+									$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+									$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+									$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+								}
+								$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+							}
+							else  $indirizzo_ritiro = 'centro byte courier';
+		
+
+						    $destinazione = $ordine_child->getAttribute('strada').' ';
+						    $destinazione .= $ordine_child->getAttribute('numero').', ';
+						    $destinazione .= $ordine_child->getAttribute('citta').', ';
+						    $destinazione .= $ordine_child->getAttribute('nazione');
 			
-						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
-						$destinazione = $ordine_child->getAttribute('strada').' ';
-						$destinazione .= $ordine_child->getAttribute('numero').', ';
-						$destinazione .= $ordine_child->getAttribute('citta').', ';
-						$destinazione .= $ordine_child->getAttribute('nazione');
-			
-						$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
-						$nome = $ordine_child->getAttribute('nome').' ';
-						$nome .= $ordine_child->getAttribute('cognome');
+		    				$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
+			    			$nome = $ordine_child->getAttribute('nome').' ';
+				    		$nome .= $ordine_child->getAttribute('cognome');
 	
-					    $table.='<tr>
+					        $table.='<tr>
 					              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
 					             <td>   
 								  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
@@ -74,11 +84,11 @@ function stampaOperazioni($listOp, $listOrd){
 					              </form>
 					             </td>
 					             </tr>';
-					    $coin = 1;		
-						$presente = 1;			
-					}
-				}
-			}
+				    	    $coin = 1;		
+					    	$presente = 1;			
+					    }
+				    }
+			    }
             
 		}
 	}

@@ -78,7 +78,10 @@ if( isset($_POST['pagamento']) ){
                 $new_op->setAttribute('id_operazione', $new_id);
                 $new_op->setAttribute('username_bytecourier', '');
                 $new_op->setAttribute('id_ordine', $_SESSION['id_ordine']);
-                $new_op->setAttribute('stato', 1);
+                if( $ordine->getAttribute('ritiro') == 'in_loco' )
+                    $new_op->setAttribute('stato', 1);
+                else
+                    $new_op->setAttribute('stato', 3);
 
                 //verifico che sia abilitata l'autoassegnazione del bytecourier
                 if( $rootSetting->getAttribute('assegnazione_automatica') == 'true' )
@@ -162,7 +165,7 @@ if($find == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'ord
 
 
 //Se è un ordine completato si abilita la possibilita di visualizzare la parte relativa alla recensione
-if( $_SESSION['funzione'] == 'recensione' ){
+if( $_SESSION['funzione'] == 'recensione' && $ordine->getAttribute('stato') == 'concluso'){
     
     $find = 0;
     for( $i = 0; $i <$listaRec->length && $find == 0; $i++ ){
@@ -190,6 +193,7 @@ if( $_SESSION['funzione'] == 'recensione' ){
     }
 }
 
+//Si verifica se l'ordine sia stato modificato, in tal caso si stampano anche le eventuali modifiche
 if( $ordine->getAttribute('stato') == 'modificato' ){
     $print = '<p>
     <strong>Larghezza:</strong> '.$larghezza.' cm ';
@@ -243,32 +247,33 @@ function autoAlloc($docOperazioni) {
 	$rootOp = $docOperazioni->documentElement;  
     $listOp = $rootOp->childNodes;
 
+    //query per ottenere gli utenti che sono byte courier
+	$select_query = "SELECT username FROM $user_table_name 
+	WHERE permesso = 10 ";
+
+    //creo un array associativo che contiene le coppie (bytecourier => numOp)  
+    $res = mysqli_query($connection_mysqli, $select_query);
+    while ($row = mysqli_fetch_assoc($res)) 
+        $arrByte[$row['username']] = countOp($row['username'], $listOp);
+
 	//scorro tutte le operazioni
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);   
 
 		//verifico se l'op non è assegnata
 		if( $operazione->getAttribute('username_bytecourier') == "" ) {
-
+            
+            //ricerco il bytecourier con meno operazioni a carico
 			$min = 999;  //numero fittizio per ricercare il bt con il minimo numero di operazioni prese in carico
 
-		    //query per ottenere gli utenti che sono byte courier
-		    $select_query = "SELECT username FROM $user_table_name 
-		                     WHERE permesso = 10 ";
-
-            $res = mysqli_query($connection_mysqli, $select_query);
-            while ($row = mysqli_fetch_assoc($res)) 
-	            $listByte[] = $row['username'];
-        
-			foreach( $listByte as $byte ) {
-				$num_op = countOp($byte, $listOp);
-
-				if( $min >  $num_op) {
-					$min = $num_op;
-					$byte_min = $byte;
+			foreach($arrByte as $nome => $numOp ){
+				if( $min >  $numOp) {
+					$min = $numOp;
+					$byte_min = $nome;
 				}
 			}
-            
+
+			$arrByte[$byte_min]++;    
 			$operazione->setAttribute('username_bytecourier', $byte_min);
 		}
 	}
@@ -351,7 +356,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <button type="submit" name="pagamento" value="pay">Paga</button>
             <button type="submit" name="pagamento" value="delete">Annulla ordine</button>';
         
-        if( $_SESSION['funzione'] == 'recensione' ){
+        if( $_SESSION['funzione'] == 'recensione' && $ordine->getAttribute('stato') == 'concluso'){
             echo $text_rec;
         }
         ?>

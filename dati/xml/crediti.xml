@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <richieste xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="crediti.xsd">
-    <richiesta_crediti id_richiesta="0" username="marco" crediti="25" stato="accettata" />
+    <richiesta_crediti id_richiesta="0" username="marcolino71" crediti="25" stato="accettata" />
     <richiesta_crediti id_richiesta="1" username="stella" crediti="457" stato="rifiutata" />
-    <richiesta_crediti id_richiesta="2" username="simona" crediti="14" stato="in_attesa" />
+    <richiesta_crediti id_richiesta="2" username="stella" crediti="14" stato="in_attesa" />
     <richiesta_crediti id_richiesta="3" username="marcolino71" crediti="7" stato="in_attesa" />
     <richiesta_crediti id_richiesta="4" username="marcolino71" crediti="8" stato="accettata" />
     <richiesta_crediti id_richiesta="5" username="marcolino71" crediti="48" stato="in_attesa" />
-    <richiesta_crediti id_richiesta="6" username="marcolino71" crediti="10" stato="in_attesa" />
 </richieste>

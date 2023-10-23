@@ -175,7 +175,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
             <h3>indirizzo di ritiro</h3>
             <?php  
             if( $_SESSION['ritiro'] == 'centro') 
-                echo '<p><strong>Hai selezionato la modalita di ritiro "in centro", consegna il pacco nel centro spedizioni più vicino</p></strong>';
+                echo '<p><strong>Hai selezionato la modalità di ritiro "in centro", consegna il pacco nel centro spedizioni più vicino</p></strong>';
             else {
                 echo '
                 <div class="flex-container" style="padding:0%; margin: -5%;">

@@ -9,13 +9,6 @@ $docOrd = openXML("../../dati/xml/ordini.xml");
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if( isset($_POST['paga'])){
-    $_SESSION['id_ordine'] = $_POST['paga'];
-    $_SESSION['funzione'] = 'pagamento';
-	header('Location:dettagli_ordine.php');
-    exit;
-}
-
 function stampaSpedizioni($listOrd) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
@@ -74,22 +67,9 @@ function stampaSpedizioni($listOrd) {
                      <strong>larghezza:</strong> '.$larghezza.' cm<br />
                      <strong>altezza:</strong> '.$altezza.' cm<br />
                      <strong>profondita:</strong> '.$profondita.' cm<br />
-                     </td>';
+                     </td>
+                     <td>In attesa di verifica</td></tr>';
 
-            if( $stato  == 'in_attesa_pagamento' || $stato == 'modificato') {
-
-                $table .='<td>
-                          <form action="ordini.php" method="post">
-                          <div id="buttons">
-                          <button type="submit" name="paga" value="'.$id_ordine.'" >Pagamento</button>
-                          </div>
-                          </form>
-                          </td>
-                          </tr>';
-            }
-            else if ( $stato == 'accettato' )   $table .='<td>In corso</td></tr>';
-            else $table .='<td>In attesa di verifica</td></tr>';
-                     
             $presente = 1;
         }
     }

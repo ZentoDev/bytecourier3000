@@ -32,15 +32,20 @@ if($coin == 1) {
 
         if( $id_ordine ==  $operazione->getAttribute('id_ordine')) {
 
-            $stato = $operazione->getAttribute('stato');  
-            
-            $ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-            $indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-            $indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-            $indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-            $indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+            $stato = $operazione->getAttribute('stato'); 
 
-            $ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+            $ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
+
+            if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+
+                $indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+                 $indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+                $indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+                $indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+                $ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+            }
+            else  $indirizzo_ritiro = 'centro byte courier';
+
             $destinazione = $ordine_child->getAttribute('strada').' ';
             $destinazione .= $ordine_child->getAttribute('numero').', ';
             $destinazione .= $ordine_child->getAttribute('citta').', ';
@@ -173,7 +178,7 @@ function stampaNote($listNote){
 
 		$nota = $listNote->item($i);
 		$author = $nota->getAttribute('username');
-        $data = $nota->getAttribute('data_nota');
+        $data = str_replace("T", " ", $nota->getAttribute('data_nota')); //Nel formato xsd dateTime è presente una 'T' per indicare l'inizio dell'orario, uso str_replace per sostituirla con una spazio vuoto prima di farla visualizzare all'utente
 		$text = $nota->textContent;
 		
 		$tabNote .="<tr>

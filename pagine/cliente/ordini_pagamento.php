@@ -26,26 +26,24 @@ function stampaSpedizioni($listOrd, $tipo_stato) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
     
-    $table='<h2>Ordini</h2>
+    $intestazione='<h2>Ordini</h2>
             <form action="ordini_pagamento.php" method="post">
             <div id="buttons">
             <button type="submit" name="tipo_ordine" value="in_attesa_pagamento" >Ordini accettati</button>
             <button type="submit" name="tipo_ordine" value="modificato" >Ordini modificati</button>&nbsp
             </div>
-            </form>
-            <table>';  
-                  
+            </form>';                  
     switch($tipo_stato) {
         case 'in_attesa_pagamento':
-            $table.= '<h3>Ordini in attesa di pagamento</h3>';
+            $intestazione.= '<h3>Ordini in attesa di pagamento</h3>';
             break;
         
         case 'modificato':
-            $table.= '<h3>Ordini modificati, in attesa di pagamento</h3>';
-            break;
-             
+            $intestazione.= '<h3>Ordini modificati, in attesa di pagamento</h3>';
+            break;        
     }
 
+    $table='<table>';
     for ($pos = 0; $pos < $listOrd->length; $pos++) {
         $ordine = $listOrd->item($pos);
         $stato = $ordine->getAttribute('stato');
@@ -117,11 +115,11 @@ function stampaSpedizioni($listOrd, $tipo_stato) {
             $presente = 1;
         }
     }
-    if($presente == 0)    echo $table = "<p>Non sono presenti ordini</p>";
+    if($presente == 0)    echo $intestazione."<p>Non sono presenti ordini</p>";
     
     else{
         $table.="</table>";
-        echo $table;
+        echo $intestazione.''.$table;
     }        
 }
 

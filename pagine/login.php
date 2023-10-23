@@ -36,6 +36,12 @@ if(isset($_POST['invio'])){
 				//indirizzo il client verso la pagina iniziale del sito
                 if($_SESSION['permesso'] == 1) {   //1 = cliente
 
+                    $_SESSION['cf'] = $row['cf'];
+                    $_SESSION['tel'] = $row['tel'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['data'] = $row['data_nascita'];
+                    $_SESSION['pw'] = $row['password'];
+
                     $_SESSION['num_civ'] = $row['num_civico'];
                     $_SESSION['via'] = $row['indirizzo'];
                     $_SESSION['citta'] = $row['citta'];

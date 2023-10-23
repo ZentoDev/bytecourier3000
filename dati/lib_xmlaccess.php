@@ -4,7 +4,7 @@
    Genera un oggetto DOMDocument a partire da un file XML*/
 function openXML ($fname) {
 
-    /*Il file viene scaricato all'interno di un array attraverso la funzione file() e poi viene posto all'interno di uns stringa. 
+    /*Il file viene scaricato all'interno di un array attraverso la funzione file() e poi viene posto all'interno di una stringa. 
       La funzione trim() permette di rimuovere i caratteri di whitespace di una data stringa.*/
     $stringXML="";
     foreach( file($fname) as $nodo ){

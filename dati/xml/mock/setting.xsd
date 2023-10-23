@@ -21,7 +21,7 @@
 <xs:element name="tipologia_spedizione">
     <xs:complexType>
         <xs:sequence>
-            <xs:element ref="tipo_pacco" maxOccurs="unbounded" minOccurs="1"/>
+            <xs:element ref="tipo_pacco" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="nome" type="xs:string" use="required"/>
         <xs:attribute name="durata" type="xs:positiveInteger" use="required"/>

@@ -38,18 +38,25 @@ function stampaOperazioni($listOp, $listOrd){
 
 			    if( $ordine->getAttribute('id_richiesta') ==  $id_ordine) {
 
+					$stato = $operazione->getAttribute('stato');
+							
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-					if( $stato >= 3) {
-						$indirizzo_ritiro = 'centro byte courier';
-					}
-					else  {
-						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
-					}
 
-					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+						if( $stato >= 3) {
+							$indirizzo_ritiro = 'centro byte courier';
+						}
+						else{
+							$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+						}
+						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					}
+					else  $indirizzo_ritiro = 'centro byte courier';
+
+
 					$destinazione = $ordine_child->getAttribute('strada').' ';
 					$destinazione .= $ordine_child->getAttribute('numero').', ';
 					$destinazione .= $ordine_child->getAttribute('citta').', ';
@@ -67,7 +74,7 @@ function stampaOperazioni($listOp, $listOrd){
 							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
 				              <strong>Destinazione:</strong> '.$destinazione.'<br />
 				              <strong>Destinatario:</strong> '.$nome.'<br />
-					          <strong>Stato:</strong> '.statoOperazione($stato).'<br />
+					          <strong>Stato:</strong> '.statoOperazione($operazione->getAttribute('stato')).'<br />
 				             </td>   
 			            	 <td>
 				              <form action="dettagli_operazione.php" method="post">

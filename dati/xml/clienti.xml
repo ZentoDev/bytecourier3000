@@ -1,1 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><clienti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="clienti.xsd"><cliente username="marcolino71" crediti="495"/><cliente username="stella" crediti="8"/><cliente username="jack8" crediti="0"/><cliente username="MGBello" crediti="0"/><cliente username="Bab" crediti="0"/></clienti>
+<?xml version="1.0" encoding="UTF-8"?><clienti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nonamespaceschemalocation="clienti.xsd">
+    <cliente username="marcolino71" crediti="77"/>
+    <cliente username="stella" crediti="8"/>
+</clienti>

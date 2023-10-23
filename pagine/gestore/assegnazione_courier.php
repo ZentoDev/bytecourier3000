@@ -49,25 +49,33 @@ function stampaOperazioni($listOp, $listOrd){
 
 		if( $operazione->getAttribute('username_bytecourier') == "" ) {    //operazione già presa in carico? in tal caso non mostrarla
 
-			$id_operazione = $operazione->getAttribute('id_ordine');
+			$id_operazione = $operazione->getAttribute('id_operazione');
+			$id_ordine = $operazione->getAttribute('id_ordine');
 
 			$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
 		    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 				$ordine = $listOrd->item($i);
-			    $id_ordine = $ordine->getAttribute('id_richiesta');
 
-			    if( $id_ordine ==  $id_operazione) {
+			    if( $id_ordine ==  $id_ordine = $ordine->getAttribute('id_richiesta') ) {
 
+					$stato = $operazione->getAttribute('stato');
+							
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-					if( $stato == 1) {
-						$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-						$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+
+					if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+						if( $stato >= 3) {
+							$indirizzo_ritiro = 'centro byte courier';
+						}
+						else{
+							$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+							$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+						}
+						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
 					}
 					else  $indirizzo_ritiro = 'centro byte courier';
 			
-					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
 					$destinazione = $ordine_child->getAttribute('strada').' ';
 					$destinazione .= $ordine_child->getAttribute('numero').', ';
 					$destinazione .= $ordine_child->getAttribute('citta').', ';
@@ -125,7 +133,7 @@ function tipologiaOperazione($stat) {
     }
 }
 
-//associa automaticamente le operazioni non assegnate ai bytecuorier
+//associa automaticamente le operazioni non assegnate ai bytecourier
 //Per ogni operazione libera si sceglie il bt con meno operazioni in carico in quel momento 
 function autoAlloc($docOperazioni) {
 
@@ -135,6 +143,15 @@ function autoAlloc($docOperazioni) {
 	$rootOp = $docOperazioni->documentElement;  
     $listOp = $rootOp->childNodes;
 
+	//query per ottenere gli utenti che sono byte courier
+	$select_query = "SELECT username FROM $user_table_name 
+	WHERE permesso = 10 ";
+
+    //creo un array associativo che contiene le coppie (bytecourier => numOp)  
+    $res = mysqli_query($connection_mysqli, $select_query);
+    while ($row = mysqli_fetch_assoc($res)) 
+        $arrByte[$row['username']] = countOp($row['username'], $listOp);
+
 	//scorro tutte le operazioni
 	for ($pos = 0; $pos < $listOp->length; $pos++) {
 		$operazione = $listOp->item($pos);   
@@ -142,25 +159,17 @@ function autoAlloc($docOperazioni) {
 		//verifico se l'op non è assegnata
 		if( $operazione->getAttribute('username_bytecourier') == "" ) {
 
+            //ricerco il bytecourier con meno operazioni a carico
 			$min = 999;  //numero fittizio per ricercare il bt con il minimo numero di operazioni prese in carico
 
-		    //query per ottenere gli utenti che sono byte courier
-		    $select_query = "SELECT username FROM $user_table_name 
-		                     WHERE permesso = 10 ";
-
-            $res = mysqli_query($connection_mysqli, $select_query);
-            while ($row = mysqli_fetch_assoc($res)) 
-	            $listByte[] = $row['username'];
-        
-			foreach( $listByte as $byte ) {
-				$num_op = countOp($byte, $listOp);
-
-				if( $min >  $num_op) {
-					$min = $num_op;
-					$byte_min = $byte;
+			foreach($arrByte as $nome => $numOp ){
+				if( $min >  $numOp) {
+					$min = $numOp;
+					$byte_min = $nome;
 				}
 			}
-            
+
+			$arrByte[$byte_min]++;            
 			$operazione->setAttribute('username_bytecourier', $byte_min);
 		}
 	}

@@ -35,12 +35,17 @@ function stampaOperazioni($listOp, $listOrd){
 			    if( $id_ordine ==  $ordine->getAttribute('id_richiesta')) {
 
 					$ordine_child = $ordine->firstChild;  //nodo indirizzo ritiro
-					$indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
-					$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
-		
-					$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+
+					if( $ordine->getAttribute('ritiro') == 'in_loco' ){
+
+					    $indirizzo_ritiro = $ordine_child->getAttribute('strada').' ';
+				     	$indirizzo_ritiro .= $ordine_child->getAttribute('numero').', ';
+			    		$indirizzo_ritiro .= $ordine_child->getAttribute('citta').', ';
+				    	$indirizzo_ritiro .= $ordine_child->getAttribute('nazione');
+						$ordine_child = $ordine_child->nextSibling;  //nodo indirizzo destinazione
+					}
+					else  $indirizzo_ritiro = 'centro byte courier';
+
 					$destinazione = $ordine_child->getAttribute('strada').' ';
 					$destinazione .= $ordine_child->getAttribute('numero').', ';
 					$destinazione .= $ordine_child->getAttribute('citta').', ';

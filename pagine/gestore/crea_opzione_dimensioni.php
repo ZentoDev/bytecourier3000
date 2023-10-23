@@ -24,10 +24,10 @@ if( isset($_POST['invio']) ){
             
             $new_dim->setAttribute('cod', $new_id);
             $new_dim->setAttribute('larghezza', $_POST['larghezza']);
-            $new_dim->setAttribute('altezza', $_POST['larghezza']);
-            $new_dim->setAttribute('profondita', $_POST['larghezza']);
-            $new_dim->setAttribute('peso_max', $_POST['larghezza']);
-            $new_dim->setAttribute('costo', $_POST['larghezza']);
+            $new_dim->setAttribute('altezza', $_POST['altezza']);
+            $new_dim->setAttribute('profondita', $_POST['profondita']);
+            $new_dim->setAttribute('peso_max', $_POST['peso']);
+            $new_dim->setAttribute('costo', $_POST['costo']);
 
             printFileXml("../../dati/xml/setting.xml", $docType);
             $find = 1;
