@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_courier.php");
 
@@ -13,6 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
+$mex_stat = '';
 $mex = '';
 $coin =0;  // =1 segnala che è stata trovata l'operazione 
 for ($pos = 0; $pos < $listaOp->length && $coin == 0; $pos++) {
@@ -65,7 +66,7 @@ if($coin == 0)  $mex = "<p>Errore nel processo di recupero dei dettagli dell'ope
 
 
 //aggiornamento stato
-if( $_POST['next_stat'] == 1) {
+if( isset($_POST['next_stat']) ) {
 
     $fail = 0;
     switch ($stato) {
@@ -102,7 +103,7 @@ if( $_POST['next_stat'] == 1) {
 }
 
 //inserimento nuova nota
-if( $_POST['invio_nota'] == 1) {
+if( isset($_POST['invio_nota']) ) {
     $note = $operazione->firstChild;
     
     $newNota = $docOp->createElement('nota', $_POST['testo']);

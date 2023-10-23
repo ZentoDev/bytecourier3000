@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_gestore.php");
 
@@ -13,7 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['dettagli'])  $mess = mostraDettagli($docOp);
+if( isset($_POST['dettagli']) )  $mess = mostraDettagli($docOp);
 
 
 function stampaOperazioni($listOp, $listOrd){
@@ -151,7 +151,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <h2>Operazioni in corso</h2>
 
      <?php 
-	 if( $_POST['dettagli'])   echo "<p><strong>$mess</strong></p>";
+	 if( isset($_POST['dettagli']) )   echo "<p><strong>$mess</strong></p>";
 
 	 stampaOperazioni($listaOp, $listaOrd); 
      ?>

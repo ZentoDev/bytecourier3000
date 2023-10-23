@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 session_start();
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';

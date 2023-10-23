@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_admin.php");
 
@@ -126,7 +126,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	    </form>
 
         <?php 
-		if($_POST['invio']){
+		if(isset($_POST['invio'])){
 			echo '<h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;'.$mex.'</h3>';
 		}
 		?>

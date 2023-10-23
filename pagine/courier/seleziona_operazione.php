@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 
 require_once("login_courier.php");
@@ -13,7 +13,7 @@ $listaOp = $rootOp->childNodes;
 $rootOrd = $docOrd->documentElement;
 $listaOrd = $rootOrd->childNodes;
 
-if($_POST['accetta']) $mess = accettaOperazione($docOp);
+if( isset($_POST['accetta']) ) $mess = accettaOperazione($docOp);
 
 function stampaOperazioni($listOp, $listOrd){
 
@@ -165,7 +165,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
      <h2>Selezione delle operazioni</h2>
 
      <?php 
-	 if( $_POST['accetta'])   echo "<p><strong>$mess</strong></p>";
+	 if( isset($_POST['accetta']) )   echo "<p><strong>$mess</strong></p>";
 
 	 stampaOperazioni($listaOp, $listaOrd); 
      ?>

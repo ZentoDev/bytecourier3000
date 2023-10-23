@@ -1,10 +1,10 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_admin.php");
 
 
-if($_POST['invio'])	$mod = modifica_utenti();
+if( isset($_POST['invio']) )	$mod = modifica_utenti();
 
 
 function modifica_utenti(){
@@ -143,7 +143,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
    <div id="center" class="colonna">
 
      <h2 style="margin-left:50px; text-align: center;">Modifica del cliente <?php echo $_POST['username'];?> </h2>
-	 <?php if( $_POST['invio'])   echo "<p><strong>$mod</strong></p>"; ?>
+	 <?php if( isset($_POST['invio']) )   echo "<p><strong>$mod</strong></p>"; ?>
      <form action="modifica_cliente.php" method="post" > 
             <div class="flex-container">
                 <div>

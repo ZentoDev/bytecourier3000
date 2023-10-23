@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_admin.php");
 require_once("../../dati/lib_xmlaccess.php");
@@ -9,9 +9,9 @@ $docCr = openXML("../../dati/xml/crediti.xml");
 $rootCr = $docCr->documentElement;  
 $listaCr = $rootCr->childNodes;
 
+$mex = '';
 if( isset( $_POST['scelta'] )) {
 
-    $mex = '';
 	for( $pos = 0; $pos < $listaCr->length && !$mex; $pos++ ) {   //ricerca della richiesta
 		$richiesta = $listaCr->item($pos);
 		if( $_POST['id_richiesta'] == $richiesta->getAttribute('id_richiesta') ) {
