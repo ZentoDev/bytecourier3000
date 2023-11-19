@@ -84,13 +84,18 @@ function stampaOperazioni($listOp, $listOrd){
 					$ordine_child = $ordine_child->nextSibling;  //nodo destinatario
 					$nome = $ordine_child->getAttribute('nome').' ';
 					$nome .= $ordine_child->getAttribute('cognome');
+
+					$ordine_child = $ordine_child->nextSibling;  //nodo mittente
+					$nome_mit = $ordine_child->getAttribute('nome').' ';
+					$nome_mit .= $ordine_child->getAttribute('cognome');
 	
 				    $table.='<tr>
 				              <th><strong>Id operazione:</strong> '.$id_operazione.'</th>
 				             <td>   
-							  <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
-				              <strong>Destinazione:</strong> '.$destinazione.'<br />
-				              <strong>Destinatario:</strong> '.$nome.'<br />
+							 <strong>Mittente:</strong> '.$nome_mit.'<br />
+							 <strong>Destinatario:</strong> '.$nome.'<br />
+							 <strong>ritiro:</strong> '.$indirizzo_ritiro.'<br />
+							 <strong>Destinazione:</strong> '.$destinazione.'<br />
 				              <strong>Tipologia:</strong> '.tipologiaOperazione($stato).'<br />
 				             </td>   
 			            	 <td>

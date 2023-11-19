@@ -53,8 +53,12 @@ if($coin == 1) {
             $destinazione .= $ordine_child->getAttribute('nazione');
 
             $ordine_child = $ordine_child->nextSibling;  //nodo destinatario
-            $nome = $ordine_child->getAttribute('nome');
-            $cognome = $ordine_child->getAttribute('cognome');
+            $nome = $ordine_child->getAttribute('nome').' ';
+            $nome .= $ordine_child->getAttribute('cognome');
+    
+            $ordine_child = $ordine_child->nextSibling;  //nodo mittente
+            $nome_mit = $ordine_child->getAttribute('nome').' ';
+            $nome_mit .= $ordine_child->getAttribute('cognome');
 
             $listaNote = $operazione->firstChild->childNodes;
 
@@ -230,8 +234,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
      <h3>Operazione <?php echo $_POST['id_operazione']; ?></h3>
 	 <p>
-	    <strong>Nome:</strong> <?php echo $nome; ?> <br />
-	    <strong>Cognome:</strong> <?php echo $cognome; ?> <br />
+        <strong>Mittente:</strong> <?php echo $nome_mit; ?> <br />
+        <strong>Destinatario:</strong> <?php echo $nome; ?> <br />
 		<strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />
 		<strong>Indirizzo destinazione:</strong> <?php echo $destinazione; ?> <br /><br />
 

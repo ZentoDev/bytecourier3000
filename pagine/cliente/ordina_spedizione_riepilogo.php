@@ -63,6 +63,12 @@ if( isset( $_POST['invio'] )) {
     $new_destinatario->setAttribute('nome', $_SESSION['nome_dest']);
     $new_destinatario->setAttribute('cognome', $_SESSION['cognome_dest']);
 
+    $new_mittente = $docOrd->createElement('mittente');
+    $new_ordine->appendChild($new_mittente);
+
+    $new_mittente->setAttribute('nome', $_SESSION['nome']);
+    $new_mittente->setAttribute('cognome', $_SESSION['cognome']);
+
     printFileXML("../../dati/xml/ordini.xml", $docOrd);
     $mex = 'richiesta ordine effettuata';
 
@@ -140,6 +146,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     </p>
     <h3>Indirizzi</h3>
 	 <p>
+        <strong>Mittente:</strong> <?php echo $_SESSION['nome'].' '.$_SESSION['cognome']; ?> <br />
         <strong>Destinatario:</strong> <?php echo $nome_dest.' '.$cognome_dest; ?> <br />
 		<strong>Indirizzo destinazione:</strong> <?php echo $via_dest.' '.$civico_dest.', '.$citta_dest.', '.$nazione_dest;?> <br />
         <?php 

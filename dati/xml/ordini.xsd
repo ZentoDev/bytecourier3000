@@ -14,7 +14,8 @@
         <xs:sequence>
             <xs:element name="indirizzo_ritiro" type="indirizzo" minOccurs="0" />
             <xs:element name="indirizzo_destinazione" type="indirizzo" minOccurs="1" />
-            <xs:element ref="destinatario" minOccurs="1" />
+            <xs:element ref="destinatario" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="mittente" minOccurs="1" maxOccurs="1"/>
             <xs:element name="modifica" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="id_richiesta" type="xs:string" use="required"/>
@@ -49,6 +50,7 @@
 </xs:element>
 
 <xs:element name="destinatario" type="nomeCognome" />
+<xs:element name="mittente" type="nomeCognome" />
 
 <xs:complexType name="nomeCognome">
     <xs:attribute name="nome" type="xs:string" use="required"/>

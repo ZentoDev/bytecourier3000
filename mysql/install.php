@@ -125,7 +125,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, permesso, ban)
 	VALUES
-	(\"Toni\", \"1234\", \"tonio\", \"buscarolo\", \"1999-1-4\", \"1000\", \"0\")
+	(\"Toni\", \"1234\", \"Tonio\", \"Buscarolo\", \"1999-1-4\", \"1000\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -138,7 +138,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"marcolino71\", \"1234\", \"marco\", \"struzzi\", \"1971-12-24\", \"STRMRC71T24H501U\", \"struzzimarco@mmail.it\", \"32964439887\", \"Italia\", \"Roma\", \"via dei fatali\", \"98\", \"1\", \"0\")
+	(\"marcolino71\", \"1234\", \"Marco\", \"Struzzi\", \"1971-12-24\", \"STRMRC71T24H501U\", \"struzzimarco@mmail.it\", \"32964439887\", \"Italia\", \"Roma\", \"via dei fatali\", \"98\", \"1\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -151,7 +151,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, cf, email, tel, nazione, citta, indirizzo, num_civico, permesso, ban)
 	VALUES
-	(\"stella\", \"1234\", \"stella\", \"gianduia\", \"1998-2-20\", \"GNDSLL98B60H274C\", \"starmail@opp.com\", \"32768434487\", \"Italia\", \"Riccione\", \"via latta\", \"4\", \"1\", \"1\")
+	(\"stella\", \"1234\", \"Stella\", \"Gianduia\", \"1998-2-20\", \"GNDSLL98B60H274C\", \"starmail@opp.com\", \"32768434487\", \"Italia\", \"Riccione\", \"via latta\", \"4\", \"1\", \"1\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))
@@ -164,7 +164,7 @@ else {
 $insert_query = "INSERT INTO $user_table_name
 	(username, password, nome, cognome, data_nascita, permesso, ban)
 	VALUES
-	(\"Locky89\", \"1234\", \"Luca\", \"ragazzoni\", \"1989-1-4\", \"10\", \"0\")
+	(\"Locky89\", \"1234\", \"Luca\", \"Ragazzoni\", \"1989-1-4\", \"10\", \"0\")
 	";
 
 if ($res = mysqli_query($connection_mysqli, $insert_query))

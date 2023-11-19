@@ -6,30 +6,35 @@
         <indirizzo_ritiro citta="Pisa" nazione="Italia" strada="via montepulciano" numero="27" />
         <indirizzo_destinazione citta="Livorno" nazione="Italia" strada="viale manzoni" numero="57" />
         <destinatario nome="Maria" cognome="Gresini" />
+        <mittente nome="Marco" cognome="Struzzi" />
     </ordine>
     <ordine id_richiesta="2" username="stella" tipologia_spedizione="citta;" costo="22"
         stato="accettato" ritiro="in_loco" peso="4" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Firenze" nazione="Italia" strada="via leonardo" numero="7" />
         <indirizzo_destinazione citta="Firenze" nazione="Italia" strada="via tripoli" numero="43" />
         <destinatario nome="Giorgia" cognome="Benedetti" />
+        <mittente nome="Stella" cognome="Gianduia" />
     </ordine>
     <ordine id_richiesta="3" username="stella" tipologia_spedizione="provincia" costo="120"
         stato="accettato" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Latina" nazione="Italia" strada="via leonida" numero="14" />
         <indirizzo_destinazione citta="Anzio" nazione="Italia" strada="via ardeatina" numero="112" />
         <destinatario nome="Lucas" cognome="Pleus" />
+        <mittente nome="Stella" cognome="Gianduia" />
     </ordine>
     <ordine id_richiesta="4" username="marcolino71" tipologia_spedizione="citta" costo="10"
         stato="accettato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Napoli" nazione="Italia" strada="viale caporetto" numero="25" />
         <indirizzo_destinazione citta="Napoli" nazione="Italia" strada="via del corso" numero="14" />
         <destinatario nome="Gennaro" cognome="Immobile" />
+        <mittente nome="Marco" cognome="Struzzi" />
     </ordine>
     <ordine id_richiesta="5" username="marcolino71" tipologia_spedizione="citta" costo="10"
         stato="accettato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Roma" nazione="Italia" strada="via duomo" numero="8" />
         <indirizzo_destinazione citta="Roma" nazione="Italia" strada="via del tasso" numero="23" />
         <destinatario nome="Miriam" cognome="Zecchinelli" />
+        <mittente nome="Marco" cognome="Struzzi" />
     </ordine>
     <ordine id_richiesta="6" username="marcolino71" tipologia_spedizione="provincia" costo="100"
         stato="concluso" ritiro="in_loco" peso="20" larghezza="20" altezza="25" profondita="15">
@@ -37,18 +42,21 @@
         <indirizzo_destinazione citta="Milano" nazione="Italia" strada="viale san tommaso"
             numero="3" />
         <destinatario nome="Luca" cognome="Barbero" />
+        <mittente nome="Marco" cognome="Struzzi" />
     </ordine>
     <ordine id_richiesta="7" username="stella" tipologia_spedizione="provincia" costo="120"
         stato="accettato" ritiro="in_loco" peso="5" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7" />
         <indirizzo_destinazione citta="Sanigallia" nazione="Italia" strada="via abete" numero="12" />
         <destinatario nome="Nando" cognome="Alonso" />
+        <mittente nome="Stella" cognome="Gianduia" />
     </ordine>
     <ordine id_richiesta="8" username="marcolino71" tipologia_spedizione="citta" costo="10"
         stato="rifiutato" ritiro="in_loco" peso="2" larghezza="20" altezza="25" profondita="15">
         <indirizzo_ritiro citta="Lucca" nazione="Italia" strada="via pardo" numero="7" />
         <indirizzo_destinazione citta="Lucca" nazione="Italia" strada="via pineta" numero="4" />
         <destinatario nome="Sofia" cognome="Bianchi" />
+        <mittente nome="Marco" cognome="Struzzi" />
     </ordine>
 
 </ordini>

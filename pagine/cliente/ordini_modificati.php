@@ -16,19 +16,20 @@ if( isset($_POST['paga'])){
     exit;
 }
 
-function stampaSpedizioni($listOrd) {
+function stampaSpedizioni($listOrd, $tipo_stato) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
-    
-    $table='<table>';  
+            
+    $intestazione= '<h2>Ordini modificati</h2>';
 
+    $table='<table>';
     for ($pos = 0; $pos < $listOrd->length; $pos++) {
         $ordine = $listOrd->item($pos);
         $stato = $ordine->getAttribute('stato');
 
         //seleziona gli ordini conclusi dal cliente
         if( $ordine->getAttribute('username') == $_SESSION['username'] && 
-            $stato == 'accettato' ) {                
+            $stato == $tipo_stato ) {                
 
             $id_ordine = $ordine->getAttribute('id_richiesta');
             $ordine_child = $ordine->firstChild; 
@@ -81,7 +82,7 @@ function stampaSpedizioni($listOrd) {
                 $table .='<td>
                           <form action="ordini.php" method="post">
                           <div id="buttons">
-                          <button type="submit" name="paga" value="'.$id_ordine.'" >Pagamento</button>
+                          <button type="submit" name="paga" value="'.$id_ordine.'" >Dettagli</button>
                           </div>
                           </form>
                           </td>
@@ -93,11 +94,11 @@ function stampaSpedizioni($listOrd) {
             $presente = 1;
         }
     }
-    if($presente == 0)    echo $table = "<p>Non sono presenti ordini</p>";
+    if($presente == 0)    echo $intestazione."<p>Non sono presenti ordini</p>";
     
     else{
         $table.="</table>";
-        echo $table;
+        echo $intestazione.''.$table;
     }        
 }
 
@@ -112,7 +113,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-    <title>Ordini in corso</title>
+    <title>Ordini modificati</title>
     <link rel="shortcut icon" href="../../picture/favicon.png"/>
 	  <link rel="stylesheet" href="../style1.css" type="text/css">
 	  <link rel="stylesheet" href="../tabselezione.css" type="text/css">
@@ -129,9 +130,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 <div id="content">
    <div id="center" class="colonna">
-    <h2>Ordini in corso</h2>
 
-     <?php echo stampaSpedizioni($listaOrd); ?>
+     <?php echo stampaSpedizioni($listaOrd, 'modificato'); ?>
    </div>
    
    <div id="navbar" class="colonna">

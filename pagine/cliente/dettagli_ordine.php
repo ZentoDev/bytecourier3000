@@ -2,7 +2,6 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
-
 require_once("../../dati/lib_xmlaccess.php");
 
 $docOrd = openXML("../../dati/xml/ordini.xml");  
@@ -141,6 +140,10 @@ for ($pos = 0; $pos < $listaOrd->length && $find == 0; $pos++) {
         $ordine_child = $ordine_child->nextSibling;  //nodo destinatario
         $nome = $ordine_child->getAttribute('nome').' ';
         $nome .= $ordine_child->getAttribute('cognome');
+
+        $ordine_child = $ordine_child->nextSibling;  //nodo mittente
+        $nome_mit = $ordine_child->getAttribute('nome').' ';
+        $nome_mit .= $ordine_child->getAttribute('cognome');
 
         if( $ordine->getAttribute('stato') == 'modificato' ){
 
@@ -344,6 +347,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
     <h3>Indirizzi</h3>
 	 <p>
+        <strong>Mittente:</strong> <?php echo $nome_mit; ?> <br />
         <strong>Destinatario:</strong> <?php echo $nome; ?> <br />
 		<strong>Indirizzo destinazione:</strong> <?php echo $destinazione; ?> <br />
         <strong>Indirizzo ritiro:</strong> <?php echo $indirizzo_ritiro; ?> <br />

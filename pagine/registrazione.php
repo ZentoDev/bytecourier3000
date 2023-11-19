@@ -157,7 +157,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <h1>Registrazione al sito</h1>
 
         <?php 
-		if($_POST['invio']){
+		if( isset($_POST['invio']) ){
 			echo '<h3>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;'.$mex.'</h3>';
 		}
 		?>

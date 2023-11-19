@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 require_once("login_cliente.php");
+require_once("../../dati/lib_xmlaccess.php");
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>

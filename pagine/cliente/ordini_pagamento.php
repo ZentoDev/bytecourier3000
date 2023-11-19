@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE);
 require_once("login_cliente.php");
-
 require_once("../../dati/lib_xmlaccess.php");
+
 $docOrd = openXML("../../dati/xml/ordini.xml");
   
 $rootOrd = $docOrd->documentElement;
@@ -16,32 +16,11 @@ if( isset($_POST['paga'])){
     exit;
 }
 
-//Seleziona la tipologia di ordini da visualizzare ('in_attesa_pagamento', 'modificato')
-$stato_selezionato = 'in_attesa_pagamento';
-if( isset($_POST['tipo_ordine']) ){
-    $stato_selezionato = $_POST['tipo_ordine'];
-}
-
 function stampaSpedizioni($listOrd, $tipo_stato) {
     
     $presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
-    
-    $intestazione='<h2>Ordini</h2>
-            <form action="ordini_pagamento.php" method="post">
-            <div id="buttons">
-            <button type="submit" name="tipo_ordine" value="in_attesa_pagamento" >Ordini accettati</button>
-            <button type="submit" name="tipo_ordine" value="modificato" >Ordini modificati</button>&nbsp
-            </div>
-            </form>';                  
-    switch($tipo_stato) {
-        case 'in_attesa_pagamento':
-            $intestazione.= '<h3>Ordini in attesa di pagamento</h3>';
-            break;
-        
-        case 'modificato':
-            $intestazione.= '<h3>Ordini modificati, in attesa di pagamento</h3>';
-            break;        
-    }
+
+    $intestazione= '<h2>Ordini in attesa di pagamento</h2>';        
 
     $table='<table>';
     for ($pos = 0; $pos < $listOrd->length; $pos++) {
@@ -152,7 +131,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <div id="content">
    <div id="center" class="colonna">
 
-     <?php echo stampaSpedizioni($listaOrd, $stato_selezionato); ?>
+     <?php echo stampaSpedizioni($listaOrd, 'in_attesa_pagamento'); ?>
    </div>
    
    <div id="navbar" class="colonna">
