@@ -18,7 +18,7 @@ function stampaUser() {
 		while ( $row = mysqli_fetch_array($res) ) {  //per ogni elemento dell'array
 
             if($row['permesso'] == 10 || $row['permesso'] == 100) {
-                if($row['permesso'] == 10) $tipologia_utente = 'bite courier';
+                if($row['permesso'] == 10) $tipologia_utente = 'bytecourier';
                 if($row['permesso'] == 100) $tipologia_utente = 'gestore';
                 $table.="<tr>
                 <th><strong></th>

@@ -18,8 +18,7 @@ try{
     $connection_mysqli = new mysqli($DB_host, $DB_user, $DB_pass, $DB_name);
 }catch (Exception $e){ $connection_mysqli = NULL; }
 
-/* Verifico se la connessione al database è andata a buon termine attraverso la funzione mysqli_connect_errno().
-Tale funzione restituisce il codice di errore dell'ultima connessione nel caso in cui questa connessione non sia
-avvenuta, altrimenti restituisce un valore nullo. */
+/* Verifico se la connessione al database è andata a buon fine.
+In caso di errore restituisco un valore nullo. */
 
 ?>

@@ -108,7 +108,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	            <input type="date" name="data" value="<?php echo $data ?>" required><br />
                 <strong>Tipologia utente</strong><br />
 				<select name="permesso_user" size="2" required>
-					<option value="10">Bite courier</option>
+					<option value="10">Bytecourier</option>
 					<option value="100">Gestore</option>
 				</select>
 	            </div>
