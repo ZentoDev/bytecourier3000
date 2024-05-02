@@ -105,8 +105,6 @@ if(mysqli_errno($connection_mysqli)){
 
 echo "<h1>POPOLAZIONE TABELLE</h1>\n";
 
-//Inserisco gli utenti e le prenotazioni nelle rispettive tabelle 
-
 //utenti
 
 $insert_query = "INSERT INTO $user_table_name

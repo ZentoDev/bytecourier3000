@@ -38,7 +38,7 @@ $assegnazione = $rootType->getAttribute('assegnazione_automatica');
 
 function stampaOperazioni($listOp, $listOrd){
 
-	$presente = 0; //questa variabile segnalerà la presenza di operazioni disponibili
+	$presente = 0; //segnala la presenza di operazioni disponibili
 
 	$table="<table>";  
 
@@ -47,12 +47,12 @@ function stampaOperazioni($listOp, $listOrd){
 
 		$stato = $operazione->getAttribute('stato');   
 
-		if( $operazione->getAttribute('username_bytecourier') == "" ) {    //operazione già presa in carico? in tal caso non mostrarla
+		if( $operazione->getAttribute('username_bytecourier') == "" ) {    //mostra solo op libere
 
 			$id_operazione = $operazione->getAttribute('id_operazione');
 			$id_ordine = $operazione->getAttribute('id_ordine');
 
-			$coin =0;  // =1 segnala che è stata trovato trovato l'ordine associato all'operazione
+			$coin =0;  // =1 è stato trovato l'ordine associato all'operazione
 		    for ( $i = 0; $i < $listOrd->length && $coin == 0; $i++ ) {
 				$ordine = $listOrd->item($i);
 

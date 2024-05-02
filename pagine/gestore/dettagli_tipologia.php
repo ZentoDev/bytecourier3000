@@ -11,7 +11,7 @@ $listaType = $rootType->firstChild->childNodes;
 
 $pagato = 0;
 $mex = '';
-$coin = 0;  // =1 segnala che è stata trovato trovato la tipologia
+$coin = 0;  // =1 segnala che è stata trovata la tipologia
 for ($pos = 0; $pos < $listaType->length && $coin == 0; $pos++) {
     $tipologia = $listaType->item($pos);
     

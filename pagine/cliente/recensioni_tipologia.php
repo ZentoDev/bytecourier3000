@@ -190,9 +190,9 @@ function ordinaReview(array &$recensioni, $tipo_visualizzazione){
 
     //ordinamento per recensioni migliori (miglior rapporto like/dislike)
     if( $tipo_visualizzazione == 2 ){
-        $scambio = true;
+        
         $c = 0;
-        while( $c < sizeof($recensioni) - 1 && $scambio ){
+        while( $c < sizeof($recensioni) - 1 ){
             $scambio = false;
             $count = 0;
             for( $i = 1; $i < sizeof($recensioni) - $c; $i++ ){
@@ -225,7 +225,6 @@ function ordinaReview(array &$recensioni, $tipo_visualizzazione){
                     $rev_appoggio = $recensioni[$i - 1];
                     $recensioni[$i - 1] = $recensioni[$i];
                     $recensioni[$i] = $rev_appoggio;
-                    $scambio = true;
 
                     $rap1 = $rap2;
                 }
@@ -236,9 +235,9 @@ function ordinaReview(array &$recensioni, $tipo_visualizzazione){
 
     //ordinamento per recensioni peggiori (peggior rapporto like/dislike)
     if( $tipo_visualizzazione == 3 ){
-        $scambio = true;
+        
         $c = 0;
-        while( $c < sizeof($recensioni) - 1 && $scambio ){
+        while( $c < sizeof($recensioni) - 1 ){
             $scambio = false;
             $count = 0;
             for( $i = 1; $i < sizeof($recensioni) - $c; $i++ ){
@@ -271,7 +270,6 @@ function ordinaReview(array &$recensioni, $tipo_visualizzazione){
                     $rev_appoggio = $recensioni[$i - 1];
                     $recensioni[$i - 1] = $recensioni[$i];
                     $recensioni[$i] = $rev_appoggio;
-                    $scambio = true;
 
                     $rap1 = $rap2;
                 }
